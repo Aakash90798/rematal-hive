@@ -1,0 +1,72 @@
+
+import { useState, useEffect } from 'react';
+import { Button } from "@/components/ui/button";
+import { ArrowRight, CheckCircle } from "lucide-react";
+
+const HeroSection = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="relative pt-32 pb-20 overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-30 z-0"></div>
+      <div className="absolute top-32 -right-32 w-64 h-64 bg-rematal-light-purple rounded-full filter blur-3xl opacity-50 z-0"></div>
+      <div className="absolute bottom-32 -left-32 w-64 h-64 bg-rematal-light-green rounded-full filter blur-3xl opacity-50 z-0"></div>
+
+      <div className="container-custom relative z-10">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className={`inline-flex items-center bg-white border border-gray-100 rounded-full px-4 py-2 mb-8 shadow-sm transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+            <span className="bg-rematal-light-green text-rematal-green text-xs font-medium px-3 py-1 rounded-full">NEW</span>
+            <span className="mx-2 text-sm font-medium">The first D2C talent marketplace in India</span>
+            <div className="flex -space-x-1 opacity-75">
+              <div className="w-5 h-5 rounded-full bg-gray-200 border-2 border-white"></div>
+              <div className="w-5 h-5 rounded-full bg-gray-300 border-2 border-white"></div>
+              <div className="w-5 h-5 rounded-full bg-gray-400 border-2 border-white"></div>
+            </div>
+          </div>
+
+          <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+            The talent platform D2C freelancers <span className="text-gradient">actually deserve</span>
+          </h1>
+
+          <p className={`text-lg text-rematal-gray mb-8 max-w-2xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+            Connect with verified D2C brands, secure payments upfront, and build a reputation that brings you better work every month.
+          </p>
+
+          <div className={`flex flex-col sm:flex-row justify-center items-center gap-4 mb-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+            <Button className="bg-rematal-orange hover:bg-rematal-orange/90 text-white rounded-full px-6 py-6 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full sm:w-auto">
+              Apply as a Freelancer <ArrowRight size={16} className="ml-2" />
+            </Button>
+            <Button variant="outline" className="border-gray-200 hover:bg-gray-50 rounded-full px-6 py-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all w-full sm:w-auto">
+              Hire Talent
+            </Button>
+          </div>
+
+          <div className={`flex flex-col md:flex-row items-center justify-center gap-6 text-sm transition-all duration-700 delay-400 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+            <div className="flex items-center text-rematal-gray">
+              <CheckCircle size={16} className="text-rematal-green mr-2" />
+              <span>Verified brands only</span>
+            </div>
+            <div className="flex items-center text-rematal-gray">
+              <CheckCircle size={16} className="text-rematal-green mr-2" />
+              <span>Payments locked upfront</span>
+            </div>
+            <div className="flex items-center text-rematal-gray">
+              <CheckCircle size={16} className="text-rematal-green mr-2" />
+              <span>Workroom tracks everything</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default HeroSection;
