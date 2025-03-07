@@ -23,10 +23,11 @@ const Footer = () => {
           
           <div>
             <nav className="flex flex-col md:flex-row items-center justify-center md:space-x-8 space-y-4 md:space-y-0">
-              <a href="#problem" className="text-rematal-dark/80 hover:text-rematal-dark">Why Rematal</a>
-              <a href="#how-it-works" className="text-rematal-dark/80 hover:text-rematal-dark">How It Works</a>
-              <a href="#perks" className="text-rematal-dark/80 hover:text-rematal-dark">Benefits</a>
-              <a href="#categories" className="text-rematal-dark/80 hover:text-rematal-dark">Categories</a>
+              <a href="#problem" className="text-rematal-dark/80 hover:text-rematal-dark transition-colors">The Dilemma</a>
+              <a href="#about" className="text-rematal-dark/80 hover:text-rematal-dark transition-colors">About Rematal</a>
+              <a href="#how-it-works" className="text-rematal-dark/80 hover:text-rematal-dark transition-colors">How It Works</a>
+              <a href="#perks" className="text-rematal-dark/80 hover:text-rematal-dark transition-colors">Benefits</a>
+              <a href="#categories" className="text-rematal-dark/80 hover:text-rematal-dark transition-colors">Talent Categories</a>
             </nav>
           </div>
           

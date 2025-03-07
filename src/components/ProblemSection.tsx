@@ -1,5 +1,4 @@
 
-import { useState, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { AlertCircle } from 'lucide-react';
 
@@ -31,10 +30,10 @@ const ProblemSection = () => {
   });
   
   const problems = [
-    "Tired of chasing late payments?",
-    "Fed up with unreliable clients disappearing mid-project?",
-    "Sick of building trust from scratch with every new client?",
-    "Hate bidding wars against low-quality freelancers who undercharge?"
+    "Chasing clients for payments that never seem to arrive?",
+    "Tired of clients who vanish mid-project without notice?",
+    "Exhausted from rebuilding trust with each new client?",
+    "Frustrated competing with low-quality freelancers who undercut rates?"
   ];
 
   return (
@@ -45,10 +44,10 @@ const ProblemSection = () => {
             ref={ref}
             className={`text-3xl md:text-4xl font-bold mb-4 transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
           >
-            Your Problem
+            The Freelancer's <span className="text-gradient">Dilemma</span>
           </h2>
           <p className={`text-lg text-rematal-gray transition-all duration-700 delay-100 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-            We understand the challenges you face as a D2C freelancer in India
+            Every D2C freelancer in India faces these challenges. Sound familiar?
           </p>
         </div>
 

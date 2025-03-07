@@ -52,30 +52,30 @@ const CategoriesSection = () => {
 
   const categories = [
     {
-      title: "Marketers",
+      title: "D2C Marketing Experts",
       icon: <Megaphone className="h-5 w-5" />,
-      skills: ["Paid Ads", "Email", "SEO", "Retention"],
+      skills: ["Paid Social & Search", "Email Marketing", "SEO Strategy", "Customer Retention"],
       color: "text-pink-500",
       bgColor: "bg-pink-50"
     },
     {
-      title: "Developers",
+      title: "E-Commerce Developers",
       icon: <Code className="h-5 w-5" />,
-      skills: ["Shopify", "Wordpress", "Landing Page", "App Development"],
+      skills: ["Shopify Customization", "WooCommerce", "Landing Pages", "Custom Apps"],
       color: "text-rematal-blue",
       bgColor: "bg-rematal-light-purple"
     },
     {
-      title: "Designers",
+      title: "Brand Designers",
       icon: <PenTool className="h-5 w-5" />,
-      skills: ["Brand", "Logo", "UI/UX", "Creative", "Motion Graphics"],
+      skills: ["Brand Identity", "UI/UX Design", "Product Photography", "Motion Graphics"],
       color: "text-rematal-orange",
       bgColor: "bg-rematal-orange/10"
     },
     {
-      title: "Content Experts",
+      title: "Content Specialists",
       icon: <Text className="h-5 w-5" />,
-      skills: ["Copywriting", "Social Content", "Blogs", "Email Campaigns"],
+      skills: ["Product Copywriting", "Social Content", "Email Sequences", "Brand Storytelling"],
       color: "text-rematal-green",
       bgColor: "bg-rematal-light-green"
     }
@@ -89,12 +89,12 @@ const CategoriesSection = () => {
             ref={ref}
             className={`text-3xl md:text-4xl font-bold mb-4 transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
           >
-            We Are Looking For <span className="text-gradient">Top Talent</span>
+            Talent We're <span className="text-gradient">Looking For</span>
           </h2>
           <p 
             className={`text-lg text-rematal-gray transition-all duration-700 delay-100 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
           >
-            Specialized freelancers with expertise in these D2C categories
+            Specialized experts who understand the unique demands of D2C brands
           </p>
         </div>
 

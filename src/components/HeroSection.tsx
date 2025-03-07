@@ -24,7 +24,7 @@ const HeroSection = () => {
         <div className="max-w-4xl mx-auto text-center">
           <div className={`inline-flex items-center bg-white border border-gray-100 rounded-full px-4 py-2 mb-8 shadow-sm transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
             <span className="bg-rematal-light-green text-rematal-green text-xs font-medium px-3 py-1 rounded-full">NEW</span>
-            <span className="mx-2 text-sm font-medium">The first D2C talent marketplace in India</span>
+            <span className="mx-2 text-sm font-medium">India's first dedicated D2C talent marketplace</span>
             <div className="flex -space-x-1 opacity-75">
               <div className="w-5 h-5 rounded-full bg-gray-200 border-2 border-white"></div>
               <div className="w-5 h-5 rounded-full bg-gray-300 border-2 border-white"></div>
@@ -33,34 +33,34 @@ const HeroSection = () => {
           </div>
 
           <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-            The talent platform D2C freelancers <span className="text-gradient">actually deserve</span>
+            Where D2C talent meets <span className="text-gradient">quality clients</span>
           </h1>
 
           <p className={`text-lg text-rematal-gray mb-8 max-w-2xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-            Connect with verified D2C brands, secure payments upfront, and build a reputation that brings you better work every month.
+            Rematal connects skilled D2C freelancers with verified brands, secures your payments upfront, and builds your professional reputation with every project.
           </p>
 
           <div className={`flex flex-col sm:flex-row justify-center items-center gap-4 mb-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
             <Button className="bg-rematal-orange hover:bg-rematal-orange/90 text-white rounded-full px-6 py-6 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full sm:w-auto">
-              Apply as a Freelancer <ArrowRight size={16} className="ml-2" />
+              Join as a Freelancer <ArrowRight size={16} className="ml-2" />
             </Button>
             <Button variant="outline" className="border-gray-200 hover:bg-gray-50 rounded-full px-6 py-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all w-full sm:w-auto">
-              Hire Talent
+              Looking to Hire Talent
             </Button>
           </div>
 
           <div className={`flex flex-col md:flex-row items-center justify-center gap-6 text-sm transition-all duration-700 delay-400 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
             <div className="flex items-center text-rematal-gray">
               <CheckCircle size={16} className="text-rematal-green mr-2" />
-              <span>Verified brands only</span>
+              <span>Pre-vetted quality brands</span>
             </div>
             <div className="flex items-center text-rematal-gray">
               <CheckCircle size={16} className="text-rematal-green mr-2" />
-              <span>Payments locked upfront</span>
+              <span>Guaranteed payment via escrow</span>
             </div>
             <div className="flex items-center text-rematal-gray">
               <CheckCircle size={16} className="text-rematal-green mr-2" />
-              <span>Workroom tracks everything</span>
+              <span>Comprehensive project tools</span>
             </div>
           </div>
         </div>

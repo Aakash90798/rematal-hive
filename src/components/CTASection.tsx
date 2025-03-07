@@ -22,13 +22,13 @@ const CTASection = () => {
           
           <div className="relative z-10 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Don't Settle for Random Gigs
+              Your Work Deserves Better
             </h2>
             <p className="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
-              Work with serious brands, get paid without drama, and build a reputation that brings you better work every month. That's what Rematal gives you — and that's why the best D2C freelancers are joining right now.
+              Stop jumping through hoops for unreliable clients. Join Rematal to work with serious brands, secure guaranteed payments, and build a reputation that brings quality projects to your doorstep.
             </p>
             <Button className="bg-rematal-orange hover:bg-rematal-orange/90 text-white rounded-full px-8 py-6 text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
-              Apply Here <ArrowRight className="ml-2" />
+              Start Your Application <ArrowRight className="ml-2" />
             </Button>
           </div>
         </div>

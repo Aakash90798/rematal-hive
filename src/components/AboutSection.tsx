@@ -10,14 +10,14 @@ const AboutSection = () => {
   });
 
   const features = [
-    "Verified brands only (serious D2C clients, not time-wasters)",
-    "Payments locked upfront (an escrow system protects your money)",
-    "Workroom tracks everything (files, chats, milestones)",
-    "Every completed project grows your public Rematal reputation"
+    "Verified brands only — serious D2C clients that value quality work",
+    "Escrow payment system — your money is secured before you start work",
+    "Comprehensive workroom — all files, chats, and milestones in one place",
+    "Merit-based reputation — every completed project builds your professional profile"
   ];
 
   return (
-    <section className="py-20">
+    <section id="about" className="py-20">
       <div className="container-custom">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div 
@@ -53,10 +53,10 @@ const AboutSection = () => {
             className={`transition-all duration-700 delay-200 ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              What is <span className="text-gradient">Rematal</span>?
+              Meet <span className="text-gradient">Rematal</span>
             </h2>
             <p className="text-lg text-rematal-gray mb-8">
-              Rematal = The hiring platform D2C freelancers actually deserve. Unlike generic marketplaces, Rematal is built specifically for Indian D2C work.
+              Not just another marketplace — Rematal is the platform built specifically for Indian D2C freelancers who deserve better clients, reliable payments, and professional recognition.
             </p>
 
             <div className="space-y-4 mb-8">
@@ -69,7 +69,7 @@ const AboutSection = () => {
             </div>
 
             <p className="text-rematal-dark font-medium mb-6">
-              If you have more than 1 year of experience in the e-commerce/D2C space, then Rematal is your new home, my friend.
+              With 1+ year of D2C experience? You've found your professional home.
             </p>
 
             <Button className="bg-rematal-orange hover:bg-rematal-orange/90 text-white rounded-full px-6">

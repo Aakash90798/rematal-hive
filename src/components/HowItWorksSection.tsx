@@ -54,33 +54,33 @@ const HowItWorksSection = () => {
 
   const steps = [
     {
-      title: "Apply to join the platform",
-      description: "Submit your application with your portfolio and D2C experience",
+      title: "Apply & Get Vetted",
+      description: "Submit your portfolio and D2C experience for review by our team",
       icon: <CircleCheck className="h-6 w-6 text-rematal-blue" />
     },
     {
-      title: "Create your Rematal Profile",
-      description: "Showcase your portfolio, services, and past D2C work",
+      title: "Build Your Profile",
+      description: "Showcase your best D2C work, services, and specializations",
       icon: <FileCheck className="h-6 w-6 text-rematal-blue" />
     },
     {
-      title: "Start getting new leads daily",
-      description: "Get matched with verified D2C brands looking for your skills",
+      title: "Connect With Brands",
+      description: "Start receiving project opportunities from verified D2C companies",
       icon: <CornerRightDown className="h-6 w-6 text-rematal-blue" />
     },
     {
-      title: "Collaborate in the Rematal Workroom",
-      description: "Chat, share files & track work all in one place",
+      title: "Collaborate Seamlessly",
+      description: "Manage projects in our dedicated workroom with all tools in one place",
       icon: <MessageSquare className="h-6 w-6 text-rematal-blue" />
     },
     {
-      title: "Secure payment upfront",
-      description: "Client funds go into escrow before you start — no work without payment",
+      title: "Get Paid Securely",
+      description: "Work with confidence knowing funds are in escrow before you start",
       icon: <Wallet className="h-6 w-6 text-rematal-blue" />
     },
     {
-      title: "Build your reputation",
-      description: "Complete projects & collect ratings to grow your Rematal profile",
+      title: "Grow Your Reputation",
+      description: "Build your professional standing with each successful project",
       icon: <Trophy className="h-6 w-6 text-rematal-blue" />
     }
   ];
@@ -93,12 +93,12 @@ const HowItWorksSection = () => {
             ref={ref}
             className={`text-3xl md:text-4xl font-bold mb-4 transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
           >
-            How It <span className="text-gradient">Works</span>
+            Your Journey to <span className="text-gradient">Better Work</span>
           </h2>
           <p 
             className={`text-lg text-rematal-gray transition-all duration-700 delay-100 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
           >
-            A simple process designed for serious D2C freelancers
+            A straightforward process designed for serious D2C professionals
           </p>
         </div>
 

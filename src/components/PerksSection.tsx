@@ -40,23 +40,23 @@ const PerksSection = () => {
 
   const perks = [
     {
-      title: "Verified Badge",
-      description: "Proof you're vetted and trusted by the Rematal community",
+      title: "Verified Professional Status",
+      description: "Earn a trusted badge that signals your expertise to premium clients",
       icon: <Shield className="h-6 w-6 text-rematal-blue" />
     },
     {
-      title: "Payment Security",
-      description: "No chasing payments — our escrow system protects your money",
+      title: "Financial Protection",
+      description: "Our escrow system ensures you always get paid for completed work",
       icon: <CreditCard className="h-6 w-6 text-rematal-blue" />
     },
     {
-      title: "Direct Access to Top D2C Brands",
-      description: "No middlemen, no begging for work — connect directly",
+      title: "Premium Client Access",
+      description: "Connect directly with serious D2C brands seeking quality talent",
       icon: <Users className="h-6 w-6 text-rematal-blue" />
     },
     {
-      title: "Public Reputation",
-      description: "Your Rematal profile becomes your career passport",
+      title: "Reputation Passport",
+      description: "Build a verified track record that attracts better opportunities",
       icon: <Award className="h-6 w-6 text-rematal-blue" />
     }
   ];
@@ -69,12 +69,12 @@ const PerksSection = () => {
             ref={ref}
             className={`text-3xl md:text-4xl font-bold mb-4 transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
           >
-            What Perks Do Freelancers <span className="text-gradient">Get?</span>
+            Benefits That <span className="text-gradient">Matter</span>
           </h2>
           <p 
             className={`text-lg text-rematal-gray transition-all duration-700 delay-100 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
           >
-            Benefits that set Rematal apart from generic freelance platforms
+            Real advantages that transform how you work in the D2C ecosystem
           </p>
         </div>
 
