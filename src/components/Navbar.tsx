@@ -11,6 +11,7 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
+    
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -19,6 +20,12 @@ const Navbar = () => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+    // Prevent scrolling when menu is open
+    if (!isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
   };
 
   return (
@@ -44,22 +51,64 @@ const Navbar = () => {
         </div>
 
         {/* Mobile menu button */}
-        <button onClick={toggleMobileMenu} className="md:hidden text-rematal-dark">
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        <button 
+          onClick={toggleMobileMenu} 
+          className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-sm text-rematal-dark"
+          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+        >
+          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-white pt-20">
-          <nav className="container-custom flex flex-col space-y-6 py-8">
-            <a href="#problem" className="text-xl font-medium text-rematal-dark" onClick={() => setIsMobileMenuOpen(false)}>Why Rematal</a>
-            <a href="#how-it-works" className="text-xl font-medium text-rematal-dark" onClick={() => setIsMobileMenuOpen(false)}>How It Works</a>
-            <a href="#perks" className="text-xl font-medium text-rematal-dark" onClick={() => setIsMobileMenuOpen(false)}>Benefits</a>
-            <a href="#categories" className="text-xl font-medium text-rematal-dark" onClick={() => setIsMobileMenuOpen(false)}>Categories</a>
-            <Button className="bg-rematal-orange hover:bg-rematal-orange/90 text-white rounded-full w-full mt-4" onClick={() => setIsMobileMenuOpen(false)}>
-              Apply Now
-            </Button>
+        <div className="md:hidden fixed inset-0 z-40 bg-white pt-20 overflow-y-auto">
+          <div className="absolute top-4 right-4 p-2">
+            <button 
+              onClick={toggleMobileMenu}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 text-rematal-dark"
+              aria-label="Close menu"
+            >
+              <X size={20} />
+            </button>
+          </div>
+          <nav className="container-custom flex flex-col space-y-5 py-6">
+            <a 
+              href="#problem" 
+              className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
+              onClick={toggleMobileMenu}
+            >
+              Why Rematal
+            </a>
+            <a 
+              href="#how-it-works" 
+              className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
+              onClick={toggleMobileMenu}
+            >
+              How It Works
+            </a>
+            <a 
+              href="#perks" 
+              className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
+              onClick={toggleMobileMenu}
+            >
+              Benefits
+            </a>
+            <a 
+              href="#categories" 
+              className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
+              onClick={toggleMobileMenu}
+            >
+              Categories
+            </a>
+            <div className="pt-4">
+              <Button 
+                className="bg-rematal-orange hover:bg-rematal-orange/90 text-white rounded-full w-full py-6 text-lg" 
+                onClick={toggleMobileMenu}
+              >
+                Apply Now
+              </Button>
+            </div>
           </nav>
         </div>
       )}

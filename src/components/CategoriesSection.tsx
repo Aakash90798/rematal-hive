@@ -60,20 +60,15 @@ const CategoriesSection = () => {
   ];
 
   return (
-    <section id="categories" className="py-12 md:py-20 bg-gray-50">
+    <section id="categories" className="py-10 md:py-16 bg-gray-50">
       <div className="container-custom">
-        <div className="max-w-2xl mx-auto text-center mb-8">
+        <div className="max-w-2xl mx-auto text-center mb-6">
           <h2 
             ref={ref}
-            className={`text-2xl md:text-3xl font-bold mb-4 transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
+            className={`text-2xl md:text-3xl font-bold mb-3 transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
           >
             Talent We're <span className="text-gradient">Looking For</span>
           </h2>
-          <p 
-            className={`text-base text-rematal-gray transition-all duration-700 delay-100 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
-          >
-            Specialized experts for D2C brands
-          </p>
         </div>
 
         <div className={`transition-all duration-700 delay-200 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
@@ -84,14 +79,14 @@ const CategoriesSection = () => {
                   key={category.id}
                   value={category.id}
                   className={cn(
-                    "group relative flex items-center justify-center py-2 px-3 m-1 rounded-lg transition-all",
+                    "group flex items-center justify-center py-1.5 px-2.5 m-1 rounded-lg transition-all",
                     "data-[state=active]:shadow-md data-[state=active]:transform data-[state=active]:-translate-y-1",
                     "border hover:border-gray-200",
                     activeTab === category.id ? `${category.activeBgColor} ${category.borderColor}` : "bg-white"
                   )}
                 >
                   <span className={cn(
-                    "flex items-center justify-center w-8 h-8 rounded-lg mr-2",
+                    "flex items-center justify-center w-7 h-7 rounded-lg mr-1.5",
                     category.bgColor,
                     "transition-all duration-300"
                   )}>
@@ -115,20 +110,17 @@ const CategoriesSection = () => {
                 <TabsContent
                   key={category.id}
                   value={category.id}
-                  className="p-0 m-0 outline-none focus:outline-none"
+                  className="p-4 m-0 outline-none focus:outline-none"
                 >
-                  <div className="p-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                      {category.skills.map((skill, index) => (
-                        <div 
-                          key={index}
-                          className="relative bg-gray-50 rounded-lg p-4 transition-all hover:shadow-md hover:-translate-y-1"
-                        >
-                          <div className={`absolute top-0 right-0 w-2 h-2 rounded-full ${category.activeBgColor} m-2`}></div>
-                          <h5 className="font-medium mb-1">{skill}</h5>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                    {category.skills.map((skill, index) => (
+                      <div 
+                        key={index}
+                        className="bg-gray-50 rounded-lg p-3 text-center shadow-sm"
+                      >
+                        <p className="text-sm font-medium">{skill}</p>
+                      </div>
+                    ))}
                   </div>
                 </TabsContent>
               ))}

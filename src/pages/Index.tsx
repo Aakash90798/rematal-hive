@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ProblemSection from "@/components/ProblemSection";
@@ -18,8 +17,15 @@ const Index = () => {
     // Simulate loading
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 800); // Reduced loading time
     return () => clearTimeout(timer);
+  }, []);
+
+  // Clean up body overflow when component unmounts
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
   }, []);
 
   return (
@@ -34,7 +40,7 @@ const Index = () => {
       ) : (
         <>
           <Navbar />
-          <main>
+          <main className="overflow-x-hidden">
             <HeroSection />
             <ProblemSection />
             <AboutSection />
