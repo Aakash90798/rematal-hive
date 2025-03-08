@@ -28,6 +28,13 @@ const Navbar = () => {
     }
   };
 
+  const handleMobileNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Close the menu
+    setIsMobileMenuOpen(false);
+    // Enable scrolling again
+    document.body.style.overflow = 'auto';
+  };
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-sm py-3' : 'bg-transparent py-5'}`}>
       <div className="container-custom flex items-center justify-between">
@@ -64,21 +71,24 @@ const Navbar = () => {
               <a 
                 href="#problem" 
                 className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
-                onClick={toggleMobileMenu}
+                onClick={handleMobileNavClick}
               >
                 Why Rematal
               </a>
               <a 
                 href="#features" 
                 className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
-                onClick={toggleMobileMenu}
+                onClick={handleMobileNavClick}
               >
                 Features
               </a>
               <div className="pt-4">
                 <Button 
                   className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg" 
-                  onClick={toggleMobileMenu}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    document.body.style.overflow = 'auto';
+                  }}
                 >
                   Apply Now
                 </Button>
