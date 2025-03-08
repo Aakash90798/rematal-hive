@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import bgImage from '../assets/bg-checkboxes.png';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -14,7 +15,8 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <div className="relative pt-32 pb-20 overflow-hidden min-h-[80vh] flex flex-col justify-center mt-[60px]">
+    <div className="relative pt-32 pb-20 overflow-hidden min-h-[80vh] flex flex-col justify-center mt-[60px]"
+    style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       {/* Background elements */}
       <div className="absolute inset-0 bg-grid-pattern opacity-30 z-0"></div>
       <div className="absolute top-32 -right-32 w-64 h-64 bg-rematal-light-purple rounded-full filter blur-3xl opacity-50 z-0"></div>
