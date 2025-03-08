@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import bgImage from '../assets/bg-checkboxes.png';
+import { APP_CONSTANTS } from '@/constants';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -28,18 +29,21 @@ const HeroSection = () => {
             <span className="mx-2 text-sm font-medium">India's First D2C Talent Marketplace</span>
           </div>
           <h1 className={`text-[38px] md:text-5xl lg:text-6xl font-bold mb-6 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-            Where D2C talent meets <span className="text-gradient">quality clients</span>
+            Where freelancers meet <span className="text-gradient">quality clients</span>
           </h1>
 
           <p className={`text-2xl max-md:text-xl max-sm:text-lg text-rematal-gray mb-16 max-w-3xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-            Get verified. Connect with top D2C brands. Elevate your career.
+            Get verified. Connect with top brands. Elevate your career.
           </p>
 
           <div className={`flex flex-col sm:flex-row justify-center items-center gap-4 mb-12 mt-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
             {/* <Button variant="outline" className="border-gray-200 hover:bg-gray-50 text-[1em] rounded-full px-6 py-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all w-full sm:w-auto">
               Looking to Hire Talent
             </Button> */}
-            <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white text-[1em] rounded-full px-6 py-6 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full sm:w-auto">
+            <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white text-[1em] rounded-full px-6 py-6 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full sm:w-auto"
+            onClick={() =>
+              window.open(APP_CONSTANTS.freelancerFormLink, '_blank')
+            }>
               Join as a Freelancer <ArrowRight size={16} className="ml-2" />
             </Button>
 

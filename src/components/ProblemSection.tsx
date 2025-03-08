@@ -22,7 +22,7 @@ const ProblemCard = ({
       ref={ref}
       className={`bg-white/90 backdrop-blur-sm rounded-xl p-6 border-l-4 ${color} shadow-lg`}
     >
-      <div className="flex items-start space-x-4">
+      <div className="flex items-center space-x-4">
         <div className={`shrink-0 p-3 rounded-full ${color.replace('border-l-4', 'bg')}/10`}>
           <span className="text-3xl max-md:text-2xl">{emoji}</span>
         </div>

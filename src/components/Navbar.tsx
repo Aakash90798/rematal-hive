@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { APP_CONSTANTS } from '@/constants';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,7 +12,7 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -52,11 +53,15 @@ const Navbar = () => {
         </nav>
 
         <div className="hidden sm:block">
-          <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6">Apply Now</Button>
+          <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6"
+            onClick={() =>
+              window.open(APP_CONSTANTS.freelancerFormLink, '_blank')
+            }>
+            Apply Now</Button>
         </div>
 
-        <button 
-          onClick={toggleMobileMenu} 
+        <button
+          onClick={toggleMobileMenu}
           className="sm:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white text-rematal-dark z-[60]"
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
         >
@@ -69,37 +74,37 @@ const Navbar = () => {
         <div className="md:hidden fixed inset-0 z-[55] bg-white pt-20 overflow-y-auto flex flex-col w-full">
           <div className="container-custom flex-1 flex flex-col w-full">
             <nav className="flex flex-col space-y-5 py-6 w-full">
-              <a 
-                href="#problem" 
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center" 
+              <a
+                href="#problem"
+                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
                 onClick={handleMobileNavClick}
               >
                 Why Rematal
               </a>
-              <a 
-                href="#features" 
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center" 
+              <a
+                href="#features"
+                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
                 onClick={handleMobileNavClick}
               >
                 Features
               </a>
-              <a 
-                href="#process" 
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center" 
+              <a
+                href="#process"
+                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
                 onClick={handleMobileNavClick}
               >
                 Process
               </a>
-              <a 
-                href="#faq" 
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center" 
+              <a
+                href="#faq"
+                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
                 onClick={handleMobileNavClick}
               >
                 FAQs
               </a>
               <div className="pt-4 w-full">
-                <Button 
-                  className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg" 
+                <Button
+                  className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg"
                   onClick={handleMobileNavClick}
                 >
                   Apply Now

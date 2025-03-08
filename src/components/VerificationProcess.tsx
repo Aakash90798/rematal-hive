@@ -88,7 +88,9 @@ const VerificationProcess = () => {
               </p>
               <Button
                 className="bg-gradient-to-r from-rematal-primary to-rematal-blue hover:from-rematal-primary/90 hover:to-rematal-blue/90 text-white rounded-full px-8 py-7 max-md:px-7 max-md:py-6 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all text-lg max-sm:text-base max-sm:w-full"
-              >
+                onClick={() =>
+                  window.open(APP_CONSTANTS.freelancerFormLink, '_blank')
+                }>
                 Start your application
               </Button>
               <div className="mt-16 grid grid-cols-2 max-sm:gap-5 gap-8 text-center">
