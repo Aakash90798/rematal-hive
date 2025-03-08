@@ -56,7 +56,7 @@ const CTASection = () => {
               
               <div className="space-y-3 text-center">
                 <Button className="mb-5 bg-rematal-primary hover:bg-rematal-primary/90 text-white text-[1em] rounded-full px-6 py-6 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all w-full">
-                  Start Your Application <ArrowRight className="ml-2" />
+                  Start Your Application
                 </Button>
                 <a href="#process" className="text-white/80 hover:text-white text-[0.8em] transition-colors">Learn how it works →</a>
               </div>
