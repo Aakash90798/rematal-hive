@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react';
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ProblemSection from "@/components/ProblemSection";
-import AboutSection from "@/components/AboutSection";
+import VerificationProcess from "@/components/VerificationProcess";
 import FeaturesSection from "@/components/features/FeaturesSection";
+import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import "../styles/animations.css";
@@ -42,8 +43,9 @@ const Index = () => {
           <main className="overflow-x-hidden">
             <HeroSection />
             <ProblemSection />
-            <AboutSection />
+            <VerificationProcess />
             <FeaturesSection />
+            <FAQSection />
             <CTASection />
           </main>
           <Footer />
