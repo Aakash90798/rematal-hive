@@ -39,7 +39,7 @@ const CTASection = () => {
             <div className="md:w-3/5 mb-8 md:mb-0 text-center md:text-left">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-sm font-medium mb-6">
                 <Sparkles className="h-4 w-4 text-yellow-300" />
-                <span>Join 500+ freelancers already on Rematal</span>
+                <span>Join 548+ freelancers already on Rematal</span>
               </div>
               
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white">
@@ -47,25 +47,12 @@ const CTASection = () => {
               </h2>
               
               <p className="text-lg text-white/80 mb-6 max-w-xl">
-                Stop jumping through hoops for unreliable clients. Join Rematal to work with serious brands, 
-                secure guaranteed payments, and build a reputation.
+              Join India's premier verified D2C talent marketplace and connect with the country's most innovative brands looking for your specific skills.
               </p>
               
-              <ul className="space-y-2 mb-8">
-                {benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-center text-white/90">
-                    <CheckCircle className="h-5 w-5 mr-2 text-rematal-primary flex-shrink-0" />
-                    <span>{benefit}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
             
             <div className="md:w-2/5 bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-white">Start Your Journey Today</h3>
-              <p className="text-white/80 mb-6">
-                Join our community of specialized D2C experts and get connected with quality clients
-              </p>
               
               <div className="space-y-3">
                 <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6 py-6 text-lg shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all w-full">

@@ -23,13 +23,7 @@ const HeroSection = () => {
       <div className="container-custom relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <div className={`inline-flex items-center bg-white border border-gray-100 rounded-full px-4 py-2 mb-8 shadow-sm transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-            <span className="bg-rematal-light-green text-rematal-green text-xs font-medium px-3 py-1 rounded-full">NEW</span>
-            <span className="mx-2 text-sm font-medium">India's first dedicated D2C talent marketplace</span>
-            <div className="flex -space-x-1 opacity-75">
-              <div className="w-5 h-5 rounded-full bg-gray-200 border-2 border-white"></div>
-              <div className="w-5 h-5 rounded-full bg-gray-300 border-2 border-white"></div>
-              <div className="w-5 h-5 rounded-full bg-gray-400 border-2 border-white"></div>
-            </div>
+            <span className="mx-2 text-sm font-medium">India's First D2C Talent Marketplace</span>
           </div>
 
           <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
@@ -37,7 +31,7 @@ const HeroSection = () => {
           </h1>
 
           <p className={`text-lg text-rematal-gray mb-8 max-w-2xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-            Rematal connects skilled D2C freelancers with verified brands, secures your payments upfront, and builds your professional reputation with every project.
+          Get verified. Connect with top D2C brands. Elevate your career.
           </p>
 
           <div className={`flex flex-col sm:flex-row justify-center items-center gap-4 mb-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>

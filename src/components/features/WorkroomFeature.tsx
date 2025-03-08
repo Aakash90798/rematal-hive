@@ -20,24 +20,24 @@ const WorkroomFeature = () => {
       
       <div className="bg-white rounded-xl shadow-sm p-6 md:p-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-rematal-light-green/20 rounded-lg p-6 text-center">
-            <div className="bg-rematal-light-green w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="bg-rematal-primary/5 rounded-lg p-6 text-center">
+            <div className="bg-rematal-primary/15 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
               <MessageSquare className="w-6 h-6 text-rematal-green" />
             </div>
             <h3 className="font-bold mb-2">Real-time Messaging</h3>
             <p className="text-sm text-rematal-gray">Direct communication with clients in one secure workspace</p>
           </div>
           
-          <div className="bg-rematal-light-green/20 rounded-lg p-6 text-center">
-            <div className="bg-rematal-light-green w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="bg-rematal-primary/5 rounded-lg p-6 text-center">
+            <div className="bg-rematal-primary/15 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
               <FileText className="w-6 h-6 text-rematal-green" />
             </div>
             <h3 className="font-bold mb-2">File Management</h3>
             <p className="text-sm text-rematal-gray">All project files organized in one central location</p>
           </div>
           
-          <div className="bg-rematal-light-green/20 rounded-lg p-6 text-center">
-            <div className="bg-rematal-light-green w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="bg-rematal-primary/5 rounded-lg p-6 text-center">
+            <div className="bg-rematal-primary/15 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckSquare className="w-6 h-6 text-rematal-green" />
             </div>
             <h3 className="font-bold mb-2">Milestone Tracking</h3>

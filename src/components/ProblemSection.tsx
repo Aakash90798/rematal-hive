@@ -5,12 +5,12 @@ import { AlertTriangle, Clock, Unplug, DollarSign } from 'lucide-react';
 const ProblemCard = ({ 
   title, 
   delay, 
-  icon: Icon,
+  emoji,
   color
 }: { 
   title: string; 
   delay: string;
-  icon: React.ElementType;
+  emoji: string;
   color: string;
 }) => {
   const { ref, inView } = useInView({
@@ -21,11 +21,11 @@ const ProblemCard = ({
   return (
     <div 
       ref={ref}
-      className={`bg-white/90 backdrop-blur-sm rounded-xl p-6 border-l-4 ${color} shadow-lg hover:shadow-xl transition-all duration-500 transform ${inView ? `opacity-100 translate-y-0 ${delay}` : 'opacity-0 translate-y-8'} hover:-translate-y-2`}
+      className={`bg-white/90 backdrop-blur-sm rounded-xl p-6 border-l-4 ${color} shadow-lg`}
     >
       <div className="flex items-start space-x-4">
         <div className={`shrink-0 p-3 rounded-full ${color.replace('border-l-4', 'bg')}/10`}>
-          <Icon className={`h-6 w-6 ${color.replace('border-l-4', 'text')}`} />
+          <span className="text-3xl">{emoji}</span>
         </div>
         <p className="text-lg font-medium text-rematal-dark">{title}</p>
       </div>
@@ -42,25 +42,25 @@ const ProblemSection = () => {
   const problems = [
     {
       title: "Chasing clients for payments that never seem to arrive?",
-      icon: DollarSign,
+      emoji: "💰", // Money-related issue
       color: "border-l-rematal-primary"
     },
     {
       title: "Tired of clients who vanish mid-project without notice?",
-      icon: Unplug,
-      color: "border-l-red-500"
+      emoji: "❌", // Ghosting clients
+      color: "border-l-black/40"
     },
     {
       title: "Exhausted from rebuilding trust with each new client?",
-      icon: Clock,
+      emoji: "🤝", // Trust and reliability
       color: "border-l-purple-500"
     },
     {
       title: "Frustrated competing with low-quality freelancers who undercut rates?",
-      icon: AlertTriangle,
+      emoji: "⚖️", // Fair competition and pricing
       color: "border-l-rematal-blue"
     }
-  ];
+ ];
 
   return (
     <section id="problem" className="py-24 relative overflow-hidden">
@@ -93,7 +93,7 @@ const ProblemSection = () => {
             <ProblemCard 
               key={index} 
               title={problem.title} 
-              icon={problem.icon}
+              emoji={problem.emoji}
               color={problem.color}
               delay={`delay-[${(index + 1) * 150}ms]`}
             />

@@ -22,27 +22,27 @@ const EscrowPayments = () => {
         </div>
       </div>
       
-      <div className="bg-rematal-light-purple/30 rounded-xl shadow-sm p-6 md:p-8 relative overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm p-6 md:p-8 relative overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-lg p-6 text-center">
-            <div className="bg-rematal-light-purple w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Shield className="w-6 h-6 text-rematal-blue" />
+          <div className="bg-rematal-primary/5 rounded-lg p-6 text-center">
+            <div className="bg-rematal-primary/15 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Shield className="w-6 h-6 text-rematal-primary" />
             </div>
             <h3 className="font-bold mb-2">Verified Funds</h3>
             <p className="text-sm text-rematal-gray">Funds are secured before you start your work</p>
           </div>
           
-          <div className="bg-white rounded-lg p-6 text-center">
-            <div className="bg-rematal-light-purple w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Lock className="w-6 h-6 text-rematal-blue" />
+          <div className="bg-rematal-primary/5 rounded-lg p-6 text-center">
+            <div className="bg-rematal-primary/15 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Lock className="w-6 h-6 text-rematal-primary" />
             </div>
             <h3 className="font-bold mb-2">Milestone Payments</h3>
             <p className="text-sm text-rematal-gray">Get paid in stages for long-term projects</p>
           </div>
           
-          <div className="bg-white rounded-lg p-6 text-center">
-            <div className="bg-rematal-light-purple w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Shield className="w-6 h-6 text-rematal-blue" />
+          <div className="bg-rematal-primary/5 rounded-lg p-6 text-center">
+            <div className="bg-rematal-primary/15 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Shield className="w-6 h-6 text-rematal-primary" />
             </div>
             <h3 className="font-bold mb-2">No Hidden Fees</h3>
             <p className="text-sm text-rematal-gray">Transparent payment process from start to finish</p>
