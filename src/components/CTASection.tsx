@@ -55,11 +55,11 @@ const CTASection = () => {
             <div className="md:w-2/5 bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
               
               <div className="space-y-3">
-                <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6 py-6 text-lg shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all w-full">
+                <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white text-[1em] rounded-full px-6 py-6 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all w-full">
                   Start Your Application <ArrowRight className="ml-2" />
                 </Button>
                 
-                <button className="text-white/90 hover:text-white font-medium flex items-center justify-center gap-2 px-6 py-2 transition-colors w-full">
+                <button className="text-white/90 hover:text-white font-light flex text-[0.8em] items-center justify-center gap-2 px-6 py-2 transition-colors w-full">
                   Learn how it works
                   <ArrowRight className="h-4 w-4" />
                 </button>

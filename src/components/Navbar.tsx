@@ -41,9 +41,7 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           <a href="#problem" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">Why Rematal</a>
-          <a href="#how-it-works" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">How It Works</a>
-          <a href="#perks" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">Benefits</a>
-          <a href="#categories" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">Categories</a>
+          <a href="#features" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">Features</a>
         </nav>
 
         <div className="hidden md:block">
@@ -81,25 +79,11 @@ const Navbar = () => {
               Why Rematal
             </a>
             <a 
-              href="#how-it-works" 
+              href="#features" 
               className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
               onClick={toggleMobileMenu}
             >
-              How It Works
-            </a>
-            <a 
-              href="#perks" 
-              className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
-              onClick={toggleMobileMenu}
-            >
-              Benefits
-            </a>
-            <a 
-              href="#categories" 
-              className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
-              onClick={toggleMobileMenu}
-            >
-              Categories
+              Features
             </a>
             <div className="pt-4">
               <Button 

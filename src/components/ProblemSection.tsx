@@ -1,6 +1,5 @@
 
 import { useInView } from 'react-intersection-observer';
-import { AlertTriangle, Clock, Unplug, DollarSign } from 'lucide-react';
 
 const ProblemCard = ({ 
   title, 
