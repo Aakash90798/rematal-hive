@@ -63,21 +63,21 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Navigation - improved positioning, z-index and styling */}
+      {/* Mobile Navigation - updated to make buttons full width */}
       {isMobileMenuOpen && (
         <div className="md:hidden fixed inset-0 z-[55] bg-white pt-20 overflow-y-auto flex flex-col">
           <div className="container-custom flex-1 flex flex-col">
-            <nav className="flex flex-col space-y-5 py-6">
+            <nav className="flex flex-col space-y-5 py-6 w-full">
               <a 
                 href="#problem" 
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark w-full text-center" 
+                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center" 
                 onClick={handleMobileNavClick}
               >
                 Why Rematal
               </a>
               <a 
                 href="#features" 
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark w-full text-center" 
+                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center" 
                 onClick={handleMobileNavClick}
               >
                 Features
