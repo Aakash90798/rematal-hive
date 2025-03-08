@@ -14,7 +14,7 @@ const FeaturesSection = () => {
   });
 
   return (
-    <section id="features" className="py-16 md:py-24 bg-gray-50">
+    <section id="features" className="py-16 md:py-20">
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 
@@ -32,7 +32,7 @@ const FeaturesSection = () => {
 
         <div className="mt-8">
           <Tabs defaultValue="workroom" className="w-full">
-            <TabsList className="w-full max-w-2xl mx-auto mb-8 h-auto flex flex-wrap justify-center gap-2 bg-gray-100 p-2 rounded-lg">
+            <TabsList className="w-full max-w-2xl mx-auto mb-8 h-auto flex flex-wrap justify-center gap-2 bg-gray-50 p-2">
               <TabsTrigger value="workroom" className="text-xs md:text-sm px-3 py-1.5 rounded-full data-[state=active]:bg-rematal-blue data-[state=active]:text-white">
                 Workroom
               </TabsTrigger>
@@ -50,7 +50,7 @@ const FeaturesSection = () => {
               </TabsTrigger>
             </TabsList>
             
-            <div className="mt-6 max-w-4xl mx-auto">
+            <div className="mt-6">
               <TabsContent value="workroom">
                 <WorkroomFeature />
               </TabsContent>
