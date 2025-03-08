@@ -26,7 +26,7 @@ const ProblemCard = ({
         <div className={`shrink-0 p-3 rounded-full ${color.replace('border-l-4', 'bg')}/10`}>
           <span className="text-3xl max-md:text-2xl">{emoji}</span>
         </div>
-        <p className="text-lg font-medium text-rematal-dark">{title}</p>
+        <p className="text-lg max-sm:text-base font-medium text-rematal-dark">{title}</p>
       </div>
     </div>
   );
@@ -76,12 +76,12 @@ const ProblemSection = () => {
           
           <h2 
             ref={ref}
-            className={`text-4xl md:text-5xl font-bold mb-6 transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
+            className={`text-4xl md:text-5xl max-sm:text-3xl font-bold mb-6 transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
           >
             The Freelancer's <span className="text-gradient font-extrabold">Dilemma</span>
           </h2>
           
-          <p className={`text-xl text-rematal-gray transition-all duration-700 delay-100 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+          <p className={`text-xl max-sm:text-base text-rematal-gray transition-all duration-700 delay-100 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
             If you're nodding your head to these pain points, you're not alone.
             <br />Every D2C freelancer in India has been there.
           </p>

@@ -74,16 +74,16 @@ const VerificationProcess = () => {
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-rematal-blue/5 rounded-full translate-x-1/2 translate-y-1/2 blur-3xl"></div>
 
       <div className="container-custom relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div>
             <div
               ref={ref}
-              className={`transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
+              className={`transition-all duration-700 max-md:text-center ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
             >
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-8 max-md:w-fit mx-auto">
                 Simple <span className="text-gradient bg-gradient-to-r from-rematal-primary to-rematal-blue">Verification</span> Process
               </h2>
-              <p className="text-base text-rematal-gray transition-all duration-700 delay-100 mb-10 leading-relaxed max-w-xl">
+              <p className="text-base text-rematal-gray transition-all duration-700 delay-100 mb-10 leading-relaxed max-w-xl max-md:mx-auto max-md:text-center">
                 Get verified and start connecting with quality D2C brands in India. Our simple 3-step process ensures you're matched with projects that align with your expertise.
               </p>
               <Button

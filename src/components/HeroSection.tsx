@@ -20,17 +20,16 @@ const HeroSection = () => {
       <div className="absolute top-32 -right-32 w-64 h-64 bg-rematal-light-purple rounded-full filter blur-3xl opacity-50 z-0"></div>
       <div className="absolute bottom-32 -left-32 w-64 h-64 bg-rematal-light-green rounded-full filter blur-3xl opacity-50 z-0"></div>
 
-      <div className="container-custom relative z-10">
+      <div className="container-custom relative z-10 ">
         <div className="max-w-4xl mx-auto text-center">
-          <div className={`inline-flex items-center bg-white border border-gray-400 rounded-full px-4 py-2 mb-8 shadow-sm transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+          <div className={`inline-flex items-center bg-white border border-gray-300 rounded-full px-4 py-2 mb-4 shadow-sm transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
             <span className="mx-2 text-sm font-medium">India's First D2C Talent Marketplace</span>
           </div>
-
-          <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-16 mt-6 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+          <h1 className={`text-[38px] md:text-5xl lg:text-6xl font-bold mb-16 mt-4 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
             Where D2C talent meets <span className="text-gradient">quality clients</span>
           </h1>
 
-          <p className={`text-2xl max-md:text-xl max-sm:text-lg text-rematal-gray mb-16 mt-12 max-w-2xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+          <p className={`text-2xl max-md:text-xl max-sm:text-lg text-rematal-gray mb-16 mt-12 max-w-3xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
             Get verified. Connect with top D2C brands. Elevate your career.
           </p>
 
