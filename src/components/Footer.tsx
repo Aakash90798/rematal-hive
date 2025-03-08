@@ -16,7 +16,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center space-x-2">
             <span className="text-xl font-display font-bold text-rematal-dark">Rematal</span>
-            <div className="h-6 w-6 rounded-full bg-rematal-orange flex items-center justify-center">
+            <div className="h-6 w-6 rounded-full bg-rematal-primary flex items-center justify-center">
               <span className="text-white font-bold text-xs">R</span>
             </div>
           </div>

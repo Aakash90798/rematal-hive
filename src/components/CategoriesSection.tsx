@@ -39,9 +39,9 @@ const CategoriesSection = () => {
       id: "design",
       title: "Design",
       icon: <PenTool className="h-5 w-5" />,
-      color: "text-rematal-orange",
+      color: "text-rematal-primary",
       hoverColor: "group-hover:text-orange-600",
-      bgColor: "bg-rematal-orange/10",
+      bgColor: "bg-rematal-primary/10",
       activeBgColor: "bg-orange-100",
       borderColor: "border-orange-200",
       skills: ["Brand Identity", "UI/UX Design", "Product Photography", "Motion Graphics"]

@@ -17,7 +17,7 @@ const EscrowPayments = () => {
       <div className="text-center mb-8">
         <h2 className="text-2xl md:text-3xl font-bold mb-4">Guaranteed Payment <span className="text-gradient">Protection</span></h2>
         <p className="text-base text-rematal-gray max-w-2xl mx-auto">No more payment anxiety. Our upcoming escrow system ensures you'll always get paid for completed work.</p>
-        <div className="inline-block bg-gradient-to-r from-rematal-orange to-rematal-blue text-white text-xs font-bold px-3 py-1 rounded-full mt-4">
+        <div className="inline-block bg-gradient-to-r from-rematal-primary to-rematal-blue text-white text-xs font-bold px-3 py-1 rounded-full mt-4">
           COMING SOON
         </div>
       </div>

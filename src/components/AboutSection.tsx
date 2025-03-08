@@ -40,8 +40,8 @@ const AboutSection = () => {
                     <div className="text-4xl font-bold text-rematal-dark">4</div>
                     <div className="text-sm text-rematal-dark mt-2">Expert Categories</div>
                   </div>
-                  <div className="bg-rematal-orange/10 p-6 rounded-xl">
-                    <div className="text-4xl font-bold text-rematal-orange">24/7</div>
+                  <div className="bg-rematal-primary/10 p-6 rounded-xl">
+                    <div className="text-4xl font-bold text-rematal-primary">24/7</div>
                     <div className="text-sm text-rematal-dark mt-2">Project Tracking</div>
                   </div>
                 </div>
@@ -72,7 +72,7 @@ const AboutSection = () => {
               With 1+ year of D2C experience? You've found your professional home.
             </p>
 
-            <Button className="bg-rematal-orange hover:bg-rematal-orange/90 text-white rounded-full px-6">
+            <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6">
               Join Rematal Today
             </Button>
           </div>

@@ -33,7 +33,7 @@ const Navbar = () => {
       <div className="container-custom flex items-center justify-between">
         <a href="/" className="flex items-center space-x-2">
           <span className="text-xl font-display font-bold text-rematal-dark">Rematal</span>
-          <div className="h-6 w-6 rounded-full bg-rematal-orange flex items-center justify-center">
+          <div className="h-6 w-6 rounded-full bg-rematal-primary flex items-center justify-center">
             <span className="text-white font-bold text-xs">R</span>
           </div>
         </a>
@@ -47,7 +47,7 @@ const Navbar = () => {
         </nav>
 
         <div className="hidden md:block">
-          <Button className="bg-rematal-orange hover:bg-rematal-orange/90 text-white rounded-full px-6">Apply Now</Button>
+          <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6">Apply Now</Button>
         </div>
 
         {/* Mobile menu button */}
@@ -103,7 +103,7 @@ const Navbar = () => {
             </a>
             <div className="pt-4">
               <Button 
-                className="bg-rematal-orange hover:bg-rematal-orange/90 text-white rounded-full w-full py-6 text-lg" 
+                className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg" 
                 onClick={toggleMobileMenu}
               >
                 Apply Now

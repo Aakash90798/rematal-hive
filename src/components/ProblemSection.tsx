@@ -43,7 +43,7 @@ const ProblemSection = () => {
     {
       title: "Chasing clients for payments that never seem to arrive?",
       icon: DollarSign,
-      color: "border-l-rematal-orange"
+      color: "border-l-rematal-primary"
     },
     {
       title: "Tired of clients who vanish mid-project without notice?",
@@ -67,7 +67,7 @@ const ProblemSection = () => {
       {/* Background elements for visual interest */}
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-gray-50 to-white"></div>
       <div className="absolute -top-20 -right-20 w-96 h-96 bg-purple-500/5 rounded-full filter blur-3xl"></div>
-      <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-rematal-orange/5 rounded-full filter blur-3xl"></div>
+      <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-rematal-primary/5 rounded-full filter blur-3xl"></div>
       
       <div className="container-custom relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-16">
@@ -103,7 +103,7 @@ const ProblemSection = () => {
         {/* Call to action for added emphasis */}
         <div className={`text-center mt-12 transition-all duration-700 delay-[600ms] ${inView ? 'opacity-100' : 'opacity-0'}`}>
           <p className="text-lg text-rematal-dark font-medium">
-            Ready to leave these problems behind? <span className="text-rematal-orange">That's why we built Rematal.</span>
+            Ready to leave these problems behind? <span className="text-rematal-primary">That's why we built Rematal.</span>
           </p>
         </div>
       </div>

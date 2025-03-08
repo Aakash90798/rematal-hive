@@ -26,7 +26,7 @@ const StepCard = ({
       className={`flex transition-all duration-700 ${delay} ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
     >
       <div className="mr-4 flex flex-col items-center">
-        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-rematal-orange text-white font-bold text-lg">
+        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-rematal-primary text-white font-bold text-lg">
           {number}
         </div>
         {number < 6 && <div className="w-0.5 h-full bg-gray-200 mt-2"></div>}

@@ -32,7 +32,7 @@ const Index = () => {
       {isLoading ? (
         <div className="fixed inset-0 bg-white flex items-center justify-center z-50">
           <div className="flex flex-col items-center">
-            <div className="h-12 w-12 rounded-full border-4 border-rematal-orange/30 border-t-rematal-orange animate-spin mb-4"></div>
+            <div className="h-12 w-12 rounded-full border-4 border-rematal-primary/30 border-t-rematal-primary animate-spin mb-4"></div>
             <span className="text-lg font-display font-medium">Loading Rematal...</span>
           </div>
         </div>

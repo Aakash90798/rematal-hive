@@ -41,7 +41,7 @@ const HeroSection = () => {
           </p>
 
           <div className={`flex flex-col sm:flex-row justify-center items-center gap-4 mb-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-            <Button className="bg-rematal-orange hover:bg-rematal-orange/90 text-white rounded-full px-6 py-6 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full sm:w-auto">
+            <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6 py-6 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full sm:w-auto">
               Join as a Freelancer <ArrowRight size={16} className="ml-2" />
             </Button>
             <Button variant="outline" className="border-gray-200 hover:bg-gray-50 rounded-full px-6 py-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all w-full sm:w-auto">

@@ -68,7 +68,7 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				rematal: {
-					"orange": "#FF7A51",
+					"primary": "#00bf63",
 					"blue": "#4172FF",
 					"light-purple": "#F0EEFF",
 					"green": "#10B981",
