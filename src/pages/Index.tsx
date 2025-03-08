@@ -4,11 +4,10 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ProblemSection from "@/components/ProblemSection";
 import AboutSection from "@/components/AboutSection";
-import HowItWorksSection from "@/components/HowItWorksSection";
-import PerksSection from "@/components/PerksSection";
-import CategoriesSection from "@/components/CategoriesSection";
+import FeaturesSection from "@/components/features/FeaturesSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
+import "../styles/animations.css";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -44,9 +43,7 @@ const Index = () => {
             <HeroSection />
             <ProblemSection />
             <AboutSection />
-            <HowItWorksSection />
-            <PerksSection />
-            <CategoriesSection />
+            <FeaturesSection />
             <CTASection />
           </main>
           <Footer />
