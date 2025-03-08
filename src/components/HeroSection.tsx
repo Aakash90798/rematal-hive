@@ -14,7 +14,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <div className="relative pt-32 pb-20 overflow-hidden min-h-[80vh] flex flex-col justify-center">
+    <div className="relative pt-32 pb-20 overflow-hidden min-h-[80vh] flex flex-col justify-center mt-[60px]">
       {/* Background elements */}
       <div className="absolute inset-0 bg-grid-pattern opacity-30 z-0"></div>
       <div className="absolute top-32 -right-32 w-64 h-64 bg-rematal-light-purple rounded-full filter blur-3xl opacity-50 z-0"></div>
