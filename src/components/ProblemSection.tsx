@@ -40,23 +40,23 @@ const ProblemSection = () => {
   
   const problems = [
     {
+      title: "Wasting hours finding new clients everytime?",
+      emoji: "👥",
+      color: "border-l-rematal-primary"
+    },
+    {
       title: "Chasing clients for payments that never seem to arrive?",
-      emoji: "💰", // Money-related issue
+      emoji: "💰",
       color: "border-l-rematal-primary"
     },
     {
       title: "Tired of clients who vanish mid-project without notice?",
-      emoji: "❌", // Ghosting clients
-      color: "border-l-rematal-primary"
-    },
-    {
-      title: "Exhausted from rebuilding trust with each new client?",
-      emoji: "🤝", // Trust and reliability
+      emoji: "❌",
       color: "border-l-rematal-primary"
     },
     {
       title: "Frustrated competing with low-quality freelancers who undercut rates?",
-      emoji: "⚖️", // Fair competition and pricing
+      emoji: "⚖️",
       color: "border-l-rematal-primary"
     }
  ];
@@ -83,7 +83,6 @@ const ProblemSection = () => {
           
           <p className={`text-xl max-sm:text-base text-rematal-gray transition-all duration-700 delay-100 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
             If you're nodding your head to these pain points, you're not alone.
-            <br />Every D2C freelancer in India has been there.
           </p>
         </div>
 

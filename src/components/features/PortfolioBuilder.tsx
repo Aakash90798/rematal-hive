@@ -1,6 +1,6 @@
 
 import { useInView } from 'react-intersection-observer';
-import { Image, Layout, Eye } from 'lucide-react';
+import { Image, Layout, Eye, Link } from 'lucide-react';
 
 const PortfolioBuilder = () => {
   const { ref, inView } = useInView({
@@ -22,10 +22,10 @@ const PortfolioBuilder = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-rematal-light-purple/45 rounded-lg p-6 text-center">
             <div className="bg-rematal-blue/15 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Layout className="w-6 h-6 text-rematal-blue" />
+              <Link className="w-6 h-6 text-rematal-blue" />
             </div>
-            <h3 className="font-bold mb-2">Custom Templates</h3>
-            <p className="text-sm text-rematal-gray">Choose from elegant, customizable portfolio templates</p>
+            <h3 className="font-bold mb-2">Share Anywhere</h3>
+            <p className="text-sm text-rematal-gray">No need to build websites, we build your public landing page</p>
           </div>
           
           <div className="bg-rematal-light-purple/45 rounded-lg p-6 text-center">
