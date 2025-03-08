@@ -47,6 +47,7 @@ const Navbar = () => {
         <nav className="hidden sm:flex items-center space-x-8">
           <a href="#problem" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">Why Rematal</a>
           <a href="#features" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">Features</a>
+          <a href="#process" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">Process</a>
           <a href="#faq" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">FAQs</a>
         </nav>
 
@@ -81,6 +82,13 @@ const Navbar = () => {
                 onClick={handleMobileNavClick}
               >
                 Features
+              </a>
+              <a 
+                href="#process" 
+                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center" 
+                onClick={handleMobileNavClick}
+              >
+                Process
               </a>
               <a 
                 href="#faq" 

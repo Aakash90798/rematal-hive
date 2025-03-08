@@ -26,15 +26,15 @@ const HeroSection = () => {
             <span className="mx-2 text-sm font-medium">India's First D2C Talent Marketplace</span>
           </div>
 
-          <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+          <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-16 mt-6 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
             Where D2C talent meets <span className="text-gradient">quality clients</span>
           </h1>
 
-          <p className={`text-lg text-rematal-gray mb-8 max-w-2xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+          <p className={`text-2xl max-md:text-xl max-sm:text-lg text-rematal-gray mb-16 mt-12 max-w-2xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
             Get verified. Connect with top D2C brands. Elevate your career.
           </p>
 
-          <div className={`flex flex-col sm:flex-row justify-center items-center gap-4 mb-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+          <div className={`flex flex-col sm:flex-row justify-center items-center gap-4 mb-12 mt-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
             <Button variant="outline" className="border-gray-200 hover:bg-gray-50 text-[1em] rounded-full px-6 py-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all w-full sm:w-auto">
               Looking to Hire Talent
             </Button>
@@ -51,11 +51,11 @@ const HeroSection = () => {
             </div>
             <div className="flex items-center text-rematal-gray">
               <CheckCircle size={16} className="text-rematal-green mr-2" />
-              <span>Guaranteed payment via escrow</span>
+              <span>Comprehensive project tools</span>
             </div>
             <div className="flex items-center text-rematal-gray">
               <CheckCircle size={16} className="text-rematal-green mr-2" />
-              <span>Comprehensive project tools</span>
+              <span>Guaranteed payment via escrow</span>
             </div>
           </div>
         </div>
