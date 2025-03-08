@@ -49,7 +49,7 @@ const Navbar = () => {
         {/* Mobile menu button */}
         <button 
           onClick={toggleMobileMenu} 
-          className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-sm text-rematal-dark"
+          className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-sm text-rematal-dark z-50"
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
         >
           {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -58,40 +58,33 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-white pt-20 overflow-y-auto">
-          <div className="absolute top-4 right-4 p-2">
-            <button 
-              onClick={toggleMobileMenu}
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 text-rematal-dark"
-              aria-label="Close menu"
-            >
-              <X size={20} />
-            </button>
-          </div>
-          <nav className="container-custom flex flex-col space-y-5 py-6">
-            <a 
-              href="#problem" 
-              className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
-              onClick={toggleMobileMenu}
-            >
-              Why Rematal
-            </a>
-            <a 
-              href="#features" 
-              className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
-              onClick={toggleMobileMenu}
-            >
-              Features
-            </a>
-            <div className="pt-4">
-              <Button 
-                className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg" 
+        <div className="md:hidden fixed inset-0 z-40 bg-white pt-20 overflow-y-auto flex flex-col">
+          <div className="container-custom flex-1 flex flex-col">
+            <nav className="flex flex-col space-y-5 py-6">
+              <a 
+                href="#problem" 
+                className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
                 onClick={toggleMobileMenu}
               >
-                Apply Now
-              </Button>
-            </div>
-          </nav>
+                Why Rematal
+              </a>
+              <a 
+                href="#features" 
+                className="p-3 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark flex justify-between items-center" 
+                onClick={toggleMobileMenu}
+              >
+                Features
+              </a>
+              <div className="pt-4">
+                <Button 
+                  className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg" 
+                  onClick={toggleMobileMenu}
+                >
+                  Apply Now
+                </Button>
+              </div>
+            </nav>
+          </div>
         </div>
       )}
     </header>
