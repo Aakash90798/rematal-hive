@@ -63,28 +63,28 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Navigation - improved positioning, z-index and styling */}
+      {/* Mobile Navigation - improved positioning, z-index and styling to match design */}
       {isMobileMenuOpen && (
         <div className="md:hidden fixed inset-0 z-[55] bg-white pt-20 overflow-y-auto flex flex-col">
-          <div className="container-custom flex-1 flex flex-col">
-            <nav className="flex flex-col space-y-5 py-6">
+          <div className="container-custom flex-1 flex flex-col items-center justify-center">
+            <nav className="flex flex-col space-y-6 py-6 w-full max-w-[280px]">
               <a 
                 href="#problem" 
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark w-full text-center" 
+                className="py-4 px-6 rounded-full bg-gray-50 text-center text-lg font-medium text-rematal-dark w-full"
                 onClick={handleMobileNavClick}
               >
                 Why Rematal
               </a>
               <a 
                 href="#features" 
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark w-full text-center" 
+                className="py-4 px-6 rounded-full bg-gray-50 text-center text-lg font-medium text-rematal-dark w-full"
                 onClick={handleMobileNavClick}
               >
                 Features
               </a>
               <div className="pt-4 w-full">
                 <Button 
-                  className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg" 
+                  className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg"
                   onClick={handleMobileNavClick}
                 >
                   Apply Now
