@@ -13,13 +13,13 @@ type FAQItemProps = {
 
 const FAQItem = ({ question, answer, isOpen, toggle }: FAQItemProps) => {
   return (
-    <div className="border-b border-gray-200 last:border-0">
+    <div className="border-b border-gray-200 last:border-0 max-w-4xl px-3">
       <button
         onClick={toggle}
         className="flex w-full items-center justify-between py-5 text-left focus:outline-none"
       >
-        <h3 className="text-base md:text-lg font-medium text-rematal-dark">{question}</h3>
-        <div className="flex items-center justify-center w-6 h-6 rounded-full border border-gray-300 bg-white ml-4 shrink-0 transition-transform">
+        <h3 className="font-sans md:text-lg font-medium text-rematal-dark">{question}</h3>
+        <div className="flex items-center justify-center w-6 h-6 rounded-full bg-white ml-4 shrink-0 transition-transform">
           {isOpen ? (
             <X size={14} className="text-rematal-dark" />
           ) : (
@@ -75,18 +75,18 @@ const FAQSection = () => {
   };
 
   return (
-    <section id="faq" className="py-16 md:py-24 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="py-16 md:py-24 bg-white px-4">
+      <div className="mx-auto max-w-4xl">
         <div 
           ref={ref}
-          className={`max-w-3xl mx-auto text-center mb-12 transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
+          className={`mx-auto text-center mb-12 transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
         >
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 font-display">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6">
             Frequently Asked Questions
           </h2>
         </div>
 
-        <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-sm border border-gray-100">
+        <div className="mx-auto bg-white rounded-xl shadow-sm border border-gray-100">
           {faqData.map((faq, index) => (
             <FAQItem
               key={index}

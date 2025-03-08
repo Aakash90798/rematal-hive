@@ -31,16 +31,17 @@ const HeroSection = () => {
           </h1>
 
           <p className={`text-lg text-rematal-gray mb-8 max-w-2xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-          Get verified. Connect with top D2C brands. Elevate your career.
+            Get verified. Connect with top D2C brands. Elevate your career.
           </p>
 
           <div className={`flex flex-col sm:flex-row justify-center items-center gap-4 mb-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-            <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white text-[1em] rounded-full px-6 py-6 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full sm:w-auto">
-              Join as a Freelancer <ArrowRight size={16} className="ml-2" />
-            </Button>
             <Button variant="outline" className="border-gray-200 hover:bg-gray-50 text-[1em] rounded-full px-6 py-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all w-full sm:w-auto">
               Looking to Hire Talent
             </Button>
+            <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white text-[1em] rounded-full px-6 py-6 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full sm:w-auto">
+              Join as a Freelancer <ArrowRight size={16} className="ml-2" />
+            </Button>
+
           </div>
 
           <div className={`flex flex-col md:flex-row items-center justify-center gap-6 text-sm transition-all duration-700 delay-400 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>

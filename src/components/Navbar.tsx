@@ -36,7 +36,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white border-b border-gray-200 shadow-md py-4' : 'bg-transparent py-5'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white border-b border-gray-200 shadow-md max-sm:py-1 py-2' : 'bg-transparent max-sm:py-2 py-3'}`}>
       <div className="container-custom flex items-center justify-between">
         <a href="/" className="flex items-center">
           <span className="text-2xl font-display font-medium text-rematal-dark">rematal</span>
@@ -44,19 +44,19 @@ const Navbar = () => {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden sm:flex items-center space-x-8">
           <a href="#problem" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">Why Rematal</a>
           <a href="#features" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">Features</a>
+          <a href="#faq" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">FAQs</a>
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden sm:block">
           <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6">Apply Now</Button>
         </div>
 
-        {/* Mobile menu button - increased z-index to ensure it's always clickable */}
         <button 
           onClick={toggleMobileMenu} 
-          className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-sm text-rematal-dark z-[60]"
+          className="sm:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white text-rematal-dark z-[60]"
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
         >
           {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -81,6 +81,13 @@ const Navbar = () => {
                 onClick={handleMobileNavClick}
               >
                 Features
+              </a>
+              <a 
+                href="#faq" 
+                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center" 
+                onClick={handleMobileNavClick}
+              >
+                FAQs
               </a>
               <div className="pt-4 w-full">
                 <Button 

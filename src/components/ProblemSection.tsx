@@ -24,7 +24,7 @@ const ProblemCard = ({
     >
       <div className="flex items-start space-x-4">
         <div className={`shrink-0 p-3 rounded-full ${color.replace('border-l-4', 'bg')}/10`}>
-          <span className="text-3xl">{emoji}</span>
+          <span className="text-3xl max-md:text-2xl">{emoji}</span>
         </div>
         <p className="text-lg font-medium text-rematal-dark">{title}</p>
       </div>
@@ -47,17 +47,17 @@ const ProblemSection = () => {
     {
       title: "Tired of clients who vanish mid-project without notice?",
       emoji: "❌", // Ghosting clients
-      color: "border-l-black/40"
+      color: "border-l-rematal-primary"
     },
     {
       title: "Exhausted from rebuilding trust with each new client?",
       emoji: "🤝", // Trust and reliability
-      color: "border-l-purple-500"
+      color: "border-l-rematal-primary"
     },
     {
       title: "Frustrated competing with low-quality freelancers who undercut rates?",
       emoji: "⚖️", // Fair competition and pricing
-      color: "border-l-rematal-blue"
+      color: "border-l-rematal-primary"
     }
  ];
 

@@ -48,13 +48,6 @@ const EscrowPayments = () => {
             <p className="text-sm text-rematal-gray">Transparent payment process from start to finish</p>
           </div>
         </div>
-        
-        <div className="mt-8 text-center">
-          <Button variant="outline" className="bg-white border-none shadow-sm hover:shadow hover:bg-white/90">
-            <AlertCircle className="w-4 h-4 mr-2" />
-            Notify me when available
-          </Button>
-        </div>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const WorkroomFeature = () => {
       className={`transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-8'}`}
     >
       <div className="text-center mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4">Comprehensive <span className="text-gradient">Workroom</span></h2>
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4">Comprehensive <span className="text-gradient">Workroom</span></h2>
         <p className="text-base text-rematal-gray max-w-2xl mx-auto">One central place for all project communication, files, and milestones.</p>
       </div>
       
