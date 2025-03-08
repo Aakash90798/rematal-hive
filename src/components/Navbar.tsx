@@ -45,10 +45,10 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden sm:flex items-center space-x-8">
-          <a href="#problem" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">Why Rematal</a>
-          <a href="#features" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">Features</a>
-          <a href="#process" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">Process</a>
-          <a href="#faq" className="text-rematal-dark/80 hover:text-rematal-dark font-medium transition-colors">FAQs</a>
+          <a href="#problem" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Why Rematal</a>
+          <a href="#features" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Features</a>
+          <a href="#process" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Process</a>
+          <a href="#faq" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">FAQs</a>
         </nav>
 
         <div className="hidden sm:block">

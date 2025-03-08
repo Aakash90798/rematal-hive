@@ -86,18 +86,18 @@ const VerificationProcess = () => {
                 Get verified and start connecting with quality D2C brands in India. Our simple 3-step process ensures you're matched with projects that align with your expertise.
               </p>
               <Button
-                className="bg-gradient-to-r from-rematal-primary to-rematal-blue hover:from-rematal-primary/90 hover:to-rematal-blue/90 text-white rounded-full px-8 py-7 max-md:px-7 max-md:py-6 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all text-lg max-sm:text-base"
+                className="bg-gradient-to-r from-rematal-primary to-rematal-blue hover:from-rematal-primary/90 hover:to-rematal-blue/90 text-white rounded-full px-8 py-7 max-md:px-7 max-md:py-6 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all text-lg max-sm:text-base max-sm:w-full"
               >
                 Start your application
               </Button>
-              <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 text-center">
+              <div className="mt-16 grid grid-cols-2 max-sm:gap-5 gap-8 text-center">
                 <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 shadow-lg">
-                  <p className="text-2xl font-bold bg-gradient-to-r from-rematal-primary to-rematal-blue bg-clip-text text-transparent mb-4">875+</p>
-                  <p className="text-rematal-gray text-lg">Freelancers Onboarded</p>
+                  <p className="text-2xl max-sm:text-xl font-bold bg-gradient-to-r from-rematal-primary to-rematal-blue bg-clip-text text-transparent mb-4">875+</p>
+                  <p className="text-rematal-gray text-lg max-sm:text-base">Freelancers Onboarded</p>
                 </div>
                 <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-lg">
-                  <p className="text-2xl font-bold bg-gradient-to-r from-rematal-primary to-rematal-blue bg-clip-text text-transparent mb-4">100%</p>
-                  <p className="text-rematal-gray text-lg">Money-Safety</p>
+                  <p className="text-2xl max-sm:text-xl font-bold bg-gradient-to-r from-rematal-primary to-rematal-blue bg-clip-text text-transparent mb-4">100%</p>
+                  <p className="text-rematal-gray text-lg max-sm:text-base">Money-Safety</p>
                 </div>
               </div>
             </div>

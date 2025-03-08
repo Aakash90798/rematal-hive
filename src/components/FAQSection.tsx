@@ -13,12 +13,12 @@ type FAQItemProps = {
 
 const FAQItem = ({ question, answer, isOpen, toggle }: FAQItemProps) => {
   return (
-    <div className="border-b border-gray-200 last:border-0 max-w-4xl px-3">
+    <div className="border-b border-gray-200 last:border-0 max-w-4xl px-3 hover:bg-rematal-primary/5 transition-all duration-300">
       <button
         onClick={toggle}
         className="flex w-full items-center justify-between py-5 text-left focus:outline-none"
       >
-        <h3 className="font-sans md:text-lg font-medium text-rematal-dark">{question}</h3>
+        <h3 className="font-sans md:text-lg font-medium text-rematal-dark ">{question}</h3>
         <div className="flex items-center justify-center w-6 h-6 rounded-full bg-white ml-4 shrink-0 transition-transform">
           {isOpen ? (
             <X size={14} className="text-rematal-dark" />
