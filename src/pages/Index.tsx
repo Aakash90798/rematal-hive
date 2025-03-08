@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ProblemSection from "@/components/ProblemSection";
 import FeaturesSection from "@/components/features/FeaturesSection";
+import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import "../styles/animations.css";
@@ -24,6 +25,7 @@ const Index = () => {
             <HeroSection />
             <ProblemSection />
             <FeaturesSection />
+            <FAQSection />
             <CTASection />
           </main>
           <Footer />
