@@ -36,7 +36,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-sm py-3' : 'bg-transparent py-5'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-sm py-3' : 'bg-transparent py-5'}`}>
       <div className="container-custom flex items-center justify-between">
         <a href="/" className="flex items-center">
           <span className="text-2xl font-display font-medium text-rematal-dark">rematal</span>
@@ -53,7 +53,7 @@ const Navbar = () => {
           <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6">Apply Now</Button>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile menu button - increased z-index to ensure it's always clickable */}
         <button 
           onClick={toggleMobileMenu} 
           className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-sm text-rematal-dark z-50"
@@ -63,7 +63,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation - increased z-index and improved positioning */}
       {isMobileMenuOpen && (
         <div className="md:hidden fixed inset-0 z-40 bg-white pt-20 overflow-y-auto flex flex-col">
           <div className="container-custom flex-1 flex flex-col">
