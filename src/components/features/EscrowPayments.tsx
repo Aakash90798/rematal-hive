@@ -1,17 +1,13 @@
 
-import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Shield, Lock, AlertCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import EmailCollectionDialog from "../EmailCollectionDialog";
 
 const EscrowPayments = () => {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
-  
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <div 
@@ -54,22 +50,12 @@ const EscrowPayments = () => {
         </div>
         
         <div className="mt-8 text-center">
-          <Button 
-            variant="outline" 
-            className="bg-white border-none shadow-sm hover:shadow hover:bg-white/90"
-            onClick={() => setIsDialogOpen(true)}
-          >
+          <Button variant="outline" className="bg-white border-none shadow-sm hover:shadow hover:bg-white/90">
             <AlertCircle className="w-4 h-4 mr-2" />
             Notify me when available
           </Button>
         </div>
       </div>
-      
-      <EmailCollectionDialog 
-        open={isDialogOpen} 
-        onOpenChange={setIsDialogOpen} 
-        feature="Escrow Payments"
-      />
     </div>
   );
 };
