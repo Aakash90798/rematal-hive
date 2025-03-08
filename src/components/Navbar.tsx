@@ -105,7 +105,10 @@ const Navbar = () => {
               <div className="pt-4 w-full">
                 <Button
                   className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg"
-                  onClick={handleMobileNavClick}
+                  onClick={() => {
+                    handleMobileNavClick();
+                    window.open(APP_CONSTANTS.freelancerFormLink, '_blank', 'noopener,noreferrer');
+                  }}
                 >
                   Apply Now
                 </Button>
