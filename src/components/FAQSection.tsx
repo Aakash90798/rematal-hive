@@ -75,8 +75,8 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-white">
-      <div className="container-custom">
+    <section id="faq" className="py-16 md:py-24 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div 
           ref={ref}
           className={`max-w-3xl mx-auto text-center mb-12 transition-all duration-700 ${inView ? 'opacity-100' : 'opacity-0 translate-y-4'}`}
