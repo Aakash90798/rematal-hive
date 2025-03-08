@@ -2,6 +2,7 @@
 import { useInView } from 'react-intersection-observer';
 import { Pencil, Video, Rocket } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { APP_CONSTANTS } from '@/constants';
 
 interface VerificationStepProps {
   number: number;
@@ -92,7 +93,7 @@ const VerificationProcess = () => {
               </Button>
               <div className="mt-16 grid grid-cols-2 max-sm:gap-5 gap-8 text-center">
                 <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 shadow-lg">
-                  <p className="text-2xl max-sm:text-xl font-bold bg-gradient-to-r from-rematal-primary to-rematal-blue bg-clip-text text-transparent mb-4">875+</p>
+                  <p className="text-2xl max-sm:text-xl font-bold bg-gradient-to-r from-rematal-primary to-rematal-blue bg-clip-text text-transparent mb-4">{APP_CONSTANTS.currFreelancersCount}+</p>
                   <p className="text-rematal-gray text-lg max-sm:text-base">Freelancers Onboarded</p>
                 </div>
                 <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-lg">
