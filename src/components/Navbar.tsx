@@ -31,11 +31,9 @@ const Navbar = () => {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-sm py-3' : 'bg-transparent py-5'}`}>
       <div className="container-custom flex items-center justify-between">
-        <a href="/" className="flex items-center space-x-2">
-          <span className="text-xl font-display font-bold text-rematal-dark">Rematal</span>
-          <div className="h-6 w-6 rounded-full bg-rematal-primary flex items-center justify-center">
-            <span className="text-white font-bold text-xs">R</span>
-          </div>
+        <a href="/" className="flex items-center">
+          <span className="text-2xl font-display font-medium text-rematal-dark">rematal</span>
+          <span className="text-2xl font-display font-medium text-rematal-primary">*</span>
         </a>
 
         {/* Desktop Navigation */}
