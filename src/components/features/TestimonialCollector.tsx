@@ -1,6 +1,6 @@
 
 import { useInView } from 'react-intersection-observer';
-import { MessageCircle, Star, Quote } from 'lucide-react';
+import { MessageCircle, Star, Quote, Handshake } from 'lucide-react';
 
 const TestimonialCollector = () => {
   const { ref, inView } = useInView({
@@ -22,7 +22,7 @@ const TestimonialCollector = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-rematal-light-purple/45 rounded-lg p-6 text-center">
             <div className="bg-rematal-blue/15 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <MessageCircle className="w-6 h-6 text-rematal-blue" />
+              <Quote className="w-6 h-6 text-rematal-blue" />
             </div>
             <h3 className="font-bold mb-2">Feedback Requests</h3>
             <p className="text-sm text-rematal-gray">Automatically request feedback after completed projects</p>
@@ -38,7 +38,7 @@ const TestimonialCollector = () => {
           
           <div className="bg-rematal-light-purple/45 rounded-lg p-6 text-center">
             <div className="bg-rematal-blue/15 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Quote className="w-6 h-6 text-rematal-blue" />
+              <Handshake className="w-6 h-6 text-rematal-blue" />
             </div>
             <h3 className="font-bold mb-2">Trust Building</h3>
             <p className="text-sm text-rematal-gray">Establish credibility with potential clients</p>

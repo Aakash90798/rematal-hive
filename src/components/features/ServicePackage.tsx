@@ -1,6 +1,6 @@
 
 import { useInView } from 'react-intersection-observer';
-import { Package, Tag, Layers } from 'lucide-react';
+import { Package, Tag, Layers, Timer, TimerReset, Calendar, CalendarClock, IndianRupee } from 'lucide-react';
 
 const ServicePackage = () => {
   const { ref, inView } = useInView({
@@ -24,8 +24,8 @@ const ServicePackage = () => {
             <div className="bg-rematal-primary/15 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
               <Package className="w-6 h-6 text-rematal-primary" />
             </div>
-            <h3 className="font-bold mb-2">Tiered Packages</h3>
-            <p className="text-sm text-rematal-gray">Structure services into basic, standard, and premium tiers</p>
+            <h3 className="font-bold mb-2">Productize Services</h3>
+            <p className="text-sm text-rematal-gray">Structure services into packages for more scalabitlity</p>
           </div>
           
           <div className="bg-rematal-primary/5 rounded-lg p-6 text-center">
@@ -38,10 +38,10 @@ const ServicePackage = () => {
           
           <div className="bg-rematal-primary/5 rounded-lg p-6 text-center">
             <div className="bg-rematal-primary/15 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Layers className="w-6 h-6 text-rematal-primary" />
+              <IndianRupee className="w-6 h-6 text-rematal-primary" />
             </div>
-            <h3 className="font-bold mb-2">Delivery Timeline</h3>
-            <p className="text-sm text-rematal-gray">Specify clear deliverables and turnaround times</p>
+            <h3 className="font-bold mb-2">Effortless Sales</h3>
+            <p className="text-sm text-rematal-gray">No need for endless sales calls just share your package link</p>
           </div>
         </div>
       </div>
