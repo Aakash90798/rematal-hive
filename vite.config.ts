@@ -4,7 +4,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: mode === "production" ? "/rematal-hive/" : "/", // Use '/' locally, but '/rematal-hive/' on GitHub Pages
+  base: "/",
   server: {
     host: "::",
     port: 8080,
