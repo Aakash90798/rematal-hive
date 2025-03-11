@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import bgImage from '../assets/bg-checkboxes.png';
 import { APP_CONSTANTS } from '@/constants';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -41,10 +42,8 @@ const HeroSection = () => {
               Looking to Hire Talent
             </Button> */}
             <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white text-[1em] rounded-full px-6 py-6 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full sm:w-auto"
-            onClick={() =>
-              window.open(APP_CONSTANTS.freelancerFormLink, '_blank')
-            }>
-              Join as a Freelancer <ArrowRight size={16} className="ml-2" />
+            asChild>
+              <Link to="/apply">Join as a Freelancer <ArrowRight size={16} className="ml-2" /></Link>
             </Button>
 
           </div>
