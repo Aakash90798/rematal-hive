@@ -1,3 +1,4 @@
+
 import { supabase } from '@/lib/supabase';
 import { ApplicationFormState, Niche, ServiceCategory, ServiceCategoryWithRelations, ServiceSubcategory, Tool, ReferralSource } from '@/types/form';
 
@@ -58,6 +59,15 @@ export async function fetchServiceCategories(): Promise<ServiceCategoryWithRelat
     }
     
     // Extract and map the subcategories and tools properly
+    // Console log the first item to understand its structure
+    if (subcategoriesData.length > 0) {
+      console.log('First subcategory item structure:', JSON.stringify(subcategoriesData[0], null, 2));
+    }
+    if (toolsData.length > 0) {
+      console.log('First tool item structure:', JSON.stringify(toolsData[0], null, 2));
+    }
+    
+    // Correctly map the nested data structure
     const subcategories: ServiceSubcategory[] = subcategoriesData.map(item => ({
       id: item.service_subcategories.id,
       name: item.service_subcategories.name
@@ -92,6 +102,11 @@ export async function fetchSubcategoriesForCategory(categoryId: string): Promise
     return [];
   }
   
+  // Log the first item to understand its structure
+  if (data.length > 0) {
+    console.log('Subcategory data structure:', JSON.stringify(data[0], null, 2));
+  }
+  
   // Properly extract and map the subcategories
   return data.map(item => ({
     id: item.service_subcategories.id,
@@ -111,6 +126,11 @@ export async function fetchToolsForCategory(categoryId: string): Promise<Tool[]>
   if (error) {
     console.error(`Error fetching tools for category ${categoryId}:`, error);
     return [];
+  }
+  
+  // Log the first item to understand its structure
+  if (data.length > 0) {
+    console.log('Tool data structure:', JSON.stringify(data[0], null, 2));
   }
   
   // Properly extract and map the tools
