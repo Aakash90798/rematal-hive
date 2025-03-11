@@ -1,14 +1,17 @@
 
 import { Button } from '@/components/ui/button';
 import { ApplicationFormState } from '@/types/form';
+import { useState } from 'react';
 
 interface YearsOfExperienceStepProps {
   formState: ApplicationFormState;
   updateFormState: (updates: Partial<ApplicationFormState>) => void;
-  onRejection: () => void;
+  onRejection: () => Promise<void>;
 }
 
 const YearsOfExperienceStep = ({ formState, updateFormState, onRejection }: YearsOfExperienceStepProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const experienceOptions = [
     { value: 'less than 1 yr', label: 'Less than 1 year' },
     { value: '1-3', label: '1-3 years' },
@@ -16,11 +19,13 @@ const YearsOfExperienceStep = ({ formState, updateFormState, onRejection }: Year
     { value: 'more than 5', label: 'More than 5 years' }
   ];
 
-  const handleSelect = (value: 'less than 1 yr' | '1-3' | '3-5' | 'more than 5') => {
+  const handleSelect = async (value: 'less than 1 yr' | '1-3' | '3-5' | 'more than 5') => {
     updateFormState({ yearsOfExperience: value });
     
     if (value === 'less than 1 yr') {
-      onRejection();
+      setIsLoading(true);
+      await onRejection();
+      setIsLoading(false);
     } else {
       updateFormState({ currentStep: 'niches' });
     }
@@ -39,6 +44,7 @@ const YearsOfExperienceStep = ({ formState, updateFormState, onRejection }: Year
           <Button
             key={option.value}
             type="button"
+            disabled={isLoading}
             className={
               formState.yearsOfExperience === option.value
                 ? "py-6 bg-rematal-primary hover:bg-rematal-primary/90 text-white text-lg justify-start px-6"

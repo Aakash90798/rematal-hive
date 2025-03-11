@@ -83,7 +83,7 @@ const Apply = () => {
   const handleRejection = async () => {
     if (formState.email) {
       // Mark the user as rejected in the database
-      await markUserAsRejected(formState.email);
+      await markUserAsRejected(formState);
     }
     
     // Navigate to rejection step

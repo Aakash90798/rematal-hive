@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { APP_CONSTANTS } from '@/constants';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,11 +54,9 @@ const Navbar = () => {
         </nav>
 
         <div className="hidden sm:block">
-          <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6"
-            onClick={() =>
-              window.open(APP_CONSTANTS.freelancerFormLink, '_blank')
-            }>
-            Apply Now</Button>
+          <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6">
+          <Link to="/apply">Apply Now</Link>
+          </Button>
         </div>
 
         <button

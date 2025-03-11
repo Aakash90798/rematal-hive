@@ -1,21 +1,28 @@
 
 import { Button } from '@/components/ui/button';
 import { ApplicationFormState } from '@/types/form';
+import { useState } from 'react';
 
 interface ExperienceCheckStepProps {
   formState: ApplicationFormState;
   updateFormState: (updates: Partial<ApplicationFormState>) => void;
-  onRejection: () => void;
+  onRejection: () => Promise<void>;
 }
 
 const ExperienceCheckStep = ({ formState, updateFormState, onRejection }: ExperienceCheckStepProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleYes = () => {
+    setIsLoading(true);
     updateFormState({ hasEcommerceExperience: true, currentStep: 'years-of-experience' });
+    setIsLoading(false);
   };
 
-  const handleNo = () => {
+  const handleNo = async () => {
+    setIsLoading(true);
     updateFormState({ hasEcommerceExperience: false });
-    onRejection();
+    await onRejection();
+    setIsLoading(false);
   };
 
   return (
@@ -32,6 +39,7 @@ const ExperienceCheckStep = ({ formState, updateFormState, onRejection }: Experi
           type="button"
           className="py-8 bg-rematal-primary hover:bg-rematal-primary/90 text-white text-lg"
           onClick={handleYes}
+          disabled={isLoading}
         >
           Yes
         </Button>
@@ -41,6 +49,7 @@ const ExperienceCheckStep = ({ formState, updateFormState, onRejection }: Experi
           className="py-8 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-800 text-lg"
           variant="outline"
           onClick={handleNo}
+          disabled={isLoading}
         >
           No
         </Button>

@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import bgImage from '../assets/bg-checkboxes.png';
-import { APP_CONSTANTS } from '@/constants';
 import { Link } from 'react-router-dom';
 
 const HeroSection = () => {

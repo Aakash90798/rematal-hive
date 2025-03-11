@@ -61,7 +61,8 @@ const PersonalInfoStep = ({ formState, updateFormState, onEmailCheck }: Personal
   
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Tell us a bit about yourself</h2>
+      <h2 className="text-2xl font-bold mb-2">Tell us a bit about yourself</h2>
+      <div className="text-base mb-6 text-rematal-primary">ℹ️ You can only fill this form once.</div>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
