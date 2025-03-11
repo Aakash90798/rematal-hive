@@ -32,7 +32,7 @@ export async function fetchServiceCategories(): Promise<ServiceCategoryWithRelat
   
   for (const category of categories) {
     // Fetch subcategories for this category
-    const { data: subcategories, error: subcategoriesError } = await supabase
+    const { data: subcategoriesData, error: subcategoriesError } = await supabase
       .from('service_category_subcategories')
       .select(`
         service_subcategories!inner(*)
@@ -45,7 +45,7 @@ export async function fetchServiceCategories(): Promise<ServiceCategoryWithRelat
     }
     
     // Fetch tools for this category
-    const { data: tools, error: toolsError } = await supabase
+    const { data: toolsData, error: toolsError } = await supabase
       .from('service_category_tools')
       .select(`
         tools!inner(*)
@@ -57,10 +57,21 @@ export async function fetchServiceCategories(): Promise<ServiceCategoryWithRelat
       continue;
     }
     
+    // Extract and map the subcategories and tools properly
+    const subcategories: ServiceSubcategory[] = subcategoriesData.map(item => ({
+      id: item.service_subcategories.id,
+      name: item.service_subcategories.name
+    }));
+    
+    const tools: Tool[] = toolsData.map(item => ({
+      id: item.tools.id,
+      name: item.tools.name
+    }));
+    
     result.push({
       ...category,
-      subcategories: subcategories.map(sub => sub.service_subcategories as ServiceSubcategory),
-      tools: tools.map(tool => tool.tools as Tool)
+      subcategories,
+      tools
     });
   }
   
@@ -81,8 +92,11 @@ export async function fetchSubcategoriesForCategory(categoryId: string): Promise
     return [];
   }
   
-  // Fix the type mapping here - extract the service_subcategories from each item
-  return data.map(item => item.service_subcategories as ServiceSubcategory);
+  // Properly extract and map the subcategories
+  return data.map(item => ({
+    id: item.service_subcategories.id,
+    name: item.service_subcategories.name
+  }));
 }
 
 // Fetch tools for a specific category
@@ -99,8 +113,11 @@ export async function fetchToolsForCategory(categoryId: string): Promise<Tool[]>
     return [];
   }
   
-  // Fix the type mapping here - extract the tools from each item
-  return data.map(item => item.tools as Tool);
+  // Properly extract and map the tools
+  return data.map(item => ({
+    id: item.tools.id,
+    name: item.tools.name
+  }));
 }
 
 // Fetch all referral sources
