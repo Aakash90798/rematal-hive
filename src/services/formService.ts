@@ -1,4 +1,3 @@
-
 import { supabase } from '@/lib/supabase';
 import { ApplicationFormState, Niche, ServiceCategory, ServiceCategoryWithRelations, ServiceSubcategory, Tool, ReferralSource } from '@/types/form';
 
@@ -60,8 +59,8 @@ export async function fetchServiceCategories(): Promise<ServiceCategoryWithRelat
     
     result.push({
       ...category,
-      subcategories: subcategories.map(sub => sub.service_subcategories),
-      tools: tools.map(tool => tool.tools)
+      subcategories: subcategories.map(sub => sub.service_subcategories as ServiceSubcategory),
+      tools: tools.map(tool => tool.tools as Tool)
     });
   }
   
@@ -82,7 +81,8 @@ export async function fetchSubcategoriesForCategory(categoryId: string): Promise
     return [];
   }
   
-  return data.map(item => item.service_subcategories);
+  // Fix the type mapping here - extract the service_subcategories from each item
+  return data.map(item => item.service_subcategories as ServiceSubcategory);
 }
 
 // Fetch tools for a specific category
@@ -99,7 +99,8 @@ export async function fetchToolsForCategory(categoryId: string): Promise<Tool[]>
     return [];
   }
   
-  return data.map(item => item.tools);
+  // Fix the type mapping here - extract the tools from each item
+  return data.map(item => item.tools as Tool);
 }
 
 // Fetch all referral sources
