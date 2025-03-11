@@ -31,7 +31,7 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
       <h2 className="text-2xl font-bold mb-6">Tell us a bit more about yourself</h2>
       
       <p className="text-gray-600 mb-8">
-        Since you've selected options that might need more context, please tell us a bit more about your skills and experience to help us understand your profile better.
+        Since you've selected options like "Let Rematal Decide/Others" that might need more context, please tell us a bit more about your skills, experience, tools to help us understand your profile better.
       </p>
       
       <FormField

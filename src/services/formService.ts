@@ -213,7 +213,8 @@ export async function submitApplication(formData: ApplicationFormState): Promise
         email: formData.email,
         mobile_no: formData.mobileNo,
         city: formData.city,
-        referral_source_id: formData.referralSourceId || null
+        referral_source_id: formData.referralSourceId || null,
+        user_type: 'EXPERT',
       })
       .select()
       .single();
