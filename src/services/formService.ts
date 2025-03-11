@@ -60,20 +60,20 @@ export async function fetchServiceCategories(): Promise<ServiceCategoryWithRelat
     
     // Extract and map the subcategories and tools properly
     // Console log the first item to understand its structure
-    if (subcategoriesData.length > 0) {
+    if (subcategoriesData && subcategoriesData.length > 0) {
       console.log('First subcategory item structure:', JSON.stringify(subcategoriesData[0], null, 2));
     }
-    if (toolsData.length > 0) {
+    if (toolsData && toolsData.length > 0) {
       console.log('First tool item structure:', JSON.stringify(toolsData[0], null, 2));
     }
     
     // Correctly map the nested data structure
-    const subcategories: ServiceSubcategory[] = subcategoriesData.map(item => ({
+    const subcategories: ServiceSubcategory[] = subcategoriesData.map((item: any) => ({
       id: item.service_subcategories.id,
       name: item.service_subcategories.name
     }));
     
-    const tools: Tool[] = toolsData.map(item => ({
+    const tools: Tool[] = toolsData.map((item: any) => ({
       id: item.tools.id,
       name: item.tools.name
     }));
@@ -103,12 +103,12 @@ export async function fetchSubcategoriesForCategory(categoryId: string): Promise
   }
   
   // Log the first item to understand its structure
-  if (data.length > 0) {
+  if (data && data.length > 0) {
     console.log('Subcategory data structure:', JSON.stringify(data[0], null, 2));
   }
   
   // Properly extract and map the subcategories
-  return data.map(item => ({
+  return data.map((item: any) => ({
     id: item.service_subcategories.id,
     name: item.service_subcategories.name
   }));
@@ -129,12 +129,12 @@ export async function fetchToolsForCategory(categoryId: string): Promise<Tool[]>
   }
   
   // Log the first item to understand its structure
-  if (data.length > 0) {
+  if (data && data.length > 0) {
     console.log('Tool data structure:', JSON.stringify(data[0], null, 2));
   }
   
   // Properly extract and map the tools
-  return data.map(item => ({
+  return data.map((item: any) => ({
     id: item.tools.id,
     name: item.tools.name
   }));
