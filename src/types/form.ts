@@ -1,4 +1,3 @@
-
 export type FormStep = 
   | 'personal-info'
   | 'experience-check'
@@ -23,22 +22,23 @@ export interface ApplicationFormState {
   city: string;
   
   // Experience
-  hasEcommerceExperience: boolean | null;
-  yearsOfExperience: 'less than 1 yr' | '1-3' | '3-5' | 'more than 5' | null;
+  hasExperience?: boolean;
+  yearsOfExperience?: string;
   
   // Skills and Experience
   selectedNicheIds: string[];
-  linkedinUrl: string;
-  portfolioUrl: string;
-  selectedServiceCategoryId: string;
+  linkedinUrl?: string;
+  portfolioUrl?: string;
+  selectedServiceCategoryId?: string;
   selectedSubcategoryIds: string[];
   selectedToolIds: string[];
   
   // Additional info if "other" is selected
-  additionalInfo: string;
+  additionalInfo?: string;
   
   // Referral source
-  referralSourceId: string;
+  referralSource?: string;
+  referralSourceId?: string;
   
   // Current step
   currentStep: FormStep;

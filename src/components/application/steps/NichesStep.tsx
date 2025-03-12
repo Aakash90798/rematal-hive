@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import FormField from '@/components/application/FormField';
 import MultiSelect from '@/components/application/MultiSelect';
 import { Button } from '@/components/ui/button';
 import { ApplicationFormState, Niche } from '@/types/form';
 import { fetchNiches } from '@/services/formService';
+import FormStepButtons from '@/components/application/FormStepButtons';
 
 interface NichesStepProps {
   formState: ApplicationFormState;
@@ -70,16 +70,12 @@ const NichesStep = ({ formState, updateFormState }: NichesStepProps) => {
         />
       </FormField>
       
-      <div className="mt-8">
-        <Button
-          type="button"
-          className="w-full bg-rematal-primary hover:bg-rematal-primary/90 text-white py-6"
-          onClick={handleContinue}
-          disabled={loading}
-        >
-          Continue →
-        </Button>
-      </div>
+      <FormStepButtons
+        onBack={() => updateFormState({ currentStep: 'years-of-experience' })}
+        onContinue={handleContinue}
+        loading={loading}
+        disabled={formState.selectedNicheIds.length === 0}
+      />
     </div>
   );
 };

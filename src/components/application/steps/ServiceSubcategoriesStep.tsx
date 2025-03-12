@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import FormField from '@/components/application/FormField';
 import MultiSelect from '@/components/application/MultiSelect';
 import { Button } from '@/components/ui/button';
 import { ApplicationFormState, ServiceSubcategory } from '@/types/form';
 import { fetchSubcategoriesForCategory } from '@/services/formService';
+import  FormStepButtons  from '@/components/application/FormStepButtons';
 
 interface ServiceSubcategoriesStepProps {
   formState: ApplicationFormState;
@@ -13,7 +13,8 @@ interface ServiceSubcategoriesStepProps {
 
 const ServiceSubcategoriesStep = ({ formState, updateFormState }: ServiceSubcategoriesStepProps) => {
   const [subcategories, setSubcategories] = useState<ServiceSubcategory[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [dataLoading, setDataLoading] = useState(true);
   
   useEffect(() => {
     const loadSubcategories = async () => {
@@ -24,12 +25,13 @@ const ServiceSubcategoriesStep = ({ formState, updateFormState }: ServiceSubcate
       }
       
       try {
+        setDataLoading(true);
         const fetchedSubcategories = await fetchSubcategoriesForCategory(formState.selectedServiceCategoryId);
         setSubcategories(fetchedSubcategories);
       } catch (error) {
         console.error('Error loading subcategories:', error);
       } finally {
-        setLoading(false);
+        setDataLoading(false);
       }
     };
     
@@ -76,16 +78,12 @@ const ServiceSubcategoriesStep = ({ formState, updateFormState }: ServiceSubcate
         />
       </FormField>
       
-      <div className="mt-8">
-        <Button
-          type="button"
-          className="w-full bg-rematal-primary hover:bg-rematal-primary/90 text-white py-6"
-          onClick={handleContinue}
-          disabled={loading}
-        >
-          Continue →
-        </Button>
-      </div>
+      <FormStepButtons
+        onBack={() => updateFormState({ currentStep: 'service-category' })}
+        onContinue={handleContinue}
+        loading={loading}
+        disabled={formState.selectedSubcategoryIds.length === 0 || dataLoading}
+      />
     </div>
   );
 };

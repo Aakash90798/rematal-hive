@@ -1,15 +1,16 @@
-
 import FormField from '@/components/application/FormField';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ApplicationFormState } from '@/types/form';
+import FormStepButtons from '@/components/application/FormStepButtons';
 
 interface AdditionalInfoStepProps {
   formState: ApplicationFormState;
   updateFormState: (updates: Partial<ApplicationFormState>) => void;
+  loading: boolean;
 }
 
-const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepProps) => {
+const AdditionalInfoStep = ({ formState, updateFormState, loading }: AdditionalInfoStepProps) => {
   const handleContinue = () => {
     const errors: Record<string, string> = {};
     
@@ -49,15 +50,12 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
         />
       </FormField>
       
-      <div className="mt-8">
-        <Button
-          type="button"
-          className="w-full bg-rematal-primary hover:bg-rematal-primary/90 text-white py-6"
-          onClick={handleContinue}
-        >
-          Continue →
-        </Button>
-      </div>
+      <FormStepButtons
+        onBack={() => updateFormState({ currentStep: 'tools' })}
+        onContinue={handleContinue}
+        loading={loading}
+        disabled={!formState.additionalInfo || formState.additionalInfo.length < 20}
+      />
     </div>
   );
 };

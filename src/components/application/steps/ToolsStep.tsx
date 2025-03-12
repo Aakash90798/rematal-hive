@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import FormField from '@/components/application/FormField';
 import MultiSelect from '@/components/application/MultiSelect';
 import { Button } from '@/components/ui/button';
 import { ApplicationFormState, Tool } from '@/types/form';
 import { fetchToolsForCategory } from '@/services/formService';
+import FormStepButtons from '@/components/application/FormStepButtons';
 
 interface ToolsStepProps {
   formState: ApplicationFormState;
@@ -13,7 +13,8 @@ interface ToolsStepProps {
 
 const ToolsStep = ({ formState, updateFormState }: ToolsStepProps) => {
   const [tools, setTools] = useState<Tool[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [dataLoading, setDataLoading] = useState(true);
   
   useEffect(() => {
     const loadTools = async () => {
@@ -24,12 +25,13 @@ const ToolsStep = ({ formState, updateFormState }: ToolsStepProps) => {
       }
       
       try {
+        setDataLoading(true);
         const fetchedTools = await fetchToolsForCategory(formState.selectedServiceCategoryId);
         setTools(fetchedTools);
       } catch (error) {
         console.error('Error loading tools:', error);
       } finally {
-        setLoading(false);
+        setDataLoading(false);
       }
     };
     
@@ -87,16 +89,12 @@ const ToolsStep = ({ formState, updateFormState }: ToolsStepProps) => {
         />
       </FormField>
       
-      <div className="mt-8">
-        <Button
-          type="button"
-          className="w-full bg-rematal-primary hover:bg-rematal-primary/90 text-white py-6"
-          onClick={handleContinue}
-          disabled={loading}
-        >
-          Continue →
-        </Button>
-      </div>
+      <FormStepButtons
+        onBack={() => updateFormState({ currentStep: 'service-subcategories' })}
+        onContinue={handleContinue}
+        loading={loading}
+        disabled={formState.selectedToolIds.length === 0 || dataLoading}
+      />
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
@@ -250,18 +249,6 @@ const Apply = () => {
           <FormProgress currentStep={formState.currentStep} />
           
           {renderStep()}
-          
-          {!['personal-info', 'success', 'rejection'].includes(formState.currentStep) && (
-            <div className="mt-8 flex justify-between">
-              <button
-                type="button"
-                onClick={handleBack}
-                className="text-gray-600 hover:text-gray-900 font-medium"
-              >
-                ← Back
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>

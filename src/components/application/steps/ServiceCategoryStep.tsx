@@ -1,8 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { LoadingButton } from '@/components/ui/loading-button';
 import { ApplicationFormState, ServiceCategory } from '@/types/form';
 import { fetchServiceCategories } from '@/services/formService';
+import { Loader2 } from "lucide-react";
+import FormStepButtons from '@/components/application/FormStepButtons';
 
 interface ServiceCategoryStepProps {
   formState: ApplicationFormState;
@@ -11,51 +13,56 @@ interface ServiceCategoryStepProps {
 
 const ServiceCategoryStep = ({ formState, updateFormState }: ServiceCategoryStepProps) => {
   const [categories, setCategories] = useState<ServiceCategory[]>([]);
-  const [loading, setLoading] = useState(true);
-  
+  const [loading, setLoading] = useState(false);
+  const [dataLoading, setDataLoading] = useState(true);
+
   useEffect(() => {
     const loadCategories = async () => {
       try {
-        const result = await fetchServiceCategories();
-        setCategories(result.map(cat => ({ id: cat.id, name: cat.name })));
+        const fetchedCategories = await fetchServiceCategories();
+        setCategories(fetchedCategories);
       } catch (error) {
-        console.error('Error loading service categories:', error);
+        console.error('Error loading categories:', error);
       } finally {
-        setLoading(false);
+        setDataLoading(false);
       }
     };
     
     loadCategories();
   }, []);
-  
+
   const handleSelect = (categoryId: string) => {
-    updateFormState({ 
-      selectedServiceCategoryId: categoryId,
-      // Reset subcategories and tools when changing category
-      selectedSubcategoryIds: [],
-      selectedToolIds: [],
-      currentStep: 'service-subcategories'
-    });
+    updateFormState({ selectedServiceCategoryId: categoryId });
   };
-  
+
+  const handleContinue = async () => {
+    if (!formState.selectedServiceCategoryId) return;
+    
+    setLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 500)); // Simulate loading
+    updateFormState({ currentStep: 'service-subcategories' });
+    setLoading(false);
+  };
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6">Select your service category</h2>
       
       <p className="text-gray-600 mb-8">
-        Choose the primary service category that best describes your expertise.
+        Choose the main category that best describes your services.
       </p>
       
-      {loading ? (
-        <div className="py-10 text-center">
-          <p>Loading categories...</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-4">
-          {categories.map((category) => (
+      <div className="grid grid-cols-1 gap-4">
+        {dataLoading ? (
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-8 w-8 animate-spin text-rematal-primary" />
+          </div>
+        ) : (
+          categories.map((category) => (
             <Button
               key={category.id}
               type="button"
+              disabled={loading || dataLoading}
               className={
                 formState.selectedServiceCategoryId === category.id
                   ? "py-6 bg-rematal-primary hover:bg-rematal-primary/90 text-white text-lg justify-start px-6"
@@ -66,13 +73,16 @@ const ServiceCategoryStep = ({ formState, updateFormState }: ServiceCategoryStep
             >
               {category.name}
             </Button>
-          ))}
-        </div>
-      )}
-      
-      {formState.errors.serviceCategory && (
-        <p className="mt-2 text-sm text-red-500">{formState.errors.serviceCategory}</p>
-      )}
+          ))
+        )}
+      </div>
+
+      <FormStepButtons
+        onBack={() => updateFormState({ currentStep: 'portfolio' })}
+        onContinue={handleContinue}
+        loading={loading}
+        disabled={!formState.selectedServiceCategoryId || dataLoading}
+      />
     </div>
   );
 };

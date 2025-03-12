@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import FormField from '@/components/application/FormField';
 import { Button } from '@/components/ui/button';
@@ -6,6 +5,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { ApplicationFormState, ReferralSource } from '@/types/form';
 import { fetchReferralSources } from '@/services/formService';
+import FormStepButtons from '@/components/application/FormStepButtons';
 
 interface ReferralSourceStepProps {
   formState: ApplicationFormState;
@@ -86,16 +86,12 @@ const ReferralSourceStep = ({ formState, updateFormState, onSubmit }: ReferralSo
         )}
       </FormField>
       
-      <div className="mt-8">
-        <Button
-          type="button"
-          className="w-full bg-rematal-primary hover:bg-rematal-primary/90 text-white py-6"
-          onClick={handleSubmit}
-          disabled={loading || submitting}
-        >
-          {submitting ? 'Submitting...' : 'Submit Application'}
-        </Button>
-      </div>
+      <FormStepButtons
+        onBack={() => updateFormState({ currentStep: formState.additionalInfo ? 'additional-info' : 'tools' })}
+        onContinue={handleSubmit}
+        loading={submitting}
+        disabled={!formState.referralSourceId}
+      />
     </div>
   );
 };

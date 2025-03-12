@@ -1,9 +1,10 @@
-
 import { useState } from 'react';
 import FormField from '@/components/application/FormField';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ApplicationFormState } from '@/types/form';
+import { LoadingButton } from "@/components/ui/loading-button";
+import FormStepButtons from '@/components/application/FormStepButtons';
 
 interface PersonalInfoStepProps {
   formState: ApplicationFormState;
@@ -155,13 +156,12 @@ const PersonalInfoStep = ({ formState, updateFormState, onEmailCheck }: Personal
         </FormField>
         
         <div className="pt-4">
-          <Button
-            type="submit"
-            className="w-full bg-rematal-primary hover:bg-rematal-primary/90 text-white py-6"
+          <FormStepButtons
+            showBack={false}
+            onContinue={handleSubmit}
+            loading={loading}
             disabled={loading}
-          >
-            {loading ? 'Checking...' : 'Continue →'}
-          </Button>
+          />
         </div>
       </form>
     </div>

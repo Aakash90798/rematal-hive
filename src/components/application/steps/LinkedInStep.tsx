@@ -1,9 +1,11 @@
-
 import FormField from '@/components/application/FormField';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ApplicationFormState } from '@/types/form';
 import { Linkedin } from 'lucide-react';
+import { LoadingButton } from "@/components/ui/loading-button";
+import { useState } from 'react';
+import FormStepButtons  from '@/components/application/FormStepButtons';
 
 interface LinkedInStepProps {
   formState: ApplicationFormState;
@@ -11,6 +13,8 @@ interface LinkedInStepProps {
 }
 
 const LinkedInStep = ({ formState, updateFormState }: LinkedInStepProps) => {
+  const [loading, setLoading] = useState(false);
+  
   const validateLinkedInUrl = (url: string) => {
     if (!url) return false;
     
@@ -18,7 +22,8 @@ const LinkedInStep = ({ formState, updateFormState }: LinkedInStepProps) => {
     return url.includes('linkedin.com');
   };
   
-  const handleContinue = () => {
+  const handleContinue = async () => {
+    setLoading(true);
     const errors: Record<string, string> = {};
     
     if (!formState.linkedinUrl) {
@@ -30,10 +35,16 @@ const LinkedInStep = ({ formState, updateFormState }: LinkedInStepProps) => {
     updateFormState({ errors });
     
     if (Object.keys(errors).length === 0) {
+      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API call
       updateFormState({ currentStep: 'portfolio' });
     }
+    setLoading(false);
   };
   
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateFormState({ linkedinUrl: e.target.value });
+  };
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6">Share your LinkedIn profile</h2>
@@ -54,23 +65,20 @@ const LinkedInStep = ({ formState, updateFormState }: LinkedInStepProps) => {
           </div>
           <Input
             id="linkedin"
-            value={formState.linkedinUrl}
-            onChange={(e) => updateFormState({ linkedinUrl: e.target.value })}
+            value={formState.linkedinUrl || ''}
+            onChange={handleChange}
             className="rounded-l-none w-full"
             placeholder="https://www.linkedin.com/in/yourprofile"
           />
         </div>
       </FormField>
       
-      <div className="mt-8">
-        <Button
-          type="button"
-          className="w-full bg-rematal-primary hover:bg-rematal-primary/90 text-white py-6"
-          onClick={handleContinue}
-        >
-          Continue →
-        </Button>
-      </div>
+      <FormStepButtons
+        onBack={() => updateFormState({ currentStep: 'niches' })}
+        onContinue={handleContinue}
+        loading={loading}
+        disabled={!formState.linkedinUrl}
+      />
     </div>
   );
 };

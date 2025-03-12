@@ -232,7 +232,7 @@ export async function submitApplication(formData: ApplicationFormState): Promise
         years_of_experience: formData.yearsOfExperience!,
         linkedin_url: formData.linkedinUrl,
         portfolio_url: formData.portfolioUrl,
-        has_ecommerce_experience: formData.hasEcommerceExperience!
+        has_ecommerce_experience: formData.hasExperience!
       })
       .select()
       .single();

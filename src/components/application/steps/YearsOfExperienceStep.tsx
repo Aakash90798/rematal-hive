@@ -1,7 +1,8 @@
-
 import { Button } from '@/components/ui/button';
+import { LoadingButton } from '@/components/ui/loading-button';
 import { ApplicationFormState } from '@/types/form';
 import { useState } from 'react';
+import FormStepButtons  from '@/components/application/FormStepButtons';
 
 interface YearsOfExperienceStepProps {
   formState: ApplicationFormState;
@@ -10,7 +11,10 @@ interface YearsOfExperienceStepProps {
 }
 
 const YearsOfExperienceStep = ({ formState, updateFormState, onRejection }: YearsOfExperienceStepProps) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [selectedExperience, setSelectedExperience] = useState<string | null>(
+    formState.yearsOfExperience || null
+  );
 
   const experienceOptions = [
     { value: 'less than 1 yr', label: 'Less than 1 year' },
@@ -19,16 +23,22 @@ const YearsOfExperienceStep = ({ formState, updateFormState, onRejection }: Year
     { value: 'more than 5', label: 'More than 5 years' }
   ];
 
-  const handleSelect = async (value: 'less than 1 yr' | '1-3' | '3-5' | 'more than 5') => {
+  const handleSelect = (value: string) => {
+    setSelectedExperience(value);
     updateFormState({ yearsOfExperience: value });
+  };
+
+  const handleContinue = async () => {
+    if (!selectedExperience) return;
     
-    if (value === 'less than 1 yr') {
-      setIsLoading(true);
+    setLoading(true);
+    if (selectedExperience === 'less than 1 yr') {
       await onRejection();
-      setIsLoading(false);
     } else {
+      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate loading
       updateFormState({ currentStep: 'niches' });
     }
+    setLoading(false);
   };
 
   return (
@@ -44,19 +54,26 @@ const YearsOfExperienceStep = ({ formState, updateFormState, onRejection }: Year
           <Button
             key={option.value}
             type="button"
-            disabled={isLoading}
+            disabled={loading}
             className={
-              formState.yearsOfExperience === option.value
+              selectedExperience === option.value
                 ? "py-6 bg-rematal-primary hover:bg-rematal-primary/90 text-white text-lg justify-start px-6"
                 : "py-6 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-800 text-lg justify-start px-6"
             }
-            variant={formState.yearsOfExperience === option.value ? "default" : "outline"}
-            onClick={() => handleSelect(option.value as any)}
+            variant={selectedExperience === option.value ? "default" : "outline"}
+            onClick={() => handleSelect(option.value)}
           >
             {option.label}
           </Button>
         ))}
       </div>
+
+      <FormStepButtons
+        onBack={() => updateFormState({ currentStep: 'experience-check' })}
+        onContinue={handleContinue}
+        loading={loading}
+        disabled={!selectedExperience}
+      />
     </div>
   );
 };

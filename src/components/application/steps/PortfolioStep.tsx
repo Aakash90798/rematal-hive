@@ -1,9 +1,11 @@
-
 import FormField from '@/components/application/FormField';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ApplicationFormState } from '@/types/form';
 import { Link2 } from 'lucide-react';
+import { LoadingButton } from "@/components/ui/loading-button";
+import { useState } from 'react';
+import  FormStepButtons from '@/components/application/FormStepButtons';
 
 interface PortfolioStepProps {
   formState: ApplicationFormState;
@@ -11,6 +13,8 @@ interface PortfolioStepProps {
 }
 
 const PortfolioStep = ({ formState, updateFormState }: PortfolioStepProps) => {
+  const [loading, setLoading] = useState(false);
+  
   const validateUrl = (url: string) => {
     if (!url) return false;
     
@@ -22,7 +26,8 @@ const PortfolioStep = ({ formState, updateFormState }: PortfolioStepProps) => {
     }
   };
   
-  const handleContinue = () => {
+  const handleContinue = async () => {
+    setLoading(true);
     const errors: Record<string, string> = {};
     
     if (!formState.portfolioUrl) {
@@ -34,10 +39,16 @@ const PortfolioStep = ({ formState, updateFormState }: PortfolioStepProps) => {
     updateFormState({ errors });
     
     if (Object.keys(errors).length === 0) {
+      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API call
       updateFormState({ currentStep: 'service-category' });
     }
+    setLoading(false);
   };
   
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateFormState({ portfolioUrl: e.target.value });
+  };
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6">Share your portfolio or GitHub</h2>
@@ -58,23 +69,20 @@ const PortfolioStep = ({ formState, updateFormState }: PortfolioStepProps) => {
           </div>
           <Input
             id="portfolio"
-            value={formState.portfolioUrl}
-            onChange={(e) => updateFormState({ portfolioUrl: e.target.value })}
+            value={formState.portfolioUrl || ''}
+            onChange={handleChange}
             className="rounded-l-none w-full"
             placeholder="https://your-portfolio-or-github.com"
           />
         </div>
       </FormField>
       
-      <div className="mt-8">
-        <Button
-          type="button"
-          className="w-full bg-rematal-primary hover:bg-rematal-primary/90 text-white py-6"
-          onClick={handleContinue}
-        >
-          Continue →
-        </Button>
-      </div>
+      <FormStepButtons
+        onBack={() => updateFormState({ currentStep: 'linkedin' })}
+        onContinue={handleContinue}
+        loading={loading}
+        disabled={!formState.portfolioUrl}
+      />
     </div>
   );
 };

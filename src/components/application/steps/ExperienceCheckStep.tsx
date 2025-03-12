@@ -1,7 +1,8 @@
-
-import { Button } from '@/components/ui/button';
-import { ApplicationFormState } from '@/types/form';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { LoadingButton } from '@/components/ui/loading-button';
+import { ApplicationFormState } from '@/types/form';
+import FormStepButtons from '@/components/application/FormStepButtons';
 
 interface ExperienceCheckStepProps {
   formState: ApplicationFormState;
@@ -10,50 +11,75 @@ interface ExperienceCheckStepProps {
 }
 
 const ExperienceCheckStep = ({ formState, updateFormState, onRejection }: ExperienceCheckStepProps) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<'yes' | 'no' | null>(
+    formState.hasExperience === true ? 'yes' : 
+    formState.hasExperience === false ? 'no' : 
+    null
+  );
 
-  const handleYes = () => {
-    setIsLoading(true);
-    updateFormState({ hasEcommerceExperience: true, currentStep: 'years-of-experience' });
-    setIsLoading(false);
+  const handleSelect = (value: 'yes' | 'no') => {
+    setSelectedOption(value);
+    updateFormState({ hasExperience: value === 'yes' });
   };
 
-  const handleNo = async () => {
-    setIsLoading(true);
-    updateFormState({ hasEcommerceExperience: false });
-    await onRejection();
-    setIsLoading(false);
+  const handleContinue = async () => {
+    if (!selectedOption) return;
+    
+    setLoading(true);
+    if (selectedOption === 'no') {
+      await onRejection();
+    } else {
+      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate loading
+      updateFormState({ currentStep: 'years-of-experience' });
+    }
+    setLoading(false);
   };
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Have you worked with e-commerce brands before?</h2>
+      <h2 className="text-2xl font-bold mb-6">Do you have experience in this field?</h2>
       
       <p className="text-gray-600 mb-8">
-        Rematal connects skilled freelancers with quality D2C e-commerce brands.
-        Prior experience working with online brands is essential.
+        We're looking for professionals with relevant experience in their domain.
       </p>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         <Button
           type="button"
-          className="py-8 bg-rematal-primary hover:bg-rematal-primary/90 text-white text-lg"
-          onClick={handleYes}
-          disabled={isLoading}
+          className={
+            selectedOption === 'yes'
+              ? "py-6 bg-rematal-primary hover:bg-rematal-primary/90 text-white text-lg justify-start px-6"
+              : "py-6 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-800 text-lg justify-start px-6"
+          }
+          variant={selectedOption === 'yes' ? "default" : "outline"}
+          onClick={() => handleSelect('yes')}
+          disabled={loading}
         >
           Yes
         </Button>
         
         <Button
           type="button"
-          className="py-8 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-800 text-lg"
-          variant="outline"
-          onClick={handleNo}
-          disabled={isLoading}
+          className={
+            selectedOption === 'no'
+              ? "py-6 bg-rematal-primary hover:bg-rematal-primary/90 text-white text-lg justify-start px-6"
+              : "py-6 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-800 text-lg justify-start px-6"
+          }
+          variant={selectedOption === 'no' ? "default" : "outline"}
+          onClick={() => handleSelect('no')}
+          disabled={loading}
         >
           No
         </Button>
       </div>
+
+      <FormStepButtons
+        onBack={() => updateFormState({ currentStep: 'personal-info' })}
+        onContinue={handleContinue}
+        loading={loading}
+        disabled={!selectedOption}
+      />
     </div>
   );
 };
