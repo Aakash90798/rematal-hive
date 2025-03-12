@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+        // Remove any reserved path segment; convert all of pathname into the query part.
+        (function (l) {
+            // Build the new URL using the base URL only
+            var newUrl = l.protocol + "//" + l.hostname + (l.port ? ":" + l.port : "") +
+                "/?/" +
+                // Remove the initial "/" from pathname and replace any "&" with "~and~"
+                l.pathname.slice(1).replace(/&/g, "~and~") +
+                // Append search parameters (if any) with replacement, prefixed by "&"
+                (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+                l.hash;
+
+            // Replace the current URL without reloading the page
+            l.replace(newUrl);
+        })(window.location);
+    </script>
+
+</head>
+<body></body>
+</html>
