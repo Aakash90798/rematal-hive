@@ -43,7 +43,11 @@ const LinkedInStep = ({ formState, updateFormState }: LinkedInStepProps) => {
   };
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateFormState({ linkedinUrl: e.target.value });
+    const newUrl = e.target.value;
+    updateFormState({ 
+      linkedinUrl: newUrl,
+      errors: validateLinkedInUrl(newUrl) ? {} : {} // Clear error if valid
+    });
   };
 
   return (

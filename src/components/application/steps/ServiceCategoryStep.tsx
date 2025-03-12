@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from "lucide-react";
@@ -36,7 +35,12 @@ const ServiceCategoryStep = ({ formState, updateFormState }: ServiceCategoryStep
   }, []);
 
   const handleSelect = (categoryId: string) => {
-    updateFormState({ selectedServiceCategoryId: categoryId });
+    // Reset related fields when category changes
+    updateFormState({ 
+      selectedServiceCategoryId: categoryId,
+      selectedSubcategoryIds: [], // Reset subcategories
+      selectedToolIds: [], // Reset tools
+    });
   };
 
   const handleContinue = async () => {

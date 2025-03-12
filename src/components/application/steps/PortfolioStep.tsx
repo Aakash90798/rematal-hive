@@ -17,7 +17,6 @@ const PortfolioStep = ({ formState, updateFormState }: PortfolioStepProps) => {
   
   const validateUrl = (url: string) => {
     if (!url) return false;
-    
     try {
       new URL(url);
       return true;
@@ -45,7 +44,11 @@ const PortfolioStep = ({ formState, updateFormState }: PortfolioStepProps) => {
   };
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateFormState({ portfolioUrl: e.target.value });
+    const newUrl = e.target.value;
+    updateFormState({ 
+      portfolioUrl: newUrl,
+      errors: validateUrl(newUrl) ? {} : formState.errors // Clear error if valid
+    });
   };
 
   return (

@@ -1,4 +1,3 @@
-
 import FormField from '@/components/application/FormField';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -13,6 +12,7 @@ interface AdditionalInfoStepProps {
 
 const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepProps) => {
   const [loading, setLoading] = useState(false);
+  const MIN_CHARS = 20;
 
   const handleContinue = () => {
     setLoading(true);
@@ -57,7 +57,7 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
       
       <FormField
         id="additionalInfo"
-        label="Additional Information"
+        label={`Additional Information (minimum ${MIN_CHARS} characters)`}
         required
         error={formState.errors.additionalInfo}
       >
@@ -68,13 +68,16 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
           className="min-h-[150px]"
           placeholder="Tell us more about your skills, experience, and the specific services you can provide..."
         />
+        <div className="mt-2 text-sm text-gray-500">
+          {formState.additionalInfo ? `${formState.additionalInfo.length}/${MIN_CHARS} characters` : `0/${MIN_CHARS} characters`}
+        </div>
       </FormField>
       
       <FormStepButtons
         onBack={goToPreviousStep}
         onContinue={handleContinue}
         loading={loading}
-        disabled={!formState.additionalInfo || formState.additionalInfo.length < 20}
+        disabled={!formState.additionalInfo || formState.additionalInfo.length < MIN_CHARS}
       />
     </div>
   );
