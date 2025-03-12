@@ -7,6 +7,24 @@
     <meta name="description" content="Rematal - India's First D2C Talent Marketplace where freelancers meet quality clients. Get verified. Connect with top brands. Elevate your career." />
     <meta name="author" content="Rematal" />
     <meta property="og:image" content="/og-image.jpg" />
+    <script type="text/javascript">
+      (function(l) {
+        // Check if the query string starts with "/"
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)                         // Remove the "?" from the beginning
+            .split("&")                       // Split in case there are extra parameters
+            .map(function(s) {
+              return s.replace(/~and~/g, "&"); // Restore any "&" characters
+            })
+            .join("?");
+          
+          // l.pathname is "/" (the base URL). Removing the trailing "/" (which is the only character)
+          // gives an empty string, so concatenating decoded gives the full path.
+          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      })(window.location);
+    </script>
     <script type="module" crossorigin src="/assets/index-BZinZmQV.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-DNOozc7s.css">
   </head>
