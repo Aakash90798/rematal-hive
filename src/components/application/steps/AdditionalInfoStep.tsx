@@ -21,7 +21,7 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
     if (!formState.additionalInfo) {
       errors.additionalInfo = 'Please provide some additional information';
     } else if (formState.additionalInfo.length < 20) {
-      errors.additionalInfo = 'Please provide more details (at least 20 characters)';
+      errors.additionalInfo = `Please provide more details (at least ${MIN_CHARS} characters)`;
     }
     
     updateFormState({ errors });
@@ -68,9 +68,6 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
           className="min-h-[150px]"
           placeholder="Tell us more about your skills, experience, and the specific services you can provide..."
         />
-        <div className="mt-2 text-sm text-gray-500">
-          {formState.additionalInfo ? `${formState.additionalInfo.length}/${MIN_CHARS} characters` : `0/${MIN_CHARS} characters`}
-        </div>
       </FormField>
       
       <FormStepButtons
