@@ -13,6 +13,8 @@ interface LinkedInStepProps {
 
 const LinkedInStep = ({ formState, updateFormState }: LinkedInStepProps) => {
   const [loading, setLoading] = useState(false);
+
+  const linkedinErrorText= "Please enter a valid LinkedIn profile URL. eg:www.linkedin.com/company/username, www.linkedin.com/in/username";
   
   const validateLinkedInUrl = (url: string): boolean => {
     if (!url) return false;
@@ -29,7 +31,7 @@ const LinkedInStep = ({ formState, updateFormState }: LinkedInStepProps) => {
     if (!formState.linkedinUrl) {
       errors.linkedin = 'LinkedIn URL is required';
     } else if (!validateLinkedInUrl(formState.linkedinUrl)) {
-      errors.linkedin = "Please enter a valid LinkedIn profile URL. eg:www.linkedin.com/company/username, www.linkedin.com/in/username";
+      errors.linkedin = linkedinErrorText;
     }
     
     updateFormState({ errors });
@@ -44,7 +46,7 @@ const LinkedInStep = ({ formState, updateFormState }: LinkedInStepProps) => {
     const newUrl = e.target.value;
     updateFormState({ 
       linkedinUrl: newUrl,
-      errors: validateLinkedInUrl(newUrl) ? {} : {} // Clear error if valid
+      errors: validateLinkedInUrl(newUrl) ? {linkedin: ""} : formState.errors,
     });
   };
 
@@ -71,7 +73,7 @@ const LinkedInStep = ({ formState, updateFormState }: LinkedInStepProps) => {
             value={formState.linkedinUrl || ''}
             onChange={handleChange}
             className="rounded-l-none w-full"
-            placeholder="https://www.linkedin.com/in/yourprofile"
+            placeholder="linkedin.com/in/yourprofile"
           />
         </div>
       </FormField>

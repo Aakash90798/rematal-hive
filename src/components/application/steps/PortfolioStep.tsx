@@ -1,11 +1,10 @@
 import FormField from '@/components/application/FormField';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ApplicationFormState } from '@/types/form';
 import { Link2 } from 'lucide-react';
-import { LoadingButton } from "@/components/ui/loading-button";
 import { useState } from 'react';
 import  FormStepButtons from '@/components/application/FormStepButtons';
+import { APP_CONSTANTS } from '@/constants';
 
 interface PortfolioStepProps {
   formState: ApplicationFormState;
@@ -17,12 +16,10 @@ const PortfolioStep = ({ formState, updateFormState }: PortfolioStepProps) => {
   
   const validateUrl = (url: string) => {
     if (!url) return false;
-    try {
-      new URL(url);
-      return true;
-    } catch (e) {
-      return false;
-    }
+  
+      const urlRegex = APP_CONSTANTS.normalUrlRegex;
+  
+      return urlRegex.test(url);
   };
   
   const handleContinue = async () => {
@@ -47,7 +44,7 @@ const PortfolioStep = ({ formState, updateFormState }: PortfolioStepProps) => {
     const newUrl = e.target.value;
     updateFormState({ 
       portfolioUrl: newUrl,
-      errors: validateUrl(newUrl) ? {} : formState.errors // Clear error if valid
+      errors: validateUrl(newUrl) ? {portfolio:''} : formState.errors,
     });
   };
 
