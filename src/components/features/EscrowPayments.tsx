@@ -1,7 +1,6 @@
 
 import { useInView } from 'react-intersection-observer';
-import { Shield, Lock, AlertCircle, Check, Verified } from 'lucide-react';
-import { Button } from "@/components/ui/button";
+import { Shield, Lock, Verified } from 'lucide-react';
 
 const EscrowPayments = () => {
   const { ref, inView } = useInView({

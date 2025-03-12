@@ -1,4 +1,5 @@
 
+import { APP_CONSTANTS } from '@/constants';
 import { supabase } from '@/lib/supabase';
 import { ApplicationFormState, Niche, ServiceCategory, ServiceCategoryWithRelations, ServiceSubcategory, Tool, ReferralSource } from '@/types/form';
 
@@ -158,7 +159,7 @@ export async function submitApplication(formData: ApplicationFormState): Promise
         mobile_no: formData.mobileNo,
         city: formData.city,
         referral_source_id: formData.referralSourceId || null,
-        user_type: 'EXPERT',
+        user_type: APP_CONSTANTS.FREELANCER_USER_TYPE, 
       })
       .select()
       .single();
@@ -291,7 +292,8 @@ export async function markUserAsRejected(formData: ApplicationFormState): Promis
           email: formData.email,
           mobile_no: formData.mobileNo,
           city: formData.city,
-          referral_source_id: formData.referralSourceId || null
+          referral_source_id: formData.referralSourceId || null,
+          user_type: APP_CONSTANTS.FREELANCER_USER_TYPE,
         })
         .select()
         .single();

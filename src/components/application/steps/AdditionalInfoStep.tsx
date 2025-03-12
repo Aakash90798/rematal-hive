@@ -1,6 +1,5 @@
 
 import FormField from '@/components/application/FormField';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ApplicationFormState } from '@/types/form';
 import FormStepButtons from '@/components/application/FormStepButtons';

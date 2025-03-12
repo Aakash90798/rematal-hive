@@ -17,7 +17,7 @@ const PortfolioStep = ({ formState, updateFormState }: PortfolioStepProps) => {
   const validateUrl = (url: string) => {
     if (!url) return false;
   
-      const urlRegex = APP_CONSTANTS.normalUrlRegex;
+      const urlRegex = APP_CONSTANTS.NORMAL_URL_REGEX;
   
       return urlRegex.test(url);
   };

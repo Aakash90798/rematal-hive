@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import FormField from '@/components/application/FormField';
 import MultiSelect from '@/components/application/MultiSelect';
-import { Button } from '@/components/ui/button';
 import { ApplicationFormState, ServiceSubcategory } from '@/types/form';
 import { fetchSubcategoriesForCategory } from '@/services/formService';
 import FormStepButtons from '@/components/application/FormStepButtons';

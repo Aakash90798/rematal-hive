@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from 'react';
 import FormField from '@/components/application/FormField';
-import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { ApplicationFormState, ReferralSource } from '@/types/form';

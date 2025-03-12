@@ -1,6 +1,6 @@
 
 import { useInView } from 'react-intersection-observer';
-import { Image, Layout, Eye, Link } from 'lucide-react';
+import { Image, Eye, Link } from 'lucide-react';
 
 const PortfolioBuilder = () => {
   const { ref, inView } = useInView({

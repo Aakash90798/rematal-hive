@@ -41,7 +41,7 @@ const CTASection = () => {
             <div className="md:w-3/5 mb-8 md:mb-0 text-center md:text-left">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-sm font-medium mb-6">
                 <Sparkles className="h-4 w-4 text-yellow-300" />
-                  <span>Join {APP_CONSTANTS.currFreelancersCount}+ freelancers</span>
+                  <span>Join {APP_CONSTANTS.CURR_FREELANCER_COUNT}+ freelancers</span>
               </div>
               
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white">

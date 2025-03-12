@@ -1,6 +1,6 @@
 
+import { Handshake, Quote, Star } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
-import { MessageCircle, Star, Quote, Handshake } from 'lucide-react';
 
 const TestimonialCollector = () => {
   const { ref, inView } = useInView({

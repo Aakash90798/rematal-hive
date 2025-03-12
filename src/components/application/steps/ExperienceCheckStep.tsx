@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { LoadingButton } from '@/components/ui/loading-button';
 import { ApplicationFormState } from '@/types/form';
 import FormStepButtons from '@/components/application/FormStepButtons';
 

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import FormField from '@/components/application/FormField';
 import MultiSelect from '@/components/application/MultiSelect';
-import { Button } from '@/components/ui/button';
 import { ApplicationFormState, Niche } from '@/types/form';
 import { fetchNiches } from '@/services/formService';
 import FormStepButtons from '@/components/application/FormStepButtons';

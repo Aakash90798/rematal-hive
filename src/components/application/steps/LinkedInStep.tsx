@@ -19,7 +19,7 @@ const LinkedInStep = ({ formState, updateFormState }: LinkedInStepProps) => {
   const validateLinkedInUrl = (url: string): boolean => {
     if (!url) return false;
 
-    const linkedInRegex = APP_CONSTANTS.linkedInUrlRegex;
+    const linkedInRegex = APP_CONSTANTS.LINKEDIN_URL_REGEX;
 
     return linkedInRegex.test(url);
 };

@@ -1,6 +1,6 @@
 
 import { useInView } from 'react-intersection-observer';
-import { Package, Tag, Layers, Timer, TimerReset, Calendar, CalendarClock, IndianRupee } from 'lucide-react';
+import { Package, Tag, IndianRupee } from 'lucide-react';
 
 const ServicePackage = () => {
   const { ref, inView } = useInView({
