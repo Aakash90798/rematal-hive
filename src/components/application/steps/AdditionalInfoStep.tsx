@@ -1,3 +1,4 @@
+
 import FormField from '@/components/application/FormField';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -31,12 +32,27 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
     setLoading(false);
   };
   
+  // Determine the previous step based on selection history
+  const goToPreviousStep = () => {
+    const LET_REMATAL_DECIDE_ID = "bab11423-d214-4c43-855e-94e7bfb92b38";
+    
+    if (formState.selectedServiceCategoryId === LET_REMATAL_DECIDE_ID) {
+      updateFormState({ currentStep: 'service-category' });
+    } else if (formState.selectedToolIds.length > 0) {
+      updateFormState({ currentStep: 'tools' });
+    } else if (formState.selectedSubcategoryIds.length > 0) {
+      updateFormState({ currentStep: 'service-subcategories' });
+    } else {
+      updateFormState({ currentStep: 'service-category' });
+    }
+  };
+  
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6">Tell us a bit more about yourself</h2>
       
       <p className="text-gray-600 mb-8">
-        Since you've selected options like "Let Rematal Decide/Others" that might need more context, please tell us a bit more about your skills, experience, tools to help us understand your profile better.
+        Since you've selected options that might need more context, please tell us a bit more about your skills, experience, and tools to help us understand your profile better.
       </p>
       
       <FormField
@@ -49,13 +65,13 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
           id="additionalInfo"
           value={formState.additionalInfo}
           onChange={(e) => updateFormState({ additionalInfo: e.target.value })}
-          className="min-h-[120px]"
+          className="min-h-[150px]"
           placeholder="Tell us more about your skills, experience, and the specific services you can provide..."
         />
       </FormField>
       
       <FormStepButtons
-        onBack={() => updateFormState({ currentStep: 'tools' })}
+        onBack={goToPreviousStep}
         onContinue={handleContinue}
         loading={loading}
         disabled={!formState.additionalInfo || formState.additionalInfo.length < 20}

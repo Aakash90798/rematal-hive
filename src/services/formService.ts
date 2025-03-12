@@ -1,4 +1,3 @@
-
 import { supabase } from '@/lib/supabase';
 import { ApplicationFormState, Niche, ServiceCategory, ServiceCategoryWithRelations, ServiceSubcategory, Tool, ReferralSource } from '@/types/form';
 
@@ -17,8 +16,8 @@ export async function fetchNiches(): Promise<Niche[]> {
   return data as Niche[];
 }
 
-// Fetch all service categories with their subcategories and tools
-export async function fetchServiceCategories(): Promise<ServiceCategoryWithRelations[]> {
+// Fetch all service categories without their subcategories and tools
+export async function fetchServiceCategories(): Promise<ServiceCategory[]> {
   const { data: categories, error: categoriesError } = await supabase
     .from('service_categories')
     .select('*')
@@ -29,63 +28,7 @@ export async function fetchServiceCategories(): Promise<ServiceCategoryWithRelat
     return [];
   }
 
-  const result: ServiceCategoryWithRelations[] = [];
-
-  for (const category of categories) {
-    // Fetch subcategories for this category
-    const { data: subcategoriesData, error: subcategoriesError } = await supabase
-      .from('service_category_subcategories')
-      .select(`
-        service_subcategories!inner(*)
-      `)
-      .eq('service_category_id', category.id);
-
-    if (subcategoriesError) {
-      console.error(`Error fetching subcategories for category ${category.id}:`, subcategoriesError);
-      continue;
-    }
-
-    // Fetch tools for this category
-    const { data: toolsData, error: toolsError } = await supabase
-      .from('service_category_tools')
-      .select(`
-        tools!inner(*)
-      `)
-      .eq('service_category_id', category.id);
-
-    if (toolsError) {
-      console.error(`Error fetching tools for category ${category.id}:`, toolsError);
-      continue;
-    }
-
-    // Extract and map the subcategories and tools properly
-    // Console log the first item to understand its structure
-    if (subcategoriesData && subcategoriesData.length > 0) {
-      console.log('First subcategory item structure:', JSON.stringify(subcategoriesData[0], null, 2));
-    }
-    if (toolsData && toolsData.length > 0) {
-      console.log('First tool item structure:', JSON.stringify(toolsData[0], null, 2));
-    }
-
-    // Correctly map the nested data structure
-    const subcategories: ServiceSubcategory[] = subcategoriesData.map((item: any) => ({
-      id: item.service_subcategories.id,
-      name: item.service_subcategories.name
-    }));
-
-    const tools: Tool[] = toolsData.map((item: any) => ({
-      id: item.tools.id,
-      name: item.tools.name
-    }));
-
-    result.push({
-      ...category,
-      subcategories,
-      tools
-    });
-  }
-
-  return result;
+  return categories as ServiceCategory[];
 }
 
 // Fetch service subcategories for a specific category
@@ -405,4 +348,3 @@ export async function markUserAsRejected(formData: ApplicationFormState): Promis
     return false;
   }
 }
-

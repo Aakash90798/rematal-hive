@@ -376,6 +376,7 @@ export type Database = {
           last_name: string
           mobile_no: string | null
           referral_source_id: string | null
+          user_type: Database["public"]["Enums"]["usertypes"] | null
         }
         Insert: {
           city?: string | null
@@ -386,6 +387,7 @@ export type Database = {
           last_name: string
           mobile_no?: string | null
           referral_source_id?: string | null
+          user_type?: Database["public"]["Enums"]["usertypes"] | null
         }
         Update: {
           city?: string | null
@@ -396,6 +398,7 @@ export type Database = {
           last_name?: string
           mobile_no?: string | null
           referral_source_id?: string | null
+          user_type?: Database["public"]["Enums"]["usertypes"] | null
         }
         Relationships: [
           {
@@ -442,7 +445,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      usertypes: "EXPERT" | "CLIENT" | "ADMIN"
     }
     CompositeTypes: {
       [_ in never]: never

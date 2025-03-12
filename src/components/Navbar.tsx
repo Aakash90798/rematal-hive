@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Mail } from "lucide-react";
 import { APP_CONSTANTS } from '@/constants';
 import { Link } from 'react-router-dom';
 
@@ -37,6 +37,14 @@ const Navbar = () => {
     document.body.style.overflow = 'auto';
   };
 
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    handleMobileNavClick();
+  };
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white border-b border-gray-200 shadow-md max-sm:py-1 py-2' : 'bg-transparent max-sm:py-2 py-3'}`}>
       <div className="container-custom flex items-center justify-between">
@@ -51,6 +59,7 @@ const Navbar = () => {
           <a href="#features" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Features</a>
           <a href="#process" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Process</a>
           <a href="#faq" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">FAQs</a>
+          <a href="#contact" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Contact</a>
         </nav>
 
         <div className="hidden sm:block">
@@ -100,6 +109,13 @@ const Navbar = () => {
                 onClick={handleMobileNavClick}
               >
                 FAQs
+              </a>
+              <a
+                href="#contact"
+                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
+                onClick={handleMobileNavClick}
+              >
+                Contact
               </a>
               <div className="pt-4 w-full">
                 <Button

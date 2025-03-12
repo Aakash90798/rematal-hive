@@ -1,10 +1,12 @@
+
 import { useState, useEffect } from 'react';
 import FormField from '@/components/application/FormField';
 import MultiSelect from '@/components/application/MultiSelect';
 import { Button } from '@/components/ui/button';
 import { ApplicationFormState, ServiceSubcategory } from '@/types/form';
 import { fetchSubcategoriesForCategory } from '@/services/formService';
-import  FormStepButtons  from '@/components/application/FormStepButtons';
+import FormStepButtons from '@/components/application/FormStepButtons';
+import { Loader2 } from "lucide-react";
 
 interface ServiceSubcategoriesStepProps {
   formState: ApplicationFormState;
@@ -50,6 +52,17 @@ const ServiceSubcategoriesStep = ({ formState, updateFormState }: ServiceSubcate
     updateFormState({ errors });
     
     if (Object.keys(errors).length === 0) {
+      // Check if "Other" is selected and determine if additional info is needed
+      const hasOtherSelected = formState.selectedSubcategoryIds.includes('other') || 
+        subcategories.some(subcat => 
+          formState.selectedSubcategoryIds.includes(subcat.id) && 
+          subcat.name.toLowerCase().includes('other')
+        );
+        
+      if (hasOtherSelected) {
+        updateFormState({ shouldShowAdditionalInfo: true });
+      }
+      
       updateFormState({ currentStep: 'tools' });
     }
   };
@@ -62,21 +75,28 @@ const ServiceSubcategoriesStep = ({ formState, updateFormState }: ServiceSubcate
         Choose up to 3 specific service areas within your selected category.
       </p>
       
-      <FormField
-        id="subcategories"
-        label="Select Subcategories"
-        required
-        error={formState.errors.subcategories}
-      >
-        <MultiSelect
-          options={subcategories}
-          selectedIds={formState.selectedSubcategoryIds}
-          onChange={(selectedIds) => updateFormState({ selectedSubcategoryIds: selectedIds })}
-          maxSelections={3}
-          placeholder="Select up to 3 subcategories"
-          disabled={loading}
-        />
-      </FormField>
+      {dataLoading ? (
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-rematal-primary" />
+          <span className="ml-2 text-rematal-primary">Loading subcategories...</span>
+        </div>
+      ) : (
+        <FormField
+          id="subcategories"
+          label="Select Subcategories"
+          required
+          error={formState.errors.subcategories}
+        >
+          <MultiSelect
+            options={subcategories}
+            selectedIds={formState.selectedSubcategoryIds}
+            onChange={(selectedIds) => updateFormState({ selectedSubcategoryIds: selectedIds })}
+            maxSelections={3}
+            placeholder="Select up to 3 subcategories"
+            disabled={loading}
+          />
+        </FormField>
+      )}
       
       <FormStepButtons
         onBack={() => updateFormState({ currentStep: 'service-category' })}

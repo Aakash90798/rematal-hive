@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import FormField from '@/components/application/FormField';
 import MultiSelect from '@/components/application/MultiSelect';
@@ -5,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ApplicationFormState, Tool } from '@/types/form';
 import { fetchToolsForCategory } from '@/services/formService';
 import FormStepButtons from '@/components/application/FormStepButtons';
+import { Loader2 } from "lucide-react";
 
 interface ToolsStepProps {
   formState: ApplicationFormState;
@@ -50,14 +52,18 @@ const ToolsStep = ({ formState, updateFormState }: ToolsStepProps) => {
     updateFormState({ errors });
     
     if (Object.keys(errors).length === 0) {
-      // Check if "Other" is selected in any of the previous steps
-      const needsAdditionalInfo = 
-        formState.selectedNicheIds.includes('other') || 
-        formState.selectedServiceCategoryId === 'other' ||
-        formState.selectedSubcategoryIds.includes('other') ||
-        formState.selectedToolIds.includes('other');
+      // Check if "Other" is selected and determine if additional info is needed
+      const hasOtherSelected = formState.selectedToolIds.includes('other') || 
+        tools.some(tool => 
+          formState.selectedToolIds.includes(tool.id) && 
+          tool.name.toLowerCase().includes('other')
+        );
+        
+      if (hasOtherSelected) {
+        updateFormState({ shouldShowAdditionalInfo: true });
+      }
       
-      if (needsAdditionalInfo) {
+      if (formState.shouldShowAdditionalInfo) {
         updateFormState({ currentStep: 'additional-info' });
       } else {
         updateFormState({ currentStep: 'referral-source' });
@@ -73,21 +79,28 @@ const ToolsStep = ({ formState, updateFormState }: ToolsStepProps) => {
         Choose up to 5 tools or technologies you regularly use in your work.
       </p>
       
-      <FormField
-        id="tools"
-        label="Select Tools"
-        required
-        error={formState.errors.tools}
-      >
-        <MultiSelect
-          options={tools}
-          selectedIds={formState.selectedToolIds}
-          onChange={(selectedIds) => updateFormState({ selectedToolIds: selectedIds })}
-          maxSelections={5}
-          placeholder="Select up to 5 tools"
-          disabled={loading}
-        />
-      </FormField>
+      {dataLoading ? (
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-rematal-primary" />
+          <span className="ml-2 text-rematal-primary">Loading tools...</span>
+        </div>
+      ) : (
+        <FormField
+          id="tools"
+          label="Select Tools"
+          required
+          error={formState.errors.tools}
+        >
+          <MultiSelect
+            options={tools}
+            selectedIds={formState.selectedToolIds}
+            onChange={(selectedIds) => updateFormState({ selectedToolIds: selectedIds })}
+            maxSelections={5}
+            placeholder="Select up to 5 tools"
+            disabled={loading}
+          />
+        </FormField>
+      )}
       
       <FormStepButtons
         onBack={() => updateFormState({ currentStep: 'service-subcategories' })}

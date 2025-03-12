@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
@@ -16,7 +17,11 @@ import AdditionalInfoStep from '@/components/application/steps/AdditionalInfoSte
 import ReferralSourceStep from '@/components/application/steps/ReferralSourceStep';
 import SuccessStep from '@/components/application/steps/SuccessStep';
 import RejectionStep from '@/components/application/steps/RejectionStep';
+import ContactSection from '@/components/application/ContactSection';
 import { checkEmailStatus, markUserAsRejected, submitApplication } from '@/services/formService';
+
+// Constant for "Let Rematal Decide" ID
+const LET_REMATAL_DECIDE_ID = "bab11423-d214-4c43-855e-94e7bfb92b38";
 
 const initialFormState: ApplicationFormState = {
   firstName: '',
@@ -35,7 +40,8 @@ const initialFormState: ApplicationFormState = {
   additionalInfo: '',
   referralSourceId: '',
   currentStep: 'personal-info',
-  errors: {}
+  errors: {},
+  shouldShowAdditionalInfo: false // New flag to track if we need to show additional info step
 };
 
 const Apply = () => {
@@ -49,11 +55,42 @@ const Apply = () => {
     window.scrollTo(0, 0);
   }, [formState.currentStep]);
 
+  // Effect to check if we need to show the additional info step
+  useEffect(() => {
+    let needsAdditionalInfo = false;
+
+    // Check for "other" selections or "let rematal decide"
+    if (formState.selectedServiceCategoryId === LET_REMATAL_DECIDE_ID) {
+      needsAdditionalInfo = true;
+    } else {
+      // Check if "other" is selected in any of the previous steps
+      const hasOtherOptions = 
+        formState.selectedNicheIds.includes('other') || 
+        formState.selectedServiceCategoryId === 'other' ||
+        formState.selectedSubcategoryIds.includes('other') ||
+        formState.selectedToolIds.includes('other');
+      
+      needsAdditionalInfo = hasOtherOptions;
+    }
+
+    if (needsAdditionalInfo !== formState.shouldShowAdditionalInfo) {
+      setFormState(prev => ({
+        ...prev,
+        shouldShowAdditionalInfo: needsAdditionalInfo
+      }));
+    }
+  }, [
+    formState.selectedNicheIds, 
+    formState.selectedServiceCategoryId, 
+    formState.selectedSubcategoryIds, 
+    formState.selectedToolIds
+  ]);
+
   const updateFormState = (updates: Partial<ApplicationFormState>) => {
     setFormState(prev => ({
       ...prev,
       ...updates,
-      errors: { ...prev.errors }
+      errors: { ...prev.errors, ...(updates.errors || {}) }
     }));
   };
 
@@ -250,6 +287,11 @@ const Apply = () => {
           
           {renderStep()}
         </div>
+        
+        {/* Add contact section to Apply page */}
+        {formState.currentStep !== 'success' && formState.currentStep !== 'rejection' && (
+          <ContactSection />
+        )}
       </div>
     </div>
   );

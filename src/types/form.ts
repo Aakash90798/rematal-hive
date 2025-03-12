@@ -1,3 +1,4 @@
+
 export type FormStep = 
   | 'personal-info'
   | 'experience-check'
@@ -35,6 +36,7 @@ export interface ApplicationFormState {
   
   // Additional info if "other" is selected
   additionalInfo?: string;
+  shouldShowAdditionalInfo?: boolean;
   
   // Referral source
   referralSource?: string;

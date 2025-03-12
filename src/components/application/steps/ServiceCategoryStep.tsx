@@ -1,10 +1,13 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { LoadingButton } from '@/components/ui/loading-button';
+import { Loader2 } from "lucide-react";
 import { ApplicationFormState, ServiceCategory } from '@/types/form';
 import { fetchServiceCategories } from '@/services/formService';
-import { Loader2 } from "lucide-react";
 import FormStepButtons from '@/components/application/FormStepButtons';
+
+// Constant for "Let Rematal Decide" ID
+const LET_REMATAL_DECIDE_ID = "bab11423-d214-4c43-855e-94e7bfb92b38";
 
 interface ServiceCategoryStepProps {
   formState: ApplicationFormState;
@@ -19,6 +22,7 @@ const ServiceCategoryStep = ({ formState, updateFormState }: ServiceCategoryStep
   useEffect(() => {
     const loadCategories = async () => {
       try {
+        setDataLoading(true);
         const fetchedCategories = await fetchServiceCategories();
         setCategories(fetchedCategories);
       } catch (error) {
@@ -39,8 +43,18 @@ const ServiceCategoryStep = ({ formState, updateFormState }: ServiceCategoryStep
     if (!formState.selectedServiceCategoryId) return;
     
     setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 500)); // Simulate loading
-    updateFormState({ currentStep: 'service-subcategories' });
+    await new Promise(resolve => setTimeout(resolve, 300)); // Simulate loading
+    
+    // If "Let Rematal Decide" is selected, skip to additional info or referral source
+    if (formState.selectedServiceCategoryId === LET_REMATAL_DECIDE_ID) {
+      updateFormState({ 
+        shouldShowAdditionalInfo: true,
+        currentStep: 'additional-info'
+      });
+    } else {
+      updateFormState({ currentStep: 'service-subcategories' });
+    }
+    
     setLoading(false);
   };
 
