@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import FormField from '@/components/application/FormField';
 import { Button } from '@/components/ui/button';
@@ -48,6 +49,14 @@ const ReferralSourceStep = ({ formState, updateFormState, onSubmit }: ReferralSo
       setSubmitting(false);
     }
   };
+
+  const handleGoBack = () => {
+    if (formState.shouldShowAdditionalInfo) {
+      updateFormState({ currentStep: 'additional-info' });
+    } else {
+      updateFormState({ currentStep: 'tools' });
+    }
+  };
   
   return (
     <div>
@@ -87,7 +96,7 @@ const ReferralSourceStep = ({ formState, updateFormState, onSubmit }: ReferralSo
       </FormField>
       
       <FormStepButtons
-        onBack={() => updateFormState({ currentStep: formState.additionalInfo ? 'additional-info' : 'tools' })}
+        onBack={handleGoBack}
         onContinue={handleSubmit}
         loading={submitting}
         disabled={!formState.referralSourceId}

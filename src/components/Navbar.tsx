@@ -64,7 +64,7 @@ const Navbar = () => {
 
         <div className="hidden sm:block">
           <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6">
-          <Link to="/apply">Apply Now</Link>
+            <Link to="/apply">Apply Now</Link>
           </Button>
         </div>
 
@@ -113,19 +113,16 @@ const Navbar = () => {
               <a
                 href="#contact"
                 className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
-                onClick={handleMobileNavClick}
+                onClick={scrollToContact}
               >
                 Contact
               </a>
               <div className="pt-4 w-full">
                 <Button
                   className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg"
-                  onClick={() => {
-                    handleMobileNavClick();
-                    window.open(APP_CONSTANTS.freelancerFormLink, '_blank', 'noopener,noreferrer');
-                  }}
+                  onClick={handleMobileNavClick}
                 >
-                  Apply Now
+                  <Link to="/apply" className="w-full block">Apply Now</Link>
                 </Button>
               </div>
             </nav>

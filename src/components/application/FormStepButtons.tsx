@@ -1,3 +1,4 @@
+
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LoadingButton } from "@/components/ui/loading-button";
@@ -31,7 +32,6 @@ const FormStepButtons = ({
         </Button>
       )}
       <LoadingButton
-        type="button"
         className="flex-1 bg-rematal-primary hover:bg-rematal-primary/90 text-white py-6"
         onClick={onContinue}
         loading={loading}
