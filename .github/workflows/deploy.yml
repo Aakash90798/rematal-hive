@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - live  # Trigger workflow only when pushing to the "live" branch
+      - live  # Trigger the workflow only when pushing to the "live" branch
 
 jobs:
   build:
