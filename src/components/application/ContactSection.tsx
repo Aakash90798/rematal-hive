@@ -12,7 +12,7 @@ const ContactSection = () => {
         </a>
       </div>
       <p className="text-sm text-rematal-gray">
-        We actively listen to all your emails. Feel free to reach out with any questions, feedback, or issues you encounter during the application process.
+        We actively listen to all your emails. Feel free to reach out with any questions, feedback, or issues you encounter during the application process. We encourage you to send us your problems, feedback, and feature requests.
       </p>
     </div>
   );
