@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
     <script>
-        // Get the full current URL
-        var l = window.location;
-        
-        // Construct the full correct URL while keeping the domain
-        var newUrl = l.protocol + "//" + l.host + l.pathname + l.search + l.hash;
-        
-        // Redirect to the same URL to let React/Vite handle it
-        window.location.replace(newUrl);
+        (function() {
+            // Check if we are on GitHub Pages' 404 page
+            var currentUrl = window.location.href;
+
+            // GitHub Pages serves the 404 page, but it keeps the original URL.
+            // If the URL is not already the homepage, redirect.
+            if (!currentUrl.includes("404.html")) {
+                // Redirect to the same URL but allow the frontend (Vite/React) to handle routing
+                var newUrl = window.location.origin + window.location.pathname + window.location.search + window.location.hash;
+                window.location.replace(newUrl);
+            }
+        })();
     </script>
 </head>
-<body></body>
+<body>
+</body>
 </html>
