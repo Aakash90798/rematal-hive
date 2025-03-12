@@ -94,15 +94,15 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
     <div>
       {infoCase === 'case1' && (
         <>
-          <h2 className="text-2xl font-bold mb-6">Tell us more about your skills</h2>
+          <h2 className="text-2xl font-bold mb-6">Tell Us About Your Skills</h2>
           
           <p className="text-gray-600 mb-8">
-            Since you've selected that you want Rematal to decide the best fit for your skills, please tell us more about your expertise, experience, and the specific services you can provide.
+            As you've chosen to let Rematal determine the best service category for you, please tell us more about your expertise and experience. This will help us match you with the most suitable opportunities.
           </p>
           
           <FormField
             id="moreInfo"
-            label={`Tell us about your skills and services (${formState.moreInfo?.length || 0}/${MIN_CHARS}+ characters)`}
+            label={`Tell us about your skills and experience (${formState.moreInfo?.length || 0}/${MIN_CHARS}+ characters)`}
             required
             error={formState.errors.moreInfo}
           >
@@ -111,7 +111,7 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
               value={formState.moreInfo || ''}
               onChange={(e) => updateFormState({ moreInfo: e.target.value })}
               className="min-h-[150px]"
-              placeholder="Please describe your professional experience, skills, and the types of services you can offer clients..."
+              placeholder="Please describe your professional experience, key skills, and the types of services you can provide..."
             />
           </FormField>
         </>
@@ -119,15 +119,15 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
       
       {infoCase === 'case2' && (
         <>
-          <h2 className="text-2xl font-bold mb-6">Tell us about missing skills or tools</h2>
+          <h2 className="text-2xl font-bold mb-6">Additional Skills & Tools</h2>
           
           <p className="text-gray-600 mb-8">
-            We noticed you selected "Other" in previous steps. Please tell us what specific skills or tools you have that weren't listed in our options.
+            We noticed you selected "Other" in the previous steps. Please tell us about the specific skills or tools you're proficient with that weren't listed in our options.
           </p>
           
           <FormField
             id="skillsToolsRequested"
-            label={`Additional skills or tools (${formState.skillsToolsRequested?.length || 0}/${MIN_CHARS}+ characters)`}
+            label={`Your additional skills and tools (${formState.skillsToolsRequested?.length || 0}/${MIN_CHARS}+ characters)`}
             required
             error={formState.errors.skillsToolsRequested}
           >
@@ -136,7 +136,7 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
               value={formState.skillsToolsRequested || ''}
               onChange={(e) => updateFormState({ skillsToolsRequested: e.target.value })}
               className="min-h-[150px]"
-              placeholder="Please describe the specific skills, tools, or technologies that weren't listed but you're proficient with..."
+              placeholder="Please describe the specific skills, tools, or technologies you're proficient with that weren't listed..."
             />
           </FormField>
         </>
@@ -144,42 +144,52 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
       
       {infoCase === 'case3' && (
         <>
-          <h2 className="text-2xl font-bold mb-6">Tell us more about yourself</h2>
+          <h2 className="text-2xl font-bold mb-6">Complete Your Profile</h2>
           
-          <p className="text-gray-600 mb-8">
-            Since you've selected "Let Rematal Decide" and indicated some skills that weren't listed, we need a bit more information to understand your profile better.
-          </p>
-          
-          <FormField
-            id="moreInfo"
-            label={`Tell us about your skills and services (${formState.moreInfo?.length || 0}/${MIN_CHARS}+ characters)`}
-            required
-            error={formState.errors.moreInfo}
-          >
-            <Textarea
-              id="moreInfo"
-              value={formState.moreInfo || ''}
-              onChange={(e) => updateFormState({ moreInfo: e.target.value })}
-              className="min-h-[150px]"
-              placeholder="Please describe your professional experience, skills, and the types of services you can offer clients..."
-            />
-          </FormField>
-          
-          <div className="mt-8">
-            <FormField
-              id="skillsToolsRequested"
-              label={`What skills or tools did you find missing? (${formState.skillsToolsRequested?.length || 0}/${MIN_CHARS}+ characters)`}
-              required
-              error={formState.errors.skillsToolsRequested}
-            >
-              <Textarea
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Your Skills & Experience</h3>
+              <p className="text-gray-600 mb-6">
+                As you've chosen to let Rematal determine the best service category for you, please tell us more about your expertise and experience.
+              </p>
+              
+              <FormField
+                id="moreInfo"
+                label={`Tell us about your skills and experience (${formState.moreInfo?.length || 0}/${MIN_CHARS}+ characters)`}
+                required
+                error={formState.errors.moreInfo}
+              >
+                <Textarea
+                  id="moreInfo"
+                  value={formState.moreInfo || ''}
+                  onChange={(e) => updateFormState({ moreInfo: e.target.value })}
+                  className="min-h-[150px]"
+                  placeholder="Please describe your professional experience, key skills, and the types of services you can provide..."
+                />
+              </FormField>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Additional Skills & Tools</h3>
+              <p className="text-gray-600 mb-6">
+                We noticed you selected "Other" in the previous steps. Please tell us about any specific skills or tools you're proficient with that weren't listed.
+              </p>
+              
+              <FormField
                 id="skillsToolsRequested"
-                value={formState.skillsToolsRequested || ''}
-                onChange={(e) => updateFormState({ skillsToolsRequested: e.target.value })}
-                className="min-h-[150px]"
-                placeholder="Please tell us about any specific skills, tools, or technologies that weren't listed but you're proficient with..."
-              />
-            </FormField>
+                label={`Your additional skills and tools (${formState.skillsToolsRequested?.length || 0}/${MIN_CHARS}+ characters)`}
+                required
+                error={formState.errors.skillsToolsRequested}
+              >
+                <Textarea
+                  id="skillsToolsRequested"
+                  value={formState.skillsToolsRequested || ''}
+                  onChange={(e) => updateFormState({ skillsToolsRequested: e.target.value })}
+                  className="min-h-[150px]"
+                  placeholder="Please describe the specific skills, tools, or technologies you're proficient with that weren't listed..."
+                />
+              </FormField>
+            </div>
           </div>
         </>
       )}
