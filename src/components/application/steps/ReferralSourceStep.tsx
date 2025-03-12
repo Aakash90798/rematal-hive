@@ -81,11 +81,11 @@ const ReferralSourceStep = ({ formState, updateFormState, onSubmit }: ReferralSo
             className="space-y-3"
           >
             {referralSources.map((source) => (
-              <div key={source.id} className="flex items-center space-x-2 border p-3 rounded-md hover:bg-gray-50">
+              <div key={source.id} className="flex items-center space-x-2 pl-3 border rounded-md hover:bg-gray-50">
                 <RadioGroupItem value={source.id} id={`source-${source.id}`} />
                 <Label 
                   htmlFor={`source-${source.id}`}
-                  className="flex-1 cursor-pointer font-normal"
+                  className="flex-1 p-3 cursor-pointer font-normal"
                 >
                   {source.name}
                 </Label>

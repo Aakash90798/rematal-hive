@@ -30,7 +30,6 @@ const ExperienceCheckStep = ({ formState, updateFormState, onRejection }: Experi
     if (selectedOption === 'no') {
       await onRejection();
     } else {
-      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate loading
       updateFormState({ currentStep: 'years-of-experience' });
     }
     setLoading(false);

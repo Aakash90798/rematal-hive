@@ -35,7 +35,6 @@ const YearsOfExperienceStep = ({ formState, updateFormState, onRejection }: Year
     if (selectedExperience === 'less than 1 yr') {
       await onRejection();
     } else {
-      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate loading
       updateFormState({ currentStep: 'niches' });
     }
     setLoading(false);

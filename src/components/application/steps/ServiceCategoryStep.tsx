@@ -43,7 +43,6 @@ const ServiceCategoryStep = ({ formState, updateFormState }: ServiceCategoryStep
     if (!formState.selectedServiceCategoryId) return;
     
     setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 300)); // Simulate loading
     
     // If "Let Rematal Decide" is selected, skip to additional info or referral source
     if (formState.selectedServiceCategoryId === LET_REMATAL_DECIDE_ID) {

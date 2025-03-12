@@ -6,6 +6,7 @@ import { Linkedin } from 'lucide-react';
 import { LoadingButton } from "@/components/ui/loading-button";
 import { useState } from 'react';
 import FormStepButtons  from '@/components/application/FormStepButtons';
+import { APP_CONSTANTS } from '@/constants';
 
 interface LinkedInStepProps {
   formState: ApplicationFormState;
@@ -15,12 +16,13 @@ interface LinkedInStepProps {
 const LinkedInStep = ({ formState, updateFormState }: LinkedInStepProps) => {
   const [loading, setLoading] = useState(false);
   
-  const validateLinkedInUrl = (url: string) => {
+  const validateLinkedInUrl = (url: string): boolean => {
     if (!url) return false;
-    
-    // Basic validation for LinkedIn URLs
-    return url.includes('linkedin.com');
-  };
+
+    const linkedInRegex = APP_CONSTANTS.linkedInUrlRegex;
+
+    return linkedInRegex.test(url);
+};
   
   const handleContinue = async () => {
     setLoading(true);
@@ -29,13 +31,12 @@ const LinkedInStep = ({ formState, updateFormState }: LinkedInStepProps) => {
     if (!formState.linkedinUrl) {
       errors.linkedin = 'LinkedIn URL is required';
     } else if (!validateLinkedInUrl(formState.linkedinUrl)) {
-      errors.linkedin = 'Please enter a valid LinkedIn URL';
+      errors.linkedin = "Please enter a valid LinkedIn profile URL. eg:www.linkedin.com/company/username, www.linkedin.com/in/username";
     }
     
     updateFormState({ errors });
     
     if (Object.keys(errors).length === 0) {
-      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API call
       updateFormState({ currentStep: 'portfolio' });
     }
     setLoading(false);

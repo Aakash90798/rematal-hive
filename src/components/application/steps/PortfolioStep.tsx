@@ -39,7 +39,6 @@ const PortfolioStep = ({ formState, updateFormState }: PortfolioStepProps) => {
     updateFormState({ errors });
     
     if (Object.keys(errors).length === 0) {
-      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API call
       updateFormState({ currentStep: 'service-category' });
     }
     setLoading(false);
