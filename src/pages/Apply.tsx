@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
@@ -19,9 +18,7 @@ import SuccessStep from '@/components/application/steps/SuccessStep';
 import RejectionStep from '@/components/application/steps/RejectionStep';
 import ContactSection from '@/components/application/ContactSection';
 import { checkEmailStatus, markUserAsRejected, submitApplication } from '@/services/formService';
-
-// Constant for "Let Rematal Decide" ID
-const LET_REMATAL_DECIDE_ID = "bab11423-d214-4c43-855e-94e7bfb92b38";
+import { APP_CONSTANTS } from '@/constants';
 
 const initialFormState: ApplicationFormState = {
   firstName: '',
@@ -38,10 +35,14 @@ const initialFormState: ApplicationFormState = {
   selectedSubcategoryIds: [],
   selectedToolIds: [],
   additionalInfo: '',
+  moreInfo: '',
+  skillsToolsRequested: '',
   referralSourceId: '',
   currentStep: 'personal-info',
   errors: {},
-  shouldShowAdditionalInfo: false // New flag to track if we need to show additional info step
+  shouldShowAdditionalInfo: false,
+  toolsData: [],
+  subcategoriesData: []
 };
 
 const Apply = () => {
@@ -55,24 +56,30 @@ const Apply = () => {
     window.scrollTo(0, 0);
   }, [formState.currentStep]);
 
-  // Effect to check if we need to show the additional info step
+  // Effect to determine if additional info step should be shown
   useEffect(() => {
     let needsAdditionalInfo = false;
-
-    // Check for "other" selections or "let rematal decide"
-    if (formState.selectedServiceCategoryId === LET_REMATAL_DECIDE_ID) {
+    
+    // Check for Let Rematal Decide
+    const isRematalDecide = formState.selectedServiceCategoryId === APP_CONSTANTS.LET_REMATAL_DECIDE_ID;
+    
+    // Check for "other" in subcategories
+    const hasOtherInSubcategories = formState.selectedSubcategoryIds.some(id => {
+      const subcategory = formState.subcategoriesData?.find(sub => sub.id === id);
+      return subcategory?.name.toLowerCase().includes('other');
+    });
+    
+    // Check for "other" in tools
+    const hasOtherInTools = formState.selectedToolIds.some(id => {
+      const tool = formState.toolsData?.find(tool => tool.id === id);
+      return tool?.name.toLowerCase().includes('other');
+    });
+    
+    // Set flag if any condition is met
+    if (isRematalDecide || hasOtherInSubcategories || hasOtherInTools) {
       needsAdditionalInfo = true;
-    } else {
-      // Check if "other" is selected in any of the previous steps
-      const hasOtherOptions = 
-        formState.selectedNicheIds.includes('other') || 
-        formState.selectedServiceCategoryId === 'other' ||
-        formState.selectedSubcategoryIds.includes('other') ||
-        formState.selectedToolIds.includes('other');
-      
-      needsAdditionalInfo = hasOtherOptions;
     }
-
+    
     if (needsAdditionalInfo !== formState.shouldShowAdditionalInfo) {
       setFormState(prev => ({
         ...prev,
@@ -80,18 +87,31 @@ const Apply = () => {
       }));
     }
   }, [
-    formState.selectedNicheIds, 
-    formState.selectedServiceCategoryId, 
-    formState.selectedSubcategoryIds, 
-    formState.selectedToolIds
+    formState.selectedServiceCategoryId,
+    formState.selectedSubcategoryIds,
+    formState.selectedToolIds,
+    formState.subcategoriesData,
+    formState.toolsData
   ]);
 
   const updateFormState = (updates: Partial<ApplicationFormState>) => {
-    setFormState(prev => ({
-      ...prev,
-      ...updates,
-      errors: { ...prev.errors, ...(updates.errors || {}) }
-    }));
+    setFormState(prev => {
+      const newState = {
+        ...prev,
+        ...updates,
+        errors: { ...prev.errors, ...(updates.errors || {}) }
+      };
+      
+      // Reset subcategories and tools if service category changes
+      if (updates.selectedServiceCategoryId && updates.selectedServiceCategoryId !== prev.selectedServiceCategoryId) {
+        newState.selectedSubcategoryIds = [];
+        newState.selectedToolIds = [];
+        newState.subcategoriesData = [];
+        newState.toolsData = [];
+      }
+      
+      return newState;
+    });
   };
 
   const handleBack = () => {
@@ -250,12 +270,19 @@ const Apply = () => {
           />
         );
       case 'additional-info':
-        return (
-          <AdditionalInfoStep 
-            formState={formState} 
-            updateFormState={updateFormState} 
-          />
-        );
+        // Only show additional info step if it's needed
+        if (formState.shouldShowAdditionalInfo) {
+          return (
+            <AdditionalInfoStep 
+              formState={formState} 
+              updateFormState={updateFormState} 
+            />
+          );
+        } else {
+          // Skip to referral source if not needed
+          updateFormState({ currentStep: 'referral-source' });
+          return null;
+        }
       case 'referral-source':
         return (
           <ReferralSourceStep 

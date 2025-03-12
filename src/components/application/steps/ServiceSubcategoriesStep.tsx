@@ -7,6 +7,7 @@ import { ApplicationFormState, ServiceSubcategory } from '@/types/form';
 import { fetchSubcategoriesForCategory } from '@/services/formService';
 import FormStepButtons from '@/components/application/FormStepButtons';
 import { Loader2 } from "lucide-react";
+import { APP_CONSTANTS } from '@/constants';
 
 interface ServiceSubcategoriesStepProps {
   formState: ApplicationFormState;
@@ -26,10 +27,22 @@ const ServiceSubcategoriesStep = ({ formState, updateFormState }: ServiceSubcate
         return;
       }
       
+      // Skip this step if "Let Rematal Decide" is selected
+      if (formState.selectedServiceCategoryId === APP_CONSTANTS.LET_REMATAL_DECIDE_ID) {
+        updateFormState({ 
+          currentStep: 'additional-info',
+          shouldShowAdditionalInfo: true
+        });
+        return;
+      }
+      
       try {
         setDataLoading(true);
         const fetchedSubcategories = await fetchSubcategoriesForCategory(formState.selectedServiceCategoryId);
         setSubcategories(fetchedSubcategories);
+        
+        // Store subcategories data for case determination in additional info step
+        updateFormState({ subcategoriesData: fetchedSubcategories });
       } catch (error) {
         console.error('Error loading subcategories:', error);
       } finally {
@@ -53,11 +66,10 @@ const ServiceSubcategoriesStep = ({ formState, updateFormState }: ServiceSubcate
     
     if (Object.keys(errors).length === 0) {
       // Check if "Other" is selected and determine if additional info is needed
-      const hasOtherSelected = formState.selectedSubcategoryIds.includes('other') || 
-        subcategories.some(subcat => 
-          formState.selectedSubcategoryIds.includes(subcat.id) && 
-          subcat.name.toLowerCase().includes('other')
-        );
+      const hasOtherSelected = formState.selectedSubcategoryIds.some(id => {
+        const subcategory = subcategories.find(sub => sub.id === id);
+        return subcategory?.name.toLowerCase().includes('other');
+      });
         
       if (hasOtherSelected) {
         updateFormState({ shouldShowAdditionalInfo: true });

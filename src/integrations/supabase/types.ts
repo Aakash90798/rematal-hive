@@ -160,7 +160,9 @@ export type Database = {
           id: string
           last_rejected_date: string | null
           linkedin_url: string | null
+          more_info: string | null
           portfolio_url: string | null
+          skills_tools_requested: string | null
           user_id: string
           video_interview_response_id: string | null
           years_of_experience: string
@@ -171,7 +173,9 @@ export type Database = {
           id?: string
           last_rejected_date?: string | null
           linkedin_url?: string | null
+          more_info?: string | null
           portfolio_url?: string | null
+          skills_tools_requested?: string | null
           user_id: string
           video_interview_response_id?: string | null
           years_of_experience: string
@@ -182,7 +186,9 @@ export type Database = {
           id?: string
           last_rejected_date?: string | null
           linkedin_url?: string | null
+          more_info?: string | null
           portfolio_url?: string | null
+          skills_tools_requested?: string | null
           user_id?: string
           video_interview_response_id?: string | null
           years_of_experience?: string

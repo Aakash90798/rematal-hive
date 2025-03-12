@@ -7,6 +7,7 @@ import { ApplicationFormState, Tool } from '@/types/form';
 import { fetchToolsForCategory } from '@/services/formService';
 import FormStepButtons from '@/components/application/FormStepButtons';
 import { Loader2 } from "lucide-react";
+import { APP_CONSTANTS } from '@/constants';
 
 interface ToolsStepProps {
   formState: ApplicationFormState;
@@ -26,10 +27,22 @@ const ToolsStep = ({ formState, updateFormState }: ToolsStepProps) => {
         return;
       }
       
+      // Skip this step if "Let Rematal Decide" is selected
+      if (formState.selectedServiceCategoryId === APP_CONSTANTS.LET_REMATAL_DECIDE_ID) {
+        updateFormState({ 
+          currentStep: 'additional-info',
+          shouldShowAdditionalInfo: true
+        });
+        return;
+      }
+      
       try {
         setDataLoading(true);
         const fetchedTools = await fetchToolsForCategory(formState.selectedServiceCategoryId);
         setTools(fetchedTools);
+        
+        // Store tools data for case determination in additional info step
+        updateFormState({ toolsData: fetchedTools });
       } catch (error) {
         console.error('Error loading tools:', error);
       } finally {
@@ -53,11 +66,10 @@ const ToolsStep = ({ formState, updateFormState }: ToolsStepProps) => {
     
     if (Object.keys(errors).length === 0) {
       // Check if "Other" is selected and determine if additional info is needed
-      const hasOtherSelected = formState.selectedToolIds.includes('other') || 
-        tools.some(tool => 
-          formState.selectedToolIds.includes(tool.id) && 
-          tool.name.toLowerCase().includes('other')
-        );
+      const hasOtherSelected = formState.selectedToolIds.some(id => {
+        const tool = tools.find(tool => tool.id === id);
+        return tool?.name.toLowerCase().includes('other');
+      });
         
       if (hasOtherSelected) {
         updateFormState({ shouldShowAdditionalInfo: true });

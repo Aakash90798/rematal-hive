@@ -1,3 +1,4 @@
+
 import { supabase } from '@/lib/supabase';
 import { ApplicationFormState, Niche, ServiceCategory, ServiceCategoryWithRelations, ServiceSubcategory, Tool, ReferralSource } from '@/types/form';
 
@@ -175,7 +176,9 @@ export async function submitApplication(formData: ApplicationFormState): Promise
         years_of_experience: formData.yearsOfExperience!,
         linkedin_url: formData.linkedinUrl,
         portfolio_url: formData.portfolioUrl,
-        has_ecommerce_experience: formData.hasExperience!
+        has_ecommerce_experience: formData.hasExperience!,
+        more_info: formData.moreInfo || null,
+        skills_tools_requested: formData.skillsToolsRequested || null
       })
       .select()
       .single();

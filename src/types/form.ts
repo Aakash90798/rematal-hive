@@ -34,9 +34,15 @@ export interface ApplicationFormState {
   selectedSubcategoryIds: string[];
   selectedToolIds: string[];
   
-  // Additional info if "other" is selected
+  // Additional info fields
   additionalInfo?: string;
   shouldShowAdditionalInfo?: boolean;
+  moreInfo?: string;
+  skillsToolsRequested?: string;
+  
+  // Data for determining cases
+  toolsData?: Tool[];
+  subcategoriesData?: ServiceSubcategory[];
   
   // Referral source
   referralSource?: string;
