@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import FormField from '@/components/application/FormField';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ApplicationFormState } from '@/types/form';
-import { LoadingButton } from "@/components/ui/loading-button";
 import FormStepButtons from '@/components/application/FormStepButtons';
 
 interface PersonalInfoStepProps {
@@ -55,8 +53,7 @@ const PersonalInfoStep = ({ formState, updateFormState, onEmailCheck }: Personal
     }
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     validate();
   };
   

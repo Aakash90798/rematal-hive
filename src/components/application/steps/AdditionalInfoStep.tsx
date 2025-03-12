@@ -3,15 +3,18 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ApplicationFormState } from '@/types/form';
 import FormStepButtons from '@/components/application/FormStepButtons';
+import { useState } from 'react';
 
 interface AdditionalInfoStepProps {
   formState: ApplicationFormState;
   updateFormState: (updates: Partial<ApplicationFormState>) => void;
-  loading: boolean;
 }
 
-const AdditionalInfoStep = ({ formState, updateFormState, loading }: AdditionalInfoStepProps) => {
+const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepProps) => {
+  const [loading, setLoading] = useState(false);
+
   const handleContinue = () => {
+    setLoading(true);
     const errors: Record<string, string> = {};
     
     if (!formState.additionalInfo) {
@@ -25,6 +28,7 @@ const AdditionalInfoStep = ({ formState, updateFormState, loading }: AdditionalI
     if (Object.keys(errors).length === 0) {
       updateFormState({ currentStep: 'referral-source' });
     }
+    setLoading(false);
   };
   
   return (

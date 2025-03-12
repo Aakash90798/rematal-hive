@@ -24,7 +24,7 @@ const initialFormState: ApplicationFormState = {
   email: '',
   mobileNo: '',
   city: '',
-  hasEcommerceExperience: null,
+  hasExperience: null,
   yearsOfExperience: null,
   selectedNicheIds: [],
   linkedinUrl: '',
