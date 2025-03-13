@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, User } from "lucide-react";
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import Logo from './logo';
+import Logo from './Logo';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -55,9 +55,9 @@ const Navbar = () => {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white border-b border-gray-200 shadow-md max-sm:py-1 py-2' : 'bg-transparent max-sm:py-2 py-3'}`}>
       <div className="container-custom flex items-center justify-between">
         <Logo/>
-        
+
         {/* Desktop Navigation */}
-        <nav className="hidden sm:flex items-center space-x-8">
+        <nav className="hidden min-[800px]:flex items-center space-x-8">
           {!isAuthPage && (
             <>
               <a href="/#problem" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Why Rematal</a>
