@@ -6,9 +6,8 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { signOut, checkApplicationStatus } from '@/lib/auth';
 import { User, LogOut, FileText, Clock, Check, X } from 'lucide-react';
-import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import ContactSection from '@/components/application/ContactSection';
+import NavbarInner from '@/components/NavbarInner';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -17,7 +16,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const fetchApplicationStatus = async () => {
       if (user) {
@@ -27,25 +26,28 @@ const Dashboard = () => {
       }
       setLoading(false);
     };
-    
-    fetchApplicationStatus();
+
+    const timer = setTimeout(fetchApplicationStatus, 1500);
+
+    return () => clearTimeout(timer);
   }, [user]);
-  
   const handleLogout = async () => {
-    try {
-      await signOut();
-      toast({
-        title: "Logged out",
-        description: "You have been successfully logged out",
-      });
-      navigate('/');
-    } catch (error) {
-      console.error("Error signing out:", error);
-      toast({
-        title: "Error",
-        description: "Failed to sign out",
-        variant: "destructive"
-      });
+    if (window.confirm("Are you sure you want to log out?")) {
+      try {
+        await signOut();
+        toast({
+          title: "Logged out",
+          description: "You have been successfully logged out",
+        });
+        navigate('/');
+      } catch (error) {
+        console.error("Error signing out:", error);
+        toast({
+          title: "Error",
+          description: "Failed to sign out",
+          variant: "destructive"
+        });
+      }
     }
   };
   
@@ -66,9 +68,9 @@ const Dashboard = () => {
   }
   
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <div className="flex-1 py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <NavbarInner />
+      <div className="flex-1 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-3xl mx-auto">
           <div className="bg-white p-8 rounded-xl shadow-md">
             <div className="flex justify-between items-center mb-8">
@@ -76,10 +78,10 @@ const Dashboard = () => {
               <Button 
                 onClick={handleLogout}
                 variant="outline"
-                className="bg-gray-50"
+                className="bg-gray-50 text-rose-500 hover:text-red-600"
               >
                 <LogOut className="h-4 w-4 mr-2" />
-                Sign out
+                Log out
               </Button>
             </div>
             
@@ -184,10 +186,6 @@ const Dashboard = () => {
                 )}
               </div>
             </div>
-          </div>
-          
-          <div className="mt-8">
-            <ContactSection />
           </div>
         </div>
       </div>

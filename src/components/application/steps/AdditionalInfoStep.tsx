@@ -35,13 +35,13 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
   const handleMoreInfoChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     if (value.length <= MAX_CHARS) {
-      updateFormState({ moreInfo: value });
+      updateFormState({ moreInfo: value, errors: { moreInfo: '' } });
       setCharCount(value.length);
     }
   };
   
   const handleSkillsToolsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    updateFormState({ skillsToolsRequested: e.target.value });
+    updateFormState({ skillsToolsRequested: e.target.value, errors: { skillsToolsRequested: '' } });
   };
   
   const handleContinue = () => {
@@ -63,7 +63,7 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
     
     // Clear errors and proceed
     updateFormState({ 
-      errors: {},
+      errors: { moreInfo: '', skillsToolsRequested: '' },
       currentStep: 'referral-source' 
     });
   };

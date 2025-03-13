@@ -70,6 +70,11 @@ export async function resendVerificationEmail(email: string) {
 }
 
 export async function checkApplicationStatus(userId: string) {
+
+  if(!userId) {
+    return { status: null, rejectedDate: null };
+  }
+
   const { data, error } = await supabase
     .from('freelancers')
     .select('application_status, last_rejected_date')
@@ -77,7 +82,7 @@ export async function checkApplicationStatus(userId: string) {
     .single();
   
   if (error) {
-    console.error('Error checking application status:', error);
+    //console.error('Error checking application status:', error);
     return { status: null, rejectedDate: null };
   }
   

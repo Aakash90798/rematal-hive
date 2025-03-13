@@ -1,6 +1,5 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { useToast } from "@/hooks/use-toast";
 import { getCurrentUser, AuthUser } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 
@@ -21,7 +20,6 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
 
   const checkSession = async () => {
     try {

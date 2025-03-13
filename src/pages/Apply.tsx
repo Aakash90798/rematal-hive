@@ -19,8 +19,9 @@ import ReferralSourceStep from '@/components/application/steps/ReferralSourceSte
 import SuccessStep from '@/components/application/steps/SuccessStep';
 import RejectionStep from '@/components/application/steps/RejectionStep';
 import ContactSection from '@/components/application/ContactSection';
-import { checkEmailStatus, markUserAsRejected, submitApplication, checkApplicationStatus } from '@/services/formService';
+import { markUserAsRejected, submitApplication, checkApplicationStatus } from '@/services/formService';
 import { APP_CONSTANTS } from '@/constants';
+import NavbarInner from '@/components/NavbarInner';
 
 const initialFormState: ApplicationFormState = {
   firstName: '',
@@ -307,7 +308,8 @@ const Apply = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-20">
+    <div className="min-h-screen bg-gray-50">
+      <NavbarInner />
       <div className="container max-w-3xl mx-auto px-4">
         <div className="bg-white rounded-xl shadow-md p-6 md:p-10">
           <FormProgress currentStep={formState.currentStep} />
