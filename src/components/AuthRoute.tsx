@@ -32,9 +32,15 @@ const AuthRoute = ({
 
   // If email verification is required and the user is logged in but email is not verified
   if (requireAuth && requireEmailVerification && user) {
-    const session = supabase.auth.session();
+    // Use getSession() to check if email is verified
+    const checkEmailVerification = async () => {
+      const { data } = await supabase.auth.getSession();
+      return data?.session?.user?.email_confirmed_at;
+    };
     
-    if (session && !session.user?.email_confirmed_at) {
+    // This is a workaround for now - checking session synchronously
+    // Ideally this would be handled with a proper hook or context
+    if (!user.email_confirmed_at) {
       return <Navigate to="/verify-email" state={{ email: user.email }} replace />;
     }
   }
