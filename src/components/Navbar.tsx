@@ -56,8 +56,7 @@ const Navbar = () => {
       <div className="container-custom flex items-center justify-between">
         <Logo/>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden min-[800px]:flex items-center space-x-8">
+        <nav className="hidden lg:flex items-center space-x-8">
           {!isAuthPage && (
             <>
               <a href="/#problem" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Why Rematal</a>
@@ -69,7 +68,7 @@ const Navbar = () => {
           )}
         </nav>
 
-        <div className="hidden sm:flex items-center space-x-4">
+        <div className="hidden lg:flex items-center space-x-4">
           {user ? (
             <>
               <Button variant="outline" className="rounded-full px-6" asChild>
@@ -97,16 +96,16 @@ const Navbar = () => {
 
         <button
           onClick={toggleMobileMenu}
-          className="sm:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white text-rematal-dark z-[60]"
+          className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white text-rematal-dark z-[60]"
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
         >
-          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Mobile Navigation - updated to make buttons full width */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-[55] bg-white pt-20 overflow-y-auto flex flex-col w-full">
+        <div className="fixed inset-0 z-[55] bg-white pt-20 overflow-y-auto flex flex-col w-full">
           <div className="container-custom flex-1 flex flex-col w-full">
             <nav className="flex flex-col space-y-5 py-6 w-full">
               {!isAuthPage && (
@@ -163,7 +162,7 @@ const Navbar = () => {
                     {!isAuthPage && (
                       <Button
                         variant="outline"
-                        className="w-full py-6 text-lg"
+                        className="w-full py-6 text-lg rounded-full text-rematal-primary"
                         onClick={handleMobileNavClick}
                         asChild
                       >
