@@ -1,5 +1,117 @@
 import { supabase } from "@/lib/supabase";
-import { ApplicationFormState } from "@/types/form";
+import { ApplicationFormState, Niche, ServiceCategory, ServiceSubcategory, Tool, ReferralSource } from "@/types/form";
+
+/**
+ * Fetches niches from the database
+ */
+export const fetchNiches = async (): Promise<Niche[]> => {
+  try {
+    const { data, error } = await supabase
+      .from('niches')
+      .select('*')
+      .order('name');
+    
+    if (error) {
+      console.error('Error fetching niches:', error);
+      return [];
+    }
+    
+    return data || [];
+  } catch (error) {
+    console.error('Unexpected error fetching niches:', error);
+    return [];
+  }
+};
+
+/**
+ * Fetches service categories from the database
+ */
+export const fetchServiceCategories = async (): Promise<ServiceCategory[]> => {
+  try {
+    const { data, error } = await supabase
+      .from('service_categories')
+      .select('*')
+      .order('name');
+    
+    if (error) {
+      console.error('Error fetching service categories:', error);
+      return [];
+    }
+    
+    return data || [];
+  } catch (error) {
+    console.error('Unexpected error fetching service categories:', error);
+    return [];
+  }
+};
+
+/**
+ * Fetches service subcategories for a given category
+ */
+export const fetchSubcategoriesForCategory = async (categoryId: string): Promise<ServiceSubcategory[]> => {
+  try {
+    const { data, error } = await supabase
+      .from('service_subcategories')
+      .select('*')
+      .eq('service_category_id', categoryId)
+      .order('name');
+    
+    if (error) {
+      console.error('Error fetching subcategories:', error);
+      return [];
+    }
+    
+    return data || [];
+  } catch (error) {
+    console.error('Unexpected error fetching subcategories:', error);
+    return [];
+  }
+};
+
+/**
+ * Fetches tools for a given category
+ */
+export const fetchToolsForCategory = async (categoryId: string): Promise<Tool[]> => {
+  try {
+    const { data, error } = await supabase
+      .from('tools')
+      .select('*')
+      .eq('service_category_id', categoryId)
+      .order('name');
+    
+    if (error) {
+      console.error('Error fetching tools:', error);
+      return [];
+    }
+    
+    return data || [];
+  } catch (error) {
+    console.error('Unexpected error fetching tools:', error);
+    return [];
+  }
+};
+
+/**
+ * Fetches referral sources
+ */
+export const fetchReferralSources = async (): Promise<ReferralSource[]> => {
+  try {
+    const { data, error } = await supabase
+      .from('referral_sources')
+      .select('*')
+      .order('name');
+    
+    if (error) {
+      console.error('Error fetching referral sources:', error);
+      return [];
+    }
+    
+    return data || [];
+  } catch (error) {
+    console.error('Unexpected error fetching referral sources:', error);
+    return [];
+  }
+};
 
 /**
  * Marks a user as rejected and records the rejection date
