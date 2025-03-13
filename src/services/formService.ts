@@ -47,14 +47,33 @@ export const fetchServiceCategories = async (): Promise<ServiceCategory[]> => {
 };
 
 /**
- * Fetches service subcategories for a given category
+ * Fetches service subcategories for a given category using the junction table
  */
 export const fetchSubcategoriesForCategory = async (categoryId: string): Promise<ServiceSubcategory[]> => {
   try {
+    // First get the subcategory IDs associated with this category via junction table
+    const { data: junctionData, error: junctionError } = await supabase
+      .from('service_category_subcategories')
+      .select('service_subcategory_id')
+      .eq('service_category_id', categoryId);
+    
+    if (junctionError) {
+      console.error('Error fetching subcategory relationships:', junctionError);
+      return [];
+    }
+    
+    if (!junctionData || junctionData.length === 0) {
+      return [];
+    }
+    
+    // Extract the subcategory IDs
+    const subcategoryIds = junctionData.map(item => item.service_subcategory_id);
+    
+    // Then fetch the actual subcategories
     const { data, error } = await supabase
       .from('service_subcategories')
       .select('*')
-      .eq('service_category_id', categoryId)
+      .in('id', subcategoryIds)
       .order('name');
     
     if (error) {
@@ -70,14 +89,33 @@ export const fetchSubcategoriesForCategory = async (categoryId: string): Promise
 };
 
 /**
- * Fetches tools for a given category
+ * Fetches tools for a given category using the junction table
  */
 export const fetchToolsForCategory = async (categoryId: string): Promise<Tool[]> => {
   try {
+    // First get the tool IDs associated with this category via junction table
+    const { data: junctionData, error: junctionError } = await supabase
+      .from('service_category_tools')
+      .select('tool_id')
+      .eq('service_category_id', categoryId);
+    
+    if (junctionError) {
+      console.error('Error fetching tool relationships:', junctionError);
+      return [];
+    }
+    
+    if (!junctionData || junctionData.length === 0) {
+      return [];
+    }
+    
+    // Extract the tool IDs
+    const toolIds = junctionData.map(item => item.tool_id);
+    
+    // Then fetch the actual tools
     const { data, error } = await supabase
       .from('tools')
       .select('*')
-      .eq('service_category_id', categoryId)
+      .in('id', toolIds)
       .order('name');
     
     if (error) {

@@ -45,7 +45,12 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
   };
   
   const handleBack = () => {
-    updateFormState({ currentStep: 'tools' });
+    // Check if this is the "Let Rematal Decide" case
+    if (isRematalDecide) {
+      updateFormState({ currentStep: 'service-category' });
+    } else {
+      updateFormState({ currentStep: 'tools' });
+    }
   };
   
   const handleContinue = () => {
