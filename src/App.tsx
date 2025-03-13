@@ -1,6 +1,5 @@
 
 import {
-  BrowserRouter as Router,
   Route,
   Routes,
   BrowserRouter
@@ -16,6 +15,8 @@ import ResetPassword from './pages/ResetPassword';
 import Index from './pages/Index';
 import { TooltipProvider } from './components/ui/tooltip';
 import { Toaster } from './components/ui/toaster';
+import AuthCallback from './pages/AuthCallback';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -29,9 +30,11 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           {/* Fixed AuthRoute usage by properly wrapping the element */}
-          <Route path="/dashboard" element={<AuthRoute><Dashboard /></AuthRoute>} />
-          <Route path="/apply" element={<AuthRoute><Apply /></AuthRoute>} />
+          <Route path="/dashboard" element={<AuthRoute requireAuth={true} requireEmailVerification={true}><Dashboard /></AuthRoute>} />
+          <Route path="/apply" element={<AuthRoute requireAuth={true} requireEmailVerification={true}><Apply /></AuthRoute>} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
       </TooltipProvider>
