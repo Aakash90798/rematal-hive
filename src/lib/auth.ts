@@ -4,6 +4,7 @@ import { supabase } from "./supabase";
 export type AuthUser = {
   id: string;
   email: string;
+  email_confirmed_at?: string | null;
 };
 
 export async function signInWithEmail(email: string, password: string) {
@@ -52,7 +53,11 @@ export async function signOut() {
 
 export async function getCurrentUser(): Promise<AuthUser | null> {
   const { data: { session } } = await supabase.auth.getSession();
-  return session?.user ? { id: session.user.id, email: session.user.email ?? '' } : null;
+  return session?.user ? { 
+    id: session.user.id, 
+    email: session.user.email ?? '',
+    email_confirmed_at: session.user.email_confirmed_at 
+  } : null;
 }
 
 export async function resendVerificationEmail(email: string) {
