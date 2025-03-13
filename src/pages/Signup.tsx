@@ -188,7 +188,7 @@ const Signup = () => {
                 <span className="flex items-center"><span className="animate-spin mr-2">●</span> Connecting...</span>
               ) : (
                 <>
-                  <FaLinkedin className="w-5 h-5 mr-2" />
+                  <FaLinkedin color="#0077B5" className="w-5 h-5 mr-2" />
                   Sign up with LinkedIn
                 </>
               )}
@@ -263,7 +263,7 @@ const Signup = () => {
             <p className="text-sm text-rematal-gray">
               Already have an account?{" "}
               <Link to="/login" className="font-medium text-rematal-primary hover:text-rematal-primary/80">
-                Sign in
+                Log in
               </Link>
             </p>
           </div>

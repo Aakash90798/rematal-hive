@@ -106,7 +106,7 @@ const VerifyEmail = () => {
             <div className="white p-4 rounded-lg text-left">
               <div className="flex items-start">
                 <p className="text-sm text-gray-700">
-                  If this page doesn't automatically update after verfication, please try to login.
+                  If this page doesn't automatically update after verification, please try to login.
                 </p>
               </div>
             </div>

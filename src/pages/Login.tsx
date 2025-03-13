@@ -183,7 +183,7 @@ const Login = () => {
                 <span className="flex items-center"><span className="animate-spin mr-2">●</span> Connecting...</span>
               ) : (
                 <>
-                  <FaLinkedin className="w-5 h-5 mr-2" />
+                  <FaLinkedin color="#0077B5" className="w-5 h-5 mr-2" />
                   Continue with LinkedIn
                 </>
               )}
