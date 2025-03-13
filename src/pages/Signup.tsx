@@ -7,9 +7,9 @@ import { LoadingButton } from "@/components/ui/loading-button";
 import { useToast } from '@/hooks/use-toast';
 import { signUpWithEmail, signInWithGoogle, signInWithLinkedIn } from '@/lib/auth';
 import { FaLinkedin } from "react-icons/fa";
-import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useAuth } from '@/contexts/AuthContext';
+import NavbarInner from '@/components/NavbarInner';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -130,9 +130,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <div className="flex-1 pt-24 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <NavbarInner />
+      <div className="flex-1 pt-5 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-md">
           {user && (
             <div className="bg-blue-50 p-4 rounded-lg mb-4 text-center">
