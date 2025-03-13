@@ -1,4 +1,3 @@
-
 import { supabase } from "./supabase";
 
 export type AuthUser = {
@@ -6,6 +5,8 @@ export type AuthUser = {
   email: string;
   email_confirmed_at?: string | null;
 };
+
+export type UserType = 'EXPERT' | 'CLIENT' | 'ADMIN';
 
 export async function signInWithEmail(email: string, password: string) {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -76,7 +77,6 @@ export async function resendVerificationEmail(email: string) {
 }
 
 export async function checkApplicationStatus(userId: string) {
-
   if(!userId) {
     return { status: null, rejectedDate: null };
   }

@@ -155,7 +155,9 @@ export type Database = {
       }
       freelancers: {
         Row: {
-          application_status: string | null
+          application_status:
+            | Database["public"]["Enums"]["applicationstatus"]
+            | null
           created_at: string | null
           has_ecommerce_experience: boolean
           id: string
@@ -169,7 +171,9 @@ export type Database = {
           years_of_experience: string
         }
         Insert: {
-          application_status?: string | null
+          application_status?:
+            | Database["public"]["Enums"]["applicationstatus"]
+            | null
           created_at?: string | null
           has_ecommerce_experience: boolean
           id?: string
@@ -183,7 +187,9 @@ export type Database = {
           years_of_experience: string
         }
         Update: {
-          application_status?: string | null
+          application_status?:
+            | Database["public"]["Enums"]["applicationstatus"]
+            | null
           created_at?: string | null
           has_ecommerce_experience?: boolean
           id?: string
@@ -451,6 +457,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      applicationstatus: "pending" | "approved" | "rejected"
       usertypes: "EXPERT" | "CLIENT" | "ADMIN"
     }
     CompositeTypes: {

@@ -1,5 +1,6 @@
+export type ApplicationStatus = 'pending' | 'approved' | 'rejected';
 
-export type FormStep = 
+export type FormStep =
   | 'personal-info'
   | 'experience-check'
   | 'years-of-experience'
@@ -13,47 +14,6 @@ export type FormStep =
   | 'referral-source'
   | 'success'
   | 'rejection';
-
-export interface ApplicationFormState {
-  // Personal Info
-  firstName: string;
-  lastName: string;
-  email: string;
-  mobileNo: string;
-  city: string;
-  
-  // Experience
-  hasExperience?: boolean;
-  yearsOfExperience?: string;
-  
-  // Skills and Experience
-  selectedNicheIds: string[];
-  linkedinUrl?: string;
-  portfolioUrl?: string;
-  selectedServiceCategoryId?: string;
-  selectedSubcategoryIds: string[];
-  selectedToolIds: string[];
-  
-  // Additional info fields
-  additionalInfo?: string;
-  shouldShowAdditionalInfo?: boolean;
-  moreInfo?: string;
-  skillsToolsRequested?: string;
-  
-  // Data for determining cases
-  toolsData?: Tool[];
-  subcategoriesData?: ServiceSubcategory[];
-  
-  // Referral source
-  referralSource?: string;
-  referralSourceId?: string;
-  
-  // Current step
-  currentStep: FormStep;
-  
-  // Error tracking
-  errors: Record<string, string>;
-}
 
 export interface Niche {
   id: string;
@@ -80,7 +40,27 @@ export interface ReferralSource {
   name: string;
 }
 
-export interface ServiceCategoryWithRelations extends ServiceCategory {
-  subcategories: ServiceSubcategory[];
-  tools: Tool[];
+export interface ApplicationFormState {
+  firstName: string;
+  lastName: string;
+  email: string;
+  mobileNo: string;
+  city: string;
+  hasExperience: boolean | null;
+  yearsOfExperience: string | null;
+  selectedNicheIds: string[];
+  linkedinUrl: string;
+  portfolioUrl: string;
+  selectedServiceCategoryId: string;
+  selectedSubcategoryIds: string[];
+  selectedToolIds: string[];
+  additionalInfo: string;
+  moreInfo: string;
+  skillsToolsRequested: string;
+  referralSourceId: string;
+  currentStep: FormStep;
+  errors: Record<string, string>;
+  shouldShowAdditionalInfo: boolean;
+  toolsData: Tool[];
+  subcategoriesData: ServiceSubcategory[];
 }

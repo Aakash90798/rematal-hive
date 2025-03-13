@@ -2,6 +2,9 @@
 import { supabase } from "@/lib/supabase";
 import { ApplicationFormState, Niche, ServiceCategory, ServiceSubcategory, Tool, ReferralSource } from "@/types/form";
 
+// Define the application status enum type to match Supabase
+export type ApplicationStatus = 'pending' | 'approved' | 'rejected';
+
 /**
  * Fetches niches from the database
  */
@@ -157,15 +160,44 @@ export const fetchReferralSources = async (): Promise<ReferralSource[]> => {
  */
 export const markUserAsRejected = async (formState: ApplicationFormState) => {
   try {
-    await supabase
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      return { success: false, message: 'User not authenticated' };
+    }
+    
+    // Update user with type EXPERT
+    const { error: userError } = await supabase
+      .from('users')
+      .update({
+        first_name: formState.firstName,
+        last_name: formState.lastName,
+        mobile_no: formState.mobileNo,
+        city: formState.city,
+        user_type: 'EXPERT'  // Set user type to EXPERT
+      })
+      .eq('id', user.id);
+      
+    if (userError) {
+      console.error('Error updating user information:', userError);
+      return { success: false, message: 'Failed to update user information' };
+    }
+    
+    // Create or update freelancer record with rejected status
+    const { error: freelancerError } = await supabase
       .from('freelancers')
       .insert({
-        user_id: supabase.auth.getUser().then(({ data }) => data.user?.id),
-        has_ecommerce_experience: false,
-        years_of_experience: '',
+        user_id: user.id,
+        has_ecommerce_experience: formState.hasExperience || false,
+        years_of_experience: formState.yearsOfExperience || '',
         last_rejected_date: new Date().toISOString(),
-        application_status: 'rejected'
-      });
+        application_status: 'rejected'  // Using enum value
+      }).select('id');
+    
+    if (freelancerError) {
+      console.error('Error marking user as rejected:', freelancerError);
+      return { success: false, message: 'Failed to update user status' };
+    }
     
     return { success: true };
   } catch (error) {
@@ -186,7 +218,7 @@ export const submitApplication = async (formState: ApplicationFormState): Promis
       return { success: false, message: 'User not authenticated' };
     }
     
-    // Update user information - Note: email is now managed by auth.users, not in our users table
+    // Update user information including setting user_type to EXPERT
     const { error: userError } = await supabase
       .from('users')
       .update({
@@ -194,7 +226,8 @@ export const submitApplication = async (formState: ApplicationFormState): Promis
         last_name: formState.lastName,
         mobile_no: formState.mobileNo,
         city: formState.city,
-        referral_source_id: formState.referralSourceId || null
+        referral_source_id: formState.referralSourceId || null,
+        user_type: 'EXPERT'  // Set user type to EXPERT
       })
       .eq('id', user.id);
 
@@ -223,7 +256,7 @@ export const submitApplication = async (formState: ApplicationFormState): Promis
           portfolio_url: formState.portfolioUrl,
           more_info: formState.moreInfo,
           skills_tools_requested: formState.skillsToolsRequested,
-          application_status: 'pending'
+          application_status: 'pending'  // Using enum value
         })
         .eq('id', existingFreelancer.id);
 
@@ -245,7 +278,7 @@ export const submitApplication = async (formState: ApplicationFormState): Promis
           portfolio_url: formState.portfolioUrl,
           more_info: formState.moreInfo,
           skills_tools_requested: formState.skillsToolsRequested,
-          application_status: 'pending'
+          application_status: 'pending'  // Using enum value
         })
         .select('id')
         .single();
