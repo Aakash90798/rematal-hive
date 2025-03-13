@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { useToast } from '@/hooks/use-toast';
 import { signUpWithEmail, signInWithGoogle, signInWithLinkedIn } from '@/lib/auth';
-import { Mail, Google, Linkedin } from 'lucide-react';
+import { FaLinkedin, FaGoogle } from "react-icons/fa";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -143,7 +143,7 @@ const Signup = () => {
                 <span className="flex items-center"><span className="animate-spin mr-2">●</span> Connecting...</span>
               ) : (
                 <>
-                  <Google className="w-5 h-5 mr-2" />
+                  <FaGoogle className="w-5 h-5 mr-2" />
                   Sign up with Google
                 </>
               )}
@@ -159,7 +159,7 @@ const Signup = () => {
                 <span className="flex items-center"><span className="animate-spin mr-2">●</span> Connecting...</span>
               ) : (
                 <>
-                  <Linkedin className="w-5 h-5 mr-2" />
+                  <FaLinkedin className="w-5 h-5 mr-2" />
                   Sign up with LinkedIn
                 </>
               )}
