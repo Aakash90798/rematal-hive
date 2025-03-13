@@ -1,3 +1,4 @@
+
 import { supabase } from "@/lib/supabase";
 import { ApplicationFormState, Niche, ServiceCategory, ServiceSubcategory, Tool, ReferralSource } from "@/types/form";
 
@@ -147,7 +148,7 @@ export const submitApplication = async (formState: ApplicationFormState): Promis
       return { success: false, message: 'User not authenticated' };
     }
     
-    // Update user information
+    // Update user information - Note: email is now managed by auth.users, not in our users table
     const { error: userError } = await supabase
       .from('users')
       .update({
