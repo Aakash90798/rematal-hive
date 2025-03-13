@@ -146,40 +146,78 @@ export async function checkEmailStatus(email: string): Promise<{ exists: boolean
   };
 }
 
+// Check application status for a user
+export async function checkApplicationStatus(userId: string): Promise<{ status: string | null, rejectedDate: string | null }> {
+  const { data, error } = await supabase
+    .from('freelancers')
+    .select('application_status, last_rejected_date')
+    .eq('user_id', userId)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Error checking application status:', error);
+    return { status: null, rejectedDate: null };
+  }
+
+  return {
+    status: data?.application_status || null,
+    rejectedDate: data?.last_rejected_date || null
+  };
+}
+
 // Submit the application form
 export async function submitApplication(formData: ApplicationFormState): Promise<{ success: boolean, message: string, userId?: string }> {
   try {
-    // Start a transaction by inserting the user first
-    const { data: userData, error: userError } = await supabase
+    // Get the current authenticated user
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session) {
+      return { success: false, message: 'You must be logged in to submit an application.' };
+    }
+
+    const userId = session.user.id;
+    
+    // Check if the user already has a freelancer profile
+    const { data: existingFreelancer } = await supabase
+      .from('freelancers')
+      .select('id')
+      .eq('user_id', userId)
+      .maybeSingle();
+      
+    if (existingFreelancer) {
+      return { success: false, message: 'You have already submitted an application.' };
+    }
+    
+    // Update user info first
+    const { error: userUpdateError } = await supabase
       .from('users')
-      .insert({
+      .update({
         first_name: formData.firstName,
         last_name: formData.lastName,
-        email: formData.email,
         mobile_no: formData.mobileNo,
         city: formData.city,
         referral_source_id: formData.referralSourceId || null,
-        user_type: APP_CONSTANTS.FREELANCER_USER_TYPE, 
+        user_type: APP_CONSTANTS.FREELANCER_USER_TYPE
       })
-      .select()
-      .single();
+      .eq('id', userId);
 
-    if (userError) {
-      console.error('Error inserting user:', userError);
-      return { success: false, message: 'Failed to submit your application. Please try again.' };
+    if (userUpdateError) {
+      console.error('Error updating user:', userUpdateError);
+      return { success: false, message: 'Failed to update your information. Please try again.' };
     }
 
-    // Now insert the freelancer record
+    // Insert the freelancer record
     const { data: freelancerData, error: freelancerError } = await supabase
       .from('freelancers')
       .insert({
-        user_id: userData.id,
+        user_id: userId,
         years_of_experience: formData.yearsOfExperience!,
         linkedin_url: formData.linkedinUrl,
         portfolio_url: formData.portfolioUrl,
         has_ecommerce_experience: formData.hasExperience!,
         more_info: formData.moreInfo || null,
-        skills_tools_requested: formData.skillsToolsRequested || null
+        skills_tools_requested: formData.skillsToolsRequested || null,
+        application_status: 'pending'
       })
       .select()
       .single();
@@ -254,7 +292,7 @@ export async function submitApplication(formData: ApplicationFormState): Promise
     return {
       success: true,
       message: 'Your application has been submitted successfully!',
-      userId: userData.id
+      userId: userId
     };
 
   } catch (error) {
@@ -266,46 +304,14 @@ export async function submitApplication(formData: ApplicationFormState): Promise
 // Mark user as rejected
 export async function markUserAsRejected(formData: ApplicationFormState): Promise<boolean> {
   try {
-    const email = formData.email;
-
-    // Find the user by email
-    const { data: user, error: userError } = await supabase
-      .from('users')
-      .select('id')
-      .eq('email', email)
-      .maybeSingle();
-
-    let userId: number | string;
-
-    // If user is not found, create one with the email
-    if (userError) {
-      console.error('Error finding user:', userError);
+    // Get the current authenticated user
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session) {
       return false;
     }
-
-    if (!user) {
-      const { data: newUser, error: createUserError } = await supabase
-        .from('users')
-        .insert({
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          email: formData.email,
-          mobile_no: formData.mobileNo,
-          city: formData.city,
-          referral_source_id: formData.referralSourceId || null,
-          user_type: APP_CONSTANTS.FREELANCER_USER_TYPE,
-        })
-        .select()
-        .single();
-
-      if (createUserError || !newUser) {
-        console.error('Error creating new user:', createUserError);
-        return false;
-      }
-      userId = newUser.id;
-    } else {
-      userId = user.id;
-    }
+    
+    const userId = session.user.id;
 
     // Find and update (or create) the freelancer record
     const { data: freelancer, error: freelancerSelectError } = await supabase
@@ -327,7 +333,8 @@ export async function markUserAsRejected(formData: ApplicationFormState): Promis
           user_id: userId,
           has_ecommerce_experience: false,
           years_of_experience: 'less than 1 yr',
-          last_rejected_date: new Date().toISOString()
+          last_rejected_date: new Date().toISOString(),
+          application_status: 'rejected'
         });
 
       if (createError) {
@@ -338,7 +345,10 @@ export async function markUserAsRejected(formData: ApplicationFormState): Promis
       // Update existing freelancer with rejection date
       const { error: updateError } = await supabase
         .from('freelancers')
-        .update({ last_rejected_date: new Date().toISOString() })
+        .update({ 
+          last_rejected_date: new Date().toISOString(),
+          application_status: 'rejected' 
+        })
         .eq('id', freelancer.id);
 
       if (updateError) {

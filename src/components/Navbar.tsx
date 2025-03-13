@@ -1,13 +1,19 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, X, Mail } from "lucide-react";
+import { Menu, X, Mail, User } from "lucide-react";
 import { APP_CONSTANTS } from '@/constants';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user } = useAuth();
+  const location = useLocation();
+  
+  // Determine if we're on a page where we shouldn't show certain nav items
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/verify-email';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,17 +61,41 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden sm:flex items-center space-x-8">
-          <a href="#problem" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Why Rematal</a>
-          <a href="#features" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Features</a>
-          <a href="#process" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Process</a>
-          <a href="#faq" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">FAQs</a>
-          <a href="#contact" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Contact</a>
+          {!isAuthPage && (
+            <>
+              <a href="/#problem" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Why Rematal</a>
+              <a href="/#features" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Features</a>
+              <a href="/#process" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Process</a>
+              <a href="/#faq" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">FAQs</a>
+              <a href="/#contact" className="text-rematal-dark/70 hover:text-rematal-dark font-medium transition-colors">Contact</a>
+            </>
+          )}
         </nav>
 
-        <div className="hidden sm:block">
-          <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6">
-            <Link to="/apply">Apply Now</Link>
-          </Button>
+        <div className="hidden sm:flex items-center space-x-4">
+          {user ? (
+            <>
+              <Button variant="outline" className="rounded-full px-6" asChild>
+                <Link to="/dashboard">
+                  <User size={18} className="mr-2" />
+                  Dashboard
+                </Link>
+              </Button>
+            </>
+          ) : (
+            <>
+              {!isAuthPage && (
+                <Button variant="outline" className="rounded-full px-6" asChild>
+                  <Link to="/login">Login</Link>
+                </Button>
+              )}
+              {!user && !isAuthPage && (
+                <Button className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full px-6">
+                  <Link to="/apply">Apply Now</Link>
+                </Button>
+              )}
+            </>
+          )}
         </div>
 
         <button
@@ -82,48 +112,78 @@ const Navbar = () => {
         <div className="md:hidden fixed inset-0 z-[55] bg-white pt-20 overflow-y-auto flex flex-col w-full">
           <div className="container-custom flex-1 flex flex-col w-full">
             <nav className="flex flex-col space-y-5 py-6 w-full">
-              <a
-                href="#problem"
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
-                onClick={handleMobileNavClick}
-              >
-                Why Rematal
-              </a>
-              <a
-                href="#features"
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
-                onClick={handleMobileNavClick}
-              >
-                Features
-              </a>
-              <a
-                href="#process"
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
-                onClick={handleMobileNavClick}
-              >
-                Process
-              </a>
-              <a
-                href="#faq"
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
-                onClick={handleMobileNavClick}
-              >
-                FAQs
-              </a>
-              <a
-                href="#contact"
-                className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
-                onClick={scrollToContact}
-              >
-                Contact
-              </a>
-              <div className="pt-4 w-full">
-                <Button
-                  className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg"
-                  onClick={handleMobileNavClick}
-                >
-                  <Link to="/apply" className="w-full block">Apply Now</Link>
-                </Button>
+              {!isAuthPage && (
+                <>
+                  <a
+                    href="/#problem"
+                    className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
+                    onClick={handleMobileNavClick}
+                  >
+                    Why Rematal
+                  </a>
+                  <a
+                    href="/#features"
+                    className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
+                    onClick={handleMobileNavClick}
+                  >
+                    Features
+                  </a>
+                  <a
+                    href="/#process"
+                    className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
+                    onClick={handleMobileNavClick}
+                  >
+                    Process
+                  </a>
+                  <a
+                    href="/#faq"
+                    className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
+                    onClick={handleMobileNavClick}
+                  >
+                    FAQs
+                  </a>
+                  <a
+                    href="/#contact"
+                    className="p-4 rounded-lg bg-gray-50 text-lg font-medium text-rematal-dark block w-full text-center"
+                    onClick={scrollToContact}
+                  >
+                    Contact
+                  </a>
+                </>
+              )}
+              
+              <div className="pt-4 w-full space-y-3">
+                {user ? (
+                  <Button
+                    className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg"
+                    onClick={handleMobileNavClick}
+                    asChild
+                  >
+                    <Link to="/dashboard" className="w-full block">Dashboard</Link>
+                  </Button>
+                ) : (
+                  <>
+                    {!isAuthPage && (
+                      <Button
+                        variant="outline"
+                        className="w-full py-6 text-lg"
+                        onClick={handleMobileNavClick}
+                        asChild
+                      >
+                        <Link to="/login" className="w-full block">Login</Link>
+                      </Button>
+                    )}
+                    {!isAuthPage && (
+                      <Button
+                        className="bg-rematal-primary hover:bg-rematal-primary/90 text-white rounded-full w-full py-6 text-lg"
+                        onClick={handleMobileNavClick}
+                        asChild
+                      >
+                        <Link to="/apply" className="w-full block">Apply Now</Link>
+                      </Button>
+                    )}
+                  </>
+                )}
               </div>
             </nav>
           </div>

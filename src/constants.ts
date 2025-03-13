@@ -6,4 +6,9 @@ export const APP_CONSTANTS = {
   NORMAL_URL_REGEX: /^(?:(?:https?:\/\/)?(?:www\.)?)?[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}(?:\:\d+)?(?:\/\S*)?$/,
   LET_REMATAL_DECIDE_ID: "bab11423-d214-4c43-855e-94e7bfb92b38",
   FREELANCER_USER_TYPE: "EXPERT",
+  APPLICATION_STATUS: {
+    PENDING: "pending",
+    APPROVED: "approved",
+    REJECTED: "rejected"
+  }
 };

@@ -1,6 +1,8 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 import { ApplicationFormState, FormStep } from '@/types/form';
 import FormProgress from '@/components/application/FormProgress';
 import PersonalInfoStep from '@/components/application/steps/PersonalInfoStep';
@@ -17,7 +19,7 @@ import ReferralSourceStep from '@/components/application/steps/ReferralSourceSte
 import SuccessStep from '@/components/application/steps/SuccessStep';
 import RejectionStep from '@/components/application/steps/RejectionStep';
 import ContactSection from '@/components/application/ContactSection';
-import { checkEmailStatus, markUserAsRejected, submitApplication } from '@/services/formService';
+import { checkEmailStatus, markUserAsRejected, submitApplication, checkApplicationStatus } from '@/services/formService';
 import { APP_CONSTANTS } from '@/constants';
 
 const initialFormState: ApplicationFormState = {
@@ -50,11 +52,38 @@ const Apply = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user } = useAuth();
 
   useEffect(() => {
     // Scroll to top on step change
     window.scrollTo(0, 0);
   }, [formState.currentStep]);
+
+  // Check if user has already applied
+  useEffect(() => {
+    const checkUserApplication = async () => {
+      if (user) {
+        // First load user details
+        if (formState.email === '' && user.email) {
+          updateFormState({ email: user.email });
+        }
+        
+        // Check if user has already applied
+        const { status } = await checkApplicationStatus(user.id);
+        if (status) {
+          // User has already applied, redirect to dashboard
+          toast({
+            title: "Application exists",
+            description: "You have already submitted an application",
+            variant: "default"
+          });
+          navigate('/dashboard');
+        }
+      }
+    };
+    
+    checkUserApplication();
+  }, [user, navigate]);
 
   // Effect to determine if additional info step should be shown
   useEffect(() => {
@@ -137,42 +166,13 @@ const Apply = () => {
   };
 
   const handleRejection = async () => {
-    if (formState.email) {
+    if (user) {
       // Mark the user as rejected in the database
       await markUserAsRejected(formState);
     }
     
     // Navigate to rejection step
     updateFormState({ currentStep: 'rejection' });
-  };
-
-  const handleEmailCheck = async (email: string) => {
-    try {
-      const { exists, recentlyRejected } = await checkEmailStatus(email);
-      
-      if (exists) {
-        if (recentlyRejected) {
-          toast({
-            title: "Application Locked",
-            description: "You can reapply after 90 days from your last submission.",
-            variant: "destructive"
-          });
-          return false;
-        } else {
-          toast({
-            title: "Application In Progress",
-            description: "We're already reviewing your application.",
-            variant: "default"
-          });
-          return false;
-        }
-      }
-      
-      return true;
-    } catch (error) {
-      console.error('Error checking email status:', error);
-      return true; // Allow to continue if check fails
-    }
   };
 
   const handleSubmit = async () => {
@@ -207,8 +207,8 @@ const Apply = () => {
         return (
           <PersonalInfoStep 
             formState={formState} 
-            updateFormState={updateFormState} 
-            onEmailCheck={handleEmailCheck}
+            updateFormState={updateFormState}
+            onEmailCheck={async () => true} // Already authenticated, so no need to check
           />
         );
       case 'experience-check':

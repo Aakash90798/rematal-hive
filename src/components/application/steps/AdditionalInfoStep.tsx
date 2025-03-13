@@ -1,9 +1,7 @@
 
-import FormField from '@/components/application/FormField';
-import { Textarea } from '@/components/ui/textarea';
+import { useState, useEffect } from 'react';
 import { ApplicationFormState } from '@/types/form';
 import FormStepButtons from '@/components/application/FormStepButtons';
-import { useState, useEffect } from 'react';
 import { APP_CONSTANTS } from '@/constants';
 
 interface AdditionalInfoStepProps {
@@ -12,201 +10,133 @@ interface AdditionalInfoStepProps {
 }
 
 const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepProps) => {
-  const [loading, setLoading] = useState(false);
-  const MIN_CHARS = 20;
-  const [infoCase, setInfoCase] = useState<'case1' | 'case2' | 'case3' | null>(null);
-
-  // Determine which case applies
+  const [charCount, setCharCount] = useState(0);
+  const MAX_CHARS = 500;
+  
+  // Determine which case we're in
+  const isRematalDecide = formState.selectedServiceCategoryId === APP_CONSTANTS.LET_REMATAL_DECIDE_ID;
+  
+  const hasOtherInSubcategories = formState.selectedSubcategoryIds.some(id => {
+    const subcategory = formState.subcategoriesData?.find(sub => sub.id === id);
+    return subcategory?.name.toLowerCase().includes('other');
+  });
+  
+  const hasOtherInTools = formState.selectedToolIds.some(id => {
+    const tool = formState.toolsData?.find(tool => tool.id === id);
+    return tool?.name.toLowerCase().includes('other');
+  });
+  
+  const isOtherCase = hasOtherInSubcategories || hasOtherInTools;
+  
   useEffect(() => {
-    const isRematalDecide = formState.selectedServiceCategoryId === APP_CONSTANTS.LET_REMATAL_DECIDE_ID;
-    
-    const hasOtherInTools = formState.selectedToolIds.some(id => {
-      // Check if the tool name contains "other"
-      const toolName = formState.toolsData?.find(tool => tool.id === id)?.name.toLowerCase();
-      return toolName?.includes('other');
-    });
-    
-    const hasOtherInSubcategories = formState.selectedSubcategoryIds.some(id => {
-      // Check if the subcategory name contains "other"
-      const subcategoryName = formState.subcategoriesData?.find(sub => sub.id === id)?.name.toLowerCase();
-      return subcategoryName?.includes('other');
-    });
-    
-    const hasOther = hasOtherInTools || hasOtherInSubcategories;
-    
-    if (isRematalDecide && hasOther) {
-      setInfoCase('case3');
-    } else if (isRematalDecide) {
-      setInfoCase('case1');
-    } else if (hasOther) {
-      setInfoCase('case2');
-    } else {
-      // This should not happen as this step should only be shown in one of the 3 cases
-      setInfoCase(null);
+    setCharCount(formState.moreInfo?.length || 0);
+  }, [formState.moreInfo]);
+  
+  const handleMoreInfoChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    if (value.length <= MAX_CHARS) {
+      updateFormState({ moreInfo: value });
+      setCharCount(value.length);
     }
-  }, [formState.selectedServiceCategoryId, formState.selectedToolIds, formState.selectedSubcategoryIds, formState.toolsData, formState.subcategoriesData]);
-
+  };
+  
+  const handleSkillsToolsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    updateFormState({ skillsToolsRequested: e.target.value });
+  };
+  
   const handleContinue = () => {
-    setLoading(true);
+    // Validate
     const errors: Record<string, string> = {};
     
-    if (infoCase === 'case1' || infoCase === 'case3') {
-      if (!formState.moreInfo) {
-        errors.moreInfo = 'Please tell us more about your skills and services';
-      } else if (formState.moreInfo.length < MIN_CHARS) {
-        errors.moreInfo = `Please provide more details (at least ${MIN_CHARS} characters)`;
-      }
+    if (isRematalDecide && (!formState.moreInfo || formState.moreInfo.trim() === '')) {
+      errors.moreInfo = 'Please tell us more about your expertise';
     }
     
-    if (infoCase === 'case2' || infoCase === 'case3') {
-      if (!formState.skillsToolsRequested) {
-        errors.skillsToolsRequested = 'Please tell us what skills or tools you found missing';
-      } else if (formState.skillsToolsRequested.length < MIN_CHARS) {
-        errors.skillsToolsRequested = `Please provide more details (at least ${MIN_CHARS} characters)`;
-      }
+    if (isOtherCase && (!formState.skillsToolsRequested || formState.skillsToolsRequested.trim() === '')) {
+      errors.skillsToolsRequested = 'Please specify the other skills/tools';
     }
     
-    updateFormState({ errors });
-    
-    if (Object.keys(errors).length === 0) {
-      updateFormState({ currentStep: 'referral-source' });
+    if (Object.keys(errors).length > 0) {
+      updateFormState({ errors });
+      return;
     }
-    setLoading(false);
+    
+    // Clear errors and proceed
+    updateFormState({ 
+      errors: {},
+      currentStep: 'referral-source' 
+    });
   };
-  
-  // Determine the previous step based on selection history
-  const goToPreviousStep = () => {
-    if (formState.selectedServiceCategoryId === APP_CONSTANTS.LET_REMATAL_DECIDE_ID) {
-      updateFormState({ currentStep: 'service-category' });
-    } else if (formState.selectedToolIds.length > 0) {
-      updateFormState({ currentStep: 'tools' });
-    } else if (formState.selectedSubcategoryIds.length > 0) {
-      updateFormState({ currentStep: 'service-subcategories' });
-    } else {
-      updateFormState({ currentStep: 'service-category' });
-    }
-  };
-  
-  if (!infoCase) return null;
   
   return (
-    <div>
-      {infoCase === 'case1' && (
-        <>
-          <h2 className="text-2xl font-bold mb-6">Tell Us About Your Skills</h2>
-          
-          <p className="text-gray-600 mb-8">
-            As you've chosen to let Rematal determine the best service category for you, please tell us more about your expertise and experience. This will help us match you with the most suitable opportunities.
-          </p>
-          
-          <FormField
-            id="moreInfo"
-            label={`Tell us about your skills and experience (${formState.moreInfo?.length || 0}/${MIN_CHARS}+ characters)`}
-            required
-            error={formState.errors.moreInfo}
-          >
-            <Textarea
+    <div className="space-y-6">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold">
+          {isRematalDecide 
+            ? "Tell us more about your expertise" 
+            : "Tell us more about your other skills/tools"}
+        </h2>
+        <p className="text-gray-600 mt-2">
+          {isRematalDecide 
+            ? "Help us understand your experience and what you specialize in" 
+            : "Please specify the other skills or tools you mentioned"}
+        </p>
+      </div>
+      
+      {isRematalDecide && (
+        <div className="space-y-4">
+          <div className={`form-group ${formState.errors?.moreInfo ? 'error' : ''}`}>
+            <label htmlFor="moreInfo" className="block font-medium mb-2">
+              Tell us more about your specific expertise and experience:
+            </label>
+            <textarea
               id="moreInfo"
+              className={`w-full p-3 border rounded-md min-h-[150px] ${
+                formState.errors?.moreInfo ? 'border-red-500' : 'border-gray-300'
+              }`}
+              placeholder="Share details about your expertise, the types of projects you've worked on, and what makes you stand out as a D2C freelancer..."
               value={formState.moreInfo || ''}
-              onChange={(e) => updateFormState({ moreInfo: e.target.value })}
-              className="min-h-[150px]"
-              placeholder="Please describe your professional experience, key skills, and the types of services you can provide..."
+              onChange={handleMoreInfoChange}
             />
-          </FormField>
-        </>
-      )}
-      
-      {infoCase === 'case2' && (
-        <>
-          <h2 className="text-2xl font-bold mb-6">Additional Skills & Tools</h2>
-          
-          <p className="text-gray-600 mb-8">
-            We noticed you selected "Other" in the previous steps. Please tell us about the specific skills or tools you're proficient with that weren't listed in our options.
-          </p>
-          
-          <FormField
-            id="skillsToolsRequested"
-            label={`Your additional skills and tools (${formState.skillsToolsRequested?.length || 0}/${MIN_CHARS}+ characters)`}
-            required
-            error={formState.errors.skillsToolsRequested}
-          >
-            <Textarea
-              id="skillsToolsRequested"
-              value={formState.skillsToolsRequested || ''}
-              onChange={(e) => updateFormState({ skillsToolsRequested: e.target.value })}
-              className="min-h-[150px]"
-              placeholder="Please describe the specific skills, tools, or technologies you're proficient with that weren't listed..."
-            />
-          </FormField>
-        </>
-      )}
-      
-      {infoCase === 'case3' && (
-        <>
-          <h2 className="text-2xl font-bold mb-6">Complete Your Profile</h2>
-          
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-xl font-semibold mb-4">Your Skills & Experience</h3>
-              <p className="text-gray-600 mb-6">
-                As you've chosen to let Rematal determine the best service category for you, please tell us more about your expertise and experience.
-              </p>
-              
-              <FormField
-                id="moreInfo"
-                label={`Tell us about your skills and experience (${formState.moreInfo?.length || 0}/${MIN_CHARS}+ characters)`}
-                required
-                error={formState.errors.moreInfo}
-              >
-                <Textarea
-                  id="moreInfo"
-                  value={formState.moreInfo || ''}
-                  onChange={(e) => updateFormState({ moreInfo: e.target.value })}
-                  className="min-h-[150px]"
-                  placeholder="Please describe your professional experience, key skills, and the types of services you can provide..."
-                />
-              </FormField>
-            </div>
-            
-            <div>
-              <h3 className="text-xl font-semibold mb-4">Additional Skills & Tools</h3>
-              <p className="text-gray-600 mb-6">
-                We noticed you selected "Other" in the previous steps. Please tell us about any specific skills or tools you're proficient with that weren't listed.
-              </p>
-              
-              <FormField
-                id="skillsToolsRequested"
-                label={`Your additional skills and tools (${formState.skillsToolsRequested?.length || 0}/${MIN_CHARS}+ characters)`}
-                required
-                error={formState.errors.skillsToolsRequested}
-              >
-                <Textarea
-                  id="skillsToolsRequested"
-                  value={formState.skillsToolsRequested || ''}
-                  onChange={(e) => updateFormState({ skillsToolsRequested: e.target.value })}
-                  className="min-h-[150px]"
-                  placeholder="Please describe the specific skills, tools, or technologies you're proficient with that weren't listed..."
-                />
-              </FormField>
+            <div className="flex justify-between text-sm mt-1">
+              {formState.errors?.moreInfo ? (
+                <span className="text-red-500">{formState.errors.moreInfo}</span>
+              ) : (
+                <span className="text-transparent">.</span>
+              )}
+              <span className={charCount > MAX_CHARS * 0.9 ? 'text-red-500' : 'text-gray-500'}>
+                {charCount}/{MAX_CHARS}
+              </span>
             </div>
           </div>
-        </>
+        </div>
+      )}
+      
+      {isOtherCase && (
+        <div className="space-y-4">
+          <div className={`form-group ${formState.errors?.skillsToolsRequested ? 'error' : ''}`}>
+            <label htmlFor="skillsToolsRequested" className="block font-medium mb-2">
+              Please specify the other skills or tools you selected:
+            </label>
+            <textarea
+              id="skillsToolsRequested"
+              className={`w-full p-3 border rounded-md min-h-[100px] ${
+                formState.errors?.skillsToolsRequested ? 'border-red-500' : 'border-gray-300'
+              }`}
+              placeholder="List the specific skills, tools, or subcategories that weren't included in our options..."
+              value={formState.skillsToolsRequested || ''}
+              onChange={handleSkillsToolsChange}
+            />
+            {formState.errors?.skillsToolsRequested && (
+              <p className="text-red-500 text-sm mt-1">{formState.errors.skillsToolsRequested}</p>
+            )}
+          </div>
+        </div>
       )}
       
       <FormStepButtons
-        onBack={goToPreviousStep}
+        onBack={() => updateFormState({ currentStep: 'tools' })}
         onContinue={handleContinue}
-        loading={loading}
-        disabled={
-          (infoCase === 'case1' && (!formState.moreInfo || formState.moreInfo.length < MIN_CHARS)) ||
-          (infoCase === 'case2' && (!formState.skillsToolsRequested || formState.skillsToolsRequested.length < MIN_CHARS)) ||
-          (infoCase === 'case3' && (
-            !formState.moreInfo || 
-            formState.moreInfo.length < MIN_CHARS || 
-            !formState.skillsToolsRequested || 
-            formState.skillsToolsRequested.length < MIN_CHARS
-          ))
-        }
       />
     </div>
   );

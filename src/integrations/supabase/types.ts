@@ -155,6 +155,7 @@ export type Database = {
       }
       freelancers: {
         Row: {
+          application_status: string | null
           created_at: string | null
           has_ecommerce_experience: boolean
           id: string
@@ -168,6 +169,7 @@ export type Database = {
           years_of_experience: string
         }
         Insert: {
+          application_status?: string | null
           created_at?: string | null
           has_ecommerce_experience: boolean
           id?: string
@@ -181,6 +183,7 @@ export type Database = {
           years_of_experience: string
         }
         Update: {
+          application_status?: string | null
           created_at?: string | null
           has_ecommerce_experience?: boolean
           id?: string
