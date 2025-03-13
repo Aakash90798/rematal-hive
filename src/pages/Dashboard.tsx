@@ -8,6 +8,7 @@ import { signOut, checkApplicationStatus } from '@/lib/auth';
 import { User, LogOut, FileText, Clock, Check, X } from 'lucide-react';
 import Footer from '@/components/Footer';
 import NavbarInner from '@/components/NavbarInner';
+import { APP_CONSTANTS } from '@/constants';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -31,6 +32,7 @@ const Dashboard = () => {
 
     return () => clearTimeout(timer);
   }, [user]);
+
   const handleLogout = async () => {
     if (window.confirm("Are you sure you want to log out?")) {
       try {
@@ -127,7 +129,7 @@ const Dashboard = () => {
                       </div>
                     )}
                     
-                    {applicationStatus === 'pending' && (
+                    {applicationStatus === 'PENDING' && (
                       <div className="bg-blue-50 p-4 rounded-lg">
                         <div className="flex items-start">
                           <Clock className="h-5 w-5 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
@@ -140,8 +142,31 @@ const Dashboard = () => {
                         </div>
                       </div>
                     )}
+
+                    {applicationStatus === 'DONE_STEP_1' && (
+                      <div className="bg-blue-50 p-4 rounded-lg">
+                        <div className="flex items-start">
+                          <Clock className="h-5 w-5 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
+                          <div>
+                            <p className="font-medium text-gray-800">Step 1 Completed</p>
+                            <p className="text-sm text-gray-700 mt-1">
+                              You've completed step 1 of your application. Please proceed to step 2 to complete your application process.
+                            </p>
+                            <Button 
+                              asChild
+                              className="bg-rematal-primary hover:bg-rematal-primary/90 text-white mt-4"
+                            >
+                              <Link to={{ 
+                                pathname: "/apply", 
+                                search: "?step=video-interview" 
+                              }}>Go to Step 2</Link>
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     
-                    {applicationStatus === 'approved' && (
+                    {applicationStatus === 'APPROVED' && (
                       <div className="bg-green-50 p-4 rounded-lg">
                         <div className="flex items-start">
                           <Check className="h-5 w-5 text-green-500 mt-0.5 mr-2 flex-shrink-0" />
@@ -155,7 +180,7 @@ const Dashboard = () => {
                       </div>
                     )}
                     
-                    {applicationStatus === 'rejected' && (
+                    {applicationStatus === 'REJECTED' && (
                       <div className="bg-red-50 p-4 rounded-lg">
                         <div className="flex items-start">
                           <X className="h-5 w-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" />

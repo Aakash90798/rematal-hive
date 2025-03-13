@@ -191,7 +191,7 @@ export const markUserAsRejected = async (formState: ApplicationFormState) => {
         has_ecommerce_experience: formState.hasExperience || false,
         years_of_experience: formState.yearsOfExperience || '',
         last_rejected_date: new Date().toISOString(),
-        application_status: 'rejected'  // Using enum value
+        application_status: 'REJECTED'  // Using enum value
       }).select('id');
     
     if (freelancerError) {
@@ -256,7 +256,7 @@ export const submitApplication = async (formState: ApplicationFormState): Promis
           portfolio_url: formState.portfolioUrl,
           more_info: formState.moreInfo,
           skills_tools_requested: formState.skillsToolsRequested,
-          application_status: 'pending'  // Using enum value
+          application_status: 'DONE_STEP_1'  // Using enum value
         })
         .eq('id', existingFreelancer.id);
 
@@ -278,7 +278,7 @@ export const submitApplication = async (formState: ApplicationFormState): Promis
           portfolio_url: formState.portfolioUrl,
           more_info: formState.moreInfo,
           skills_tools_requested: formState.skillsToolsRequested,
-          application_status: 'pending'  // Using enum value
+          application_status: 'DONE_STEP_1'  // Using enum value
         })
         .select('id')
         .single();

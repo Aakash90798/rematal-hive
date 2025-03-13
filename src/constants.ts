@@ -7,8 +7,9 @@ export const APP_CONSTANTS = {
   LET_REMATAL_DECIDE_ID: "bab11423-d214-4c43-855e-94e7bfb92b38",
   FREELANCER_USER_TYPE: "EXPERT",
   APPLICATION_STATUS: {
-    PENDING: "pending",
-    APPROVED: "approved",
-    REJECTED: "rejected"
+    PENDING: "PENDING",
+    APPROVED: "APPROVED",
+    REJECTED: "REJECTED",
+    DONE_STEP_1: "DONE_STEP_1"
   }
 };

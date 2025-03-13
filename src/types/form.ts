@@ -1,4 +1,5 @@
-export type ApplicationStatus = 'pending' | 'approved' | 'rejected';
+
+export type ApplicationStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'DONE_STEP_1';
 
 export type FormStep =
   | 'personal-info'

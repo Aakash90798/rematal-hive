@@ -8,6 +8,16 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
+interface VideoInterviewPayload {
+  jobID: number;
+  jobTitle: string;
+  applicantName: string;
+  applicantEmail: string;
+  shareableURL: string;
+  submittedOn: string;
+  currentStage: string;
+}
+
 serve(async (req) => {
   // Handle CORS preflight request
   if (req.method === 'OPTIONS') {
@@ -32,26 +42,19 @@ serve(async (req) => {
     }
     
     // Parse request body
-    const reqData = await req.json();
+    const reqData: VideoInterviewPayload = await req.json();
     
     // Create Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
     
-    // Extract data from request
-    const { 
-      email,
-      about_freelancer,
-      recent_experience,
-      challenge_solved,
-      what_seperates_avg
-    } = reqData;
+    const { applicantEmail } = reqData;
     
     // Validate required fields
-    if (!email) {
+    if (!applicantEmail) {
       return new Response(
-        JSON.stringify({ success: false, message: 'Missing required fields: email' }),
+        JSON.stringify({ success: false, message: 'Missing required field: applicantEmail' }),
         {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -59,19 +62,33 @@ serve(async (req) => {
       );
     }
     
-    // Get user by email
-    const { data: userData, error: userError } = await supabase
-      .from('users')
-      .select('id')
-      .eq('email', email)
-      .maybeSingle();
-    
-    if (userError || !userData) {
+    // Get user by email from auth.users
+    const { data: userData, error: userError } = await supabase.auth
+      .admin
+      .listUsers();
+      
+    if (userError) {
       return new Response(
         JSON.stringify({ 
           success: false, 
-          message: 'User not found with provided email',
-          error: userError?.message
+          message: 'Error fetching users',
+          error: userError.message
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+    
+    // Find user with matching email
+    const foundUser = userData.users.find(u => u.email === applicantEmail);
+    
+    if (!foundUser) {
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          message: 'User not found with provided email'
         }),
         {
           status: 404,
@@ -79,20 +96,35 @@ serve(async (req) => {
         }
       );
     }
+    
+    const userId = foundUser.id;
     
     // Get freelancer by user ID
     const { data: freelancerData, error: freelancerError } = await supabase
       .from('freelancers')
       .select('id')
-      .eq('user_id', userData.id)
+      .eq('user_id', userId)
       .maybeSingle();
     
-    if (freelancerError || !freelancerData) {
+    if (freelancerError) {
       return new Response(
         JSON.stringify({ 
           success: false, 
-          message: 'Freelancer not found for this user',
-          error: freelancerError?.message
+          message: 'Error fetching freelancer data',
+          error: freelancerError.message
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+    
+    if (!freelancerData) {
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          message: 'Freelancer not found for this user'
         }),
         {
           status: 404,
@@ -101,23 +133,56 @@ serve(async (req) => {
       );
     }
     
-    // Create new video interview response
-    const { data: responseData, error: responseError } = await supabase
+    // Check if video interview response already exists for this user
+    const { data: existingResponse, error: checkError } = await supabase
       .from('video_interview_responses')
-      .insert({
-        about_freelancer,
-        recent_experience,
-        challenge_solved,
-        what_seperates_avg
-      })
-      .select()
-      .single();
+      .select('id')
+      .eq('id', userId)
+      .maybeSingle();
+      
+    if (checkError) {
+      console.error('Error checking existing response:', checkError);
+    }
+    
+    let responseOperation;
+    
+    if (existingResponse) {
+      // Update existing response
+      responseOperation = supabase
+        .from('video_interview_responses')
+        .update({
+          jobID: reqData.jobID,
+          jobTitle: reqData.jobTitle,
+          applicantName: reqData.applicantName,
+          applicantEmail: reqData.applicantEmail,
+          shareableURL: reqData.shareableURL,
+          submittedOn: reqData.submittedOn,
+          currentStage: reqData.currentStage
+        })
+        .eq('id', userId);
+    } else {
+      // Create new response
+      responseOperation = supabase
+        .from('video_interview_responses')
+        .insert({
+          id: userId, // Use the user's ID as the primary key
+          jobID: reqData.jobID,
+          jobTitle: reqData.jobTitle,
+          applicantName: reqData.applicantName,
+          applicantEmail: reqData.applicantEmail,
+          shareableURL: reqData.shareableURL,
+          submittedOn: reqData.submittedOn,
+          currentStage: reqData.currentStage
+        });
+    }
+    
+    const { error: responseError } = await responseOperation;
     
     if (responseError) {
       return new Response(
         JSON.stringify({ 
           success: false, 
-          message: 'Failed to create video interview response',
+          message: 'Failed to save video interview response',
           error: responseError.message
         }),
         {
@@ -127,24 +192,26 @@ serve(async (req) => {
       );
     }
     
-    // Update freelancer's video interview response ID
-    const { error: updateError } = await supabase
-      .from('freelancers')
-      .update({ video_interview_response_id: responseData.id })
-      .eq('id', freelancerData.id);
-    
-    if (updateError) {
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          message: 'Failed to update freelancer with video response ID',
-          error: updateError.message
-        }),
-        {
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
+    // Update freelancer status if currentStage is "submitted"
+    if (reqData.currentStage === "submitted") {
+      const { error: updateError } = await supabase
+        .from('freelancers')
+        .update({ application_status: 'PENDING' })
+        .eq('id', freelancerData.id);
+      
+      if (updateError) {
+        return new Response(
+          JSON.stringify({ 
+            success: false, 
+            message: 'Failed to update freelancer status',
+            error: updateError.message
+          }),
+          {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
     }
     
     // Return success response
