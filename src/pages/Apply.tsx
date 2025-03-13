@@ -60,6 +60,26 @@ const Apply = () => {
     window.scrollTo(0, 0);
   }, [formState.currentStep]);
 
+  // Check if user is authenticated and email is verified
+  useEffect(() => {
+    if (!user) {
+      // Redirect to login if not authenticated
+      navigate('/login');
+      return;
+    }
+
+    if (!user.email_confirmed_at) {
+      // Redirect to verify email if email not verified
+      navigate('/verify-email', { state: { email: user.email } });
+      return;
+    }
+
+    // Update email in form state
+    if (user.email) {
+      updateFormState({ email: user.email });
+    }
+  }, [user, navigate]);
+
   // Check if user has already applied
   useEffect(() => {
     const checkUserApplication = async () => {
@@ -209,7 +229,6 @@ const Apply = () => {
           <PersonalInfoStep 
             formState={formState} 
             updateFormState={updateFormState}
-            onEmailCheck={async () => true} // Already authenticated, so no need to check
           />
         );
       case 'experience-check':
@@ -306,6 +325,11 @@ const Apply = () => {
         return null;
     }
   };
+
+  // If user is not authenticated, this component will redirect in useEffect
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

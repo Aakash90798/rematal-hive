@@ -1,236 +1,123 @@
+import { supabase } from "@/lib/supabase";
+import { ApplicationFormState } from "@/types/form";
 
-import { APP_CONSTANTS } from '@/constants';
-import { supabase } from '@/lib/supabase';
-import { ApplicationFormState, Niche, ServiceCategory, ServiceCategoryWithRelations, ServiceSubcategory, Tool, ReferralSource } from '@/types/form';
-
-// Fetch all niches
-export async function fetchNiches(): Promise<Niche[]> {
-  const { data, error } = await supabase
-    .from('niches')
-    .select('*')
-    .order('name');
-
-  if (error) {
-    console.error('Error fetching niches:', error);
-    return [];
-  }
-
-  return data as Niche[];
-}
-
-// Fetch all service categories without their subcategories and tools
-export async function fetchServiceCategories(): Promise<ServiceCategory[]> {
-  const { data: categories, error: categoriesError } = await supabase
-    .from('service_categories')
-    .select('*')
-    .order('name');
-
-  if (categoriesError) {
-    console.error('Error fetching service categories:', categoriesError);
-    return [];
-  }
-
-  return categories as ServiceCategory[];
-}
-
-// Fetch service subcategories for a specific category
-export async function fetchSubcategoriesForCategory(categoryId: string): Promise<ServiceSubcategory[]> {
-  const { data, error } = await supabase
-    .from('service_category_subcategories')
-    .select(`
-      service_subcategories!inner(*)
-    `)
-    .eq('service_category_id', categoryId);
-
-  if (error) {
-    console.error(`Error fetching subcategories for category ${categoryId}:`, error);
-    return [];
-  }
-
-  // Log the first item to understand its structure
-  if (data && data.length > 0) {
-    console.log('Subcategory data structure:', JSON.stringify(data[0], null, 2));
-  }
-
-  // Properly extract and map the subcategories
-  return data.map((item: any) => ({
-    id: item.service_subcategories.id,
-    name: item.service_subcategories.name
-  }));
-}
-
-// Fetch tools for a specific category
-export async function fetchToolsForCategory(categoryId: string): Promise<Tool[]> {
-  const { data, error } = await supabase
-    .from('service_category_tools')
-    .select(`
-      tools!inner(*)
-    `)
-    .eq('service_category_id', categoryId);
-
-  if (error) {
-    console.error(`Error fetching tools for category ${categoryId}:`, error);
-    return [];
-  }
-
-  // Log the first item to understand its structure
-  if (data && data.length > 0) {
-    console.log('Tool data structure:', JSON.stringify(data[0], null, 2));
-  }
-
-  // Properly extract and map the tools
-  return data.map((item: any) => ({
-    id: item.tools.id,
-    name: item.tools.name
-  }));
-}
-
-// Fetch all referral sources
-export async function fetchReferralSources(): Promise<ReferralSource[]> {
-  const { data, error } = await supabase
-    .from('referral_sources')
-    .select('*')
-    .order('name');
-
-  if (error) {
-    console.error('Error fetching referral sources:', error);
-    return [];
-  }
-
-  return data as ReferralSource[];
-}
-
-// Check if email already exists and if they were rejected recently
-export async function checkEmailStatus(email: string): Promise<{ exists: boolean, recentlyRejected: boolean }> {
-  // Check if the email exists in the database
-  const { data: users, error: userError } = await supabase
-    .from('users')
-    .select('id')
-    .eq('email', email)
-    .maybeSingle();
-
-  if (userError) {
-    console.error('Error checking user email:', userError);
-    return { exists: false, recentlyRejected: false };
-  }
-
-  // If user doesn't exist, they can apply
-  if (!users) {
-    return { exists: false, recentlyRejected: false };
-  }
-
-  // Check if they were rejected in the last 90 days
-  const { data: freelancer, error: freelancerError } = await supabase
-    .from('freelancers')
-    .select('last_rejected_date')
-    .eq('user_id', users.id)
-    .maybeSingle();
-
-  if (freelancerError) {
-    console.error('Error checking freelancer rejection status:', freelancerError);
-    return { exists: true, recentlyRejected: false };
-  }
-
-  if (!freelancer || !freelancer.last_rejected_date) {
-    return { exists: true, recentlyRejected: false };
-  }
-
-  // Check if rejection was within last 90 days
-  const rejectionDate = new Date(freelancer.last_rejected_date);
-  const ninetyDaysAgo = new Date();
-  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
-
-  return {
-    exists: true,
-    recentlyRejected: rejectionDate > ninetyDaysAgo
-  };
-}
-
-// Check application status for a user
-export async function checkApplicationStatus(userId: string): Promise<{ status: string | null, rejectedDate: string | null }> {
-  const { data, error } = await supabase
-    .from('freelancers')
-    .select('application_status, last_rejected_date')
-    .eq('user_id', userId)
-    .maybeSingle();
-
-  if (error) {
-    console.error('Error checking application status:', error);
-    return { status: null, rejectedDate: null };
-  }
-
-  return {
-    status: data?.application_status || null,
-    rejectedDate: data?.last_rejected_date || null
-  };
-}
-
-// Submit the application form
-export async function submitApplication(formData: ApplicationFormState): Promise<{ success: boolean, message: string, userId?: string }> {
+/**
+ * Marks a user as rejected and records the rejection date
+ */
+export const markUserAsRejected = async (formState: ApplicationFormState) => {
   try {
-    // Get the current authenticated user
-    const { data: { session } } = await supabase.auth.getSession();
+    await supabase
+      .from('freelancers')
+      .insert({
+        user_id: supabase.auth.getUser().then(({ data }) => data.user?.id),
+        has_ecommerce_experience: false,
+        years_of_experience: '',
+        last_rejected_date: new Date().toISOString(),
+        application_status: 'rejected'
+      });
     
-    if (!session) {
-      return { success: false, message: 'You must be logged in to submit an application.' };
+    return { success: true };
+  } catch (error) {
+    console.error('Error marking user as rejected:', error);
+    return { success: false, message: 'Failed to update user status' };
+  }
+};
+
+/**
+ * Submits the application form data to the database
+ */
+export const submitApplication = async (formState: ApplicationFormState): Promise<{ success: boolean; message?: string; userId?: string }> => {
+  try {
+    // Get the authenticated user
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      return { success: false, message: 'User not authenticated' };
+    }
+    
+    // Update user information
+    const { error: userError } = await supabase
+      .from('users')
+      .update({
+        first_name: formState.firstName,
+        last_name: formState.lastName,
+        mobile_no: formState.mobileNo,
+        city: formState.city,
+        referral_source_id: formState.referralSourceId || null
+      })
+      .eq('id', user.id);
+
+    if (userError) {
+      console.error('Error updating user information:', userError);
+      return { success: false, message: 'Failed to update user information' };
     }
 
-    const userId = session.user.id;
-    
-    // Check if the user already has a freelancer profile
+    // Check if freelancer record already exists
     const { data: existingFreelancer } = await supabase
       .from('freelancers')
       .select('id')
-      .eq('user_id', userId)
-      .maybeSingle();
-      
-    if (existingFreelancer) {
-      return { success: false, message: 'You have already submitted an application.' };
-    }
-    
-    // Update user info first
-    const { error: userUpdateError } = await supabase
-      .from('users')
-      .update({
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        mobile_no: formData.mobileNo,
-        city: formData.city,
-        referral_source_id: formData.referralSourceId || null,
-        user_type: APP_CONSTANTS.FREELANCER_USER_TYPE
-      })
-      .eq('id', userId);
-
-    if (userUpdateError) {
-      console.error('Error updating user:', userUpdateError);
-      return { success: false, message: 'Failed to update your information. Please try again.' };
-    }
-
-    // Insert the freelancer record
-    const { data: freelancerData, error: freelancerError } = await supabase
-      .from('freelancers')
-      .insert({
-        user_id: userId,
-        years_of_experience: formData.yearsOfExperience!,
-        linkedin_url: formData.linkedinUrl,
-        portfolio_url: formData.portfolioUrl,
-        has_ecommerce_experience: formData.hasExperience!,
-        more_info: formData.moreInfo || null,
-        skills_tools_requested: formData.skillsToolsRequested || null,
-        application_status: 'pending'
-      })
-      .select()
+      .eq('user_id', user.id)
       .single();
 
-    if (freelancerError) {
-      console.error('Error inserting freelancer:', freelancerError);
-      return { success: false, message: 'Failed to submit your application. Please try again.' };
+    let freelancerId;
+
+    if (existingFreelancer) {
+      // Update existing freelancer record
+      const { error: updateError } = await supabase
+        .from('freelancers')
+        .update({
+          has_ecommerce_experience: formState.hasExperience,
+          years_of_experience: formState.yearsOfExperience,
+          linkedin_url: formState.linkedinUrl,
+          portfolio_url: formState.portfolioUrl,
+          more_info: formState.moreInfo,
+          skills_tools_requested: formState.skillsToolsRequested,
+          application_status: 'pending'
+        })
+        .eq('id', existingFreelancer.id);
+
+      if (updateError) {
+        console.error('Error updating freelancer information:', updateError);
+        return { success: false, message: 'Failed to update freelancer information' };
+      }
+
+      freelancerId = existingFreelancer.id;
+    } else {
+      // Create new freelancer record
+      const { data: newFreelancer, error: insertError } = await supabase
+        .from('freelancers')
+        .insert({
+          user_id: user.id,
+          has_ecommerce_experience: formState.hasExperience,
+          years_of_experience: formState.yearsOfExperience,
+          linkedin_url: formState.linkedinUrl,
+          portfolio_url: formState.portfolioUrl,
+          more_info: formState.moreInfo,
+          skills_tools_requested: formState.skillsToolsRequested,
+          application_status: 'pending'
+        })
+        .select('id')
+        .single();
+
+      if (insertError) {
+        console.error('Error creating freelancer record:', insertError);
+        return { success: false, message: 'Failed to create freelancer record' };
+      }
+
+      freelancerId = newFreelancer?.id;
     }
 
-    // Add niches
-    if (formData.selectedNicheIds.length > 0) {
-      const nicheInserts = formData.selectedNicheIds.map(nicheId => ({
-        freelancer_id: freelancerData.id,
+    // Process niches
+    if (formState.selectedNicheIds && formState.selectedNicheIds.length > 0) {
+      // First clear existing niches
+      await supabase
+        .from('freelancer_niches')
+        .delete()
+        .eq('freelancer_id', freelancerId);
+
+      // Then insert new niches
+      const nicheInserts = formState.selectedNicheIds.map(nicheId => ({
+        freelancer_id: freelancerId,
         niche_id: nicheId
       }));
 
@@ -239,28 +126,42 @@ export async function submitApplication(formData: ApplicationFormState): Promise
         .insert(nicheInserts);
 
       if (nichesError) {
-        console.error('Error inserting niches:', nichesError);
+        console.error('Error saving niches:', nichesError);
       }
     }
 
-    // Add service category
-    if (formData.selectedServiceCategoryId) {
+    // Process service category
+    if (formState.selectedServiceCategoryId) {
+      // First clear existing categories
+      await supabase
+        .from('freelancer_service_categories')
+        .delete()
+        .eq('freelancer_id', freelancerId);
+
+      // Then insert new category
       const { error: categoryError } = await supabase
         .from('freelancer_service_categories')
         .insert({
-          freelancer_id: freelancerData.id,
-          service_category_id: formData.selectedServiceCategoryId
+          freelancer_id: freelancerId,
+          service_category_id: formState.selectedServiceCategoryId
         });
 
       if (categoryError) {
-        console.error('Error inserting service category:', categoryError);
+        console.error('Error saving service category:', categoryError);
       }
     }
 
-    // Add subcategories
-    if (formData.selectedSubcategoryIds.length > 0) {
-      const subcategoryInserts = formData.selectedSubcategoryIds.map(subcategoryId => ({
-        freelancer_id: freelancerData.id,
+    // Process subcategories
+    if (formState.selectedSubcategoryIds && formState.selectedSubcategoryIds.length > 0) {
+      // First clear existing subcategories
+      await supabase
+        .from('freelancer_service_subcategories')
+        .delete()
+        .eq('freelancer_id', freelancerId);
+
+      // Then insert new subcategories
+      const subcategoryInserts = formState.selectedSubcategoryIds.map(subcategoryId => ({
+        freelancer_id: freelancerId,
         service_subcategory_id: subcategoryId
       }));
 
@@ -269,14 +170,21 @@ export async function submitApplication(formData: ApplicationFormState): Promise
         .insert(subcategoryInserts);
 
       if (subcategoriesError) {
-        console.error('Error inserting subcategories:', subcategoriesError);
+        console.error('Error saving subcategories:', subcategoriesError);
       }
     }
 
-    // Add tools
-    if (formData.selectedToolIds.length > 0) {
-      const toolInserts = formData.selectedToolIds.map(toolId => ({
-        freelancer_id: freelancerData.id,
+    // Process tools
+    if (formState.selectedToolIds && formState.selectedToolIds.length > 0) {
+      // First clear existing tools
+      await supabase
+        .from('freelancer_tools')
+        .delete()
+        .eq('freelancer_id', freelancerId);
+
+      // Then insert new tools
+      const toolInserts = formState.selectedToolIds.map(toolId => ({
+        freelancer_id: freelancerId,
         tool_id: toolId
       }));
 
@@ -285,81 +193,38 @@ export async function submitApplication(formData: ApplicationFormState): Promise
         .insert(toolInserts);
 
       if (toolsError) {
-        console.error('Error inserting tools:', toolsError);
+        console.error('Error saving tools:', toolsError);
       }
     }
 
-    return {
-      success: true,
-      message: 'Your application has been submitted successfully!',
-      userId: userId
-    };
-
+    return { success: true, userId: user.id };
   } catch (error) {
     console.error('Error submitting application:', error);
-    return { success: false, message: 'An unexpected error occurred. Please try again.' };
+    return { success: false, message: 'An unexpected error occurred' };
   }
-}
+};
 
-// Mark user as rejected
-export async function markUserAsRejected(formData: ApplicationFormState): Promise<boolean> {
-  try {
-    // Get the current authenticated user
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    if (!session) {
-      return false;
-    }
-    
-    const userId = session.user.id;
-
-    // Find and update (or create) the freelancer record
-    const { data: freelancer, error: freelancerSelectError } = await supabase
-      .from('freelancers')
-      .select('id')
-      .eq('user_id', userId)
-      .maybeSingle();
-
-    if (freelancerSelectError) {
-      console.error('Error finding freelancer to mark as rejected:', freelancerSelectError);
-      return false;
-    }
-
-    if (!freelancer) {
-      // If freelancer doesn't exist yet, create one with rejected status
-      const { error: createError } = await supabase
-        .from('freelancers')
-        .insert({
-          user_id: userId,
-          has_ecommerce_experience: false,
-          years_of_experience: 'less than 1 yr',
-          last_rejected_date: new Date().toISOString(),
-          application_status: 'rejected'
-        });
-
-      if (createError) {
-        console.error('Error creating rejected freelancer:', createError);
-        return false;
-      }
-    } else {
-      // Update existing freelancer with rejection date
-      const { error: updateError } = await supabase
-        .from('freelancers')
-        .update({ 
-          last_rejected_date: new Date().toISOString(),
-          application_status: 'rejected' 
-        })
-        .eq('id', freelancer.id);
-
-      if (updateError) {
-        console.error('Error updating freelancer rejection date:', updateError);
-        return false;
-      }
-    }
-
-    return true;
-  } catch (error) {
-    console.error('Error marking user as rejected:', error);
-    return false;
+/**
+ * Checks if a user has already applied
+ */
+export const checkApplicationStatus = async (userId: string) => {
+  if(!userId) {
+    return { status: null, rejectedDate: null };
   }
-}
+
+  const { data, error } = await supabase
+    .from('freelancers')
+    .select('application_status, last_rejected_date')
+    .eq('user_id', userId)
+    .single();
+  
+  if (error) {
+    //console.error('Error checking application status:', error);
+    return { status: null, rejectedDate: null };
+  }
+  
+  return { 
+    status: data?.application_status || null,
+    rejectedDate: data?.last_rejected_date || null
+  };
+};

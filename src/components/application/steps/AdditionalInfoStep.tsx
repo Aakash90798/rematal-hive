@@ -44,6 +44,10 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
     updateFormState({ skillsToolsRequested: e.target.value, errors: { skillsToolsRequested: '' } });
   };
   
+  const handleBack = () => {
+    updateFormState({ currentStep: 'tools' });
+  };
+  
   const handleContinue = () => {
     // Validate
     const errors: Record<string, string> = {};
@@ -135,7 +139,7 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
       )}
       
       <FormStepButtons
-        onBack={() => updateFormState({ currentStep: 'tools' })}
+        onBack={handleBack}
         onContinue={handleContinue}
       />
     </div>

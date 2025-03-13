@@ -1,17 +1,20 @@
+
 import { useState } from 'react';
 import FormField from '@/components/application/FormField';
 import { Input } from '@/components/ui/input';
 import { ApplicationFormState } from '@/types/form';
 import FormStepButtons from '@/components/application/FormStepButtons';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface PersonalInfoStepProps {
   formState: ApplicationFormState;
   updateFormState: (updates: Partial<ApplicationFormState>) => void;
-  onEmailCheck: (email: string) => Promise<boolean>;
+  onEmailCheck?: (email: string) => Promise<boolean>;
 }
 
 const PersonalInfoStep = ({ formState, updateFormState, onEmailCheck }: PersonalInfoStepProps) => {
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
   
   const validate = async () => {
     const errors: Record<string, string> = {};
@@ -22,12 +25,6 @@ const PersonalInfoStep = ({ formState, updateFormState, onEmailCheck }: Personal
     
     if (!formState.lastName) {
       errors.lastName = 'Last name is required';
-    }
-    
-    if (!formState.email) {
-      errors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formState.email)) {
-      errors.email = 'Please enter a valid email address';
     }
     
     if (!formState.mobileNo) {
@@ -44,16 +41,29 @@ const PersonalInfoStep = ({ formState, updateFormState, onEmailCheck }: Personal
     
     if (Object.keys(errors).length === 0) {
       setLoading(true);
-      const canProceed = await onEmailCheck(formState.email);
+      
+      // Use the authenticated user's email
+      const userEmail = user?.email || '';
+      
+      let canProceed = true;
+      if (onEmailCheck) {
+        canProceed = await onEmailCheck(userEmail);
+      }
+      
       setLoading(false);
       
       if (canProceed) {
-        updateFormState({ currentStep: 'experience-check' });
+        // Make sure email is set in formState using the user's authenticated email
+        updateFormState({ 
+          email: userEmail,
+          currentStep: 'experience-check' 
+        });
       }
     }
   };
   
-  const handleSubmit = () => {
+  const handleSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     validate();
   };
   
@@ -95,19 +105,18 @@ const PersonalInfoStep = ({ formState, updateFormState, onEmailCheck }: Personal
           </FormField>
         </div>
         
+        {/* Show user's email as read-only */}
         <FormField
           id="email"
           label="Email Address"
           required
-          error={formState.errors.email}
         >
           <Input
             id="email"
             type="email"
-            value={formState.email}
-            onChange={(e) => updateFormState({ email: e.target.value })}
-            className="w-full"
-            placeholder="your.email@example.com"
+            value={user?.email || ''}
+            readOnly
+            className="w-full bg-gray-100"
           />
         </FormField>
         

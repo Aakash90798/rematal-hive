@@ -20,6 +20,9 @@ export async function signUpWithEmail(email: string, password: string) {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      emailRedirectTo: `${window.location.origin}/dashboard`
+    }
   });
   
   return { data, error };
@@ -64,6 +67,9 @@ export async function resendVerificationEmail(email: string) {
   const { data, error } = await supabase.auth.resend({
     type: 'signup',
     email,
+    options: {
+      emailRedirectTo: `${window.location.origin}/dashboard`
+    }
   });
   
   return { data, error };
