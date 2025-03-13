@@ -28,18 +28,18 @@ serve(async (req) => {
   }
 
   try {
-    // Get API key from request headers
-    const apiKey = req.headers.get('x-api-key');
+    // doesn't require api key
+    // const apiKey = req.headers.get('x-api-key');
     
-    if (!apiKey || apiKey !== Deno.env.get('WEBHOOK_API_KEY')) {
-      return new Response(
-        JSON.stringify({ success: false, message: 'Unauthorized: Invalid API key' }),
-        {
-          status: 401,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
-    }
+    // if (!apiKey || apiKey !== Deno.env.get('WEBHOOK_API_KEY')) {
+    //   return new Response(
+    //     JSON.stringify({ success: false, message: 'Unauthorized: Invalid API key' }),
+    //     {
+    //       status: 401,
+    //       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    //     }
+    //   );
+    // }
     
     // Parse request body
     const reqData: VideoInterviewPayload = await req.json();
