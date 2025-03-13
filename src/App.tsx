@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate
+  BrowserRouter
 } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import AuthRoute from './components/AuthRoute';
@@ -14,11 +14,15 @@ import Apply from './pages/Apply';
 import VerifyEmail from './pages/VerifyEmail';
 import ResetPassword from './pages/ResetPassword';
 import Index from './pages/Index';
+import { TooltipProvider } from './components/ui/tooltip';
+import { Toaster } from './components/ui/toaster';
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <TooltipProvider>
+      <Toaster />
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
@@ -29,7 +33,8 @@ function App() {
           <Route path="/apply" element={<AuthRoute><Apply /></AuthRoute>} />
           <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
-      </Router>
+      </BrowserRouter>
+      </TooltipProvider>
     </AuthProvider>
   );
 }
