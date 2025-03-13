@@ -44,7 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUser({
             id: session.user.id,
             email: session.user.email ?? '',
-            email_confirmed_at: session.user.email_confirmed_at
+            email_confirmed_at: session.user.email_confirmed_at,
           });
         } else {
           setUser(null);

@@ -52,23 +52,33 @@ const Dashboard = () => {
       }
     }
   };
-  
+
   const calculateDaysRemaining = () => {
     if (!rejectedDate) return 0;
-    
+
     const rejected = new Date(rejectedDate);
     const now = new Date();
     const ninetyDaysLater = new Date(rejected);
     ninetyDaysLater.setDate(ninetyDaysLater.getDate() + 90);
-    
+
     const daysRemaining = Math.ceil((ninetyDaysLater.getTime() - now.getTime()) / (1000 * 3600 * 24));
     return daysRemaining > 0 ? daysRemaining : 0;
   };
-  
+
+  const handleContinueToStep2 = () => {
+    // Create the URL with the user's information
+    const firstName = 'John';
+    const lastName = 'Doe';
+    const hirevireUrl = `https://app.hirevire.com/applications/3776ece3-0688-4024-b666-e1e689cd9ce7?first_name=${encodeURIComponent(firstName)}&last_name=${encodeURIComponent(lastName)}&email=${encodeURIComponent(user.email)}`;
+
+    // Open in a new tab
+    window.open(hirevireUrl, '_blank');
+  };
+
   if (!user) {
     return null; // This should be handled by the AuthRoute component
   }
-  
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <NavbarInner />
@@ -77,7 +87,7 @@ const Dashboard = () => {
           <div className="bg-white p-8 rounded-xl shadow-md">
             <div className="flex justify-between items-center mb-8">
               <h1 className="text-2xl md:text-3xl font-bold text-rematal-dark">Your Dashboard</h1>
-              <Button 
+              <Button
                 onClick={handleLogout}
                 variant="outline"
                 className="bg-gray-50 text-rose-500 hover:text-red-600"
@@ -86,14 +96,14 @@ const Dashboard = () => {
                 Log out
               </Button>
             </div>
-            
+
             <div className="space-y-8">
               <div className="bg-gray-50 p-6 rounded-lg">
                 <h2 className="text-lg font-medium text-rematal-dark mb-4 flex items-center">
                   <User className="h-5 w-5 mr-2 text-rematal-primary" />
                   Your Information
                 </h2>
-                
+
                 <div className="space-y-3">
                   <div className="grid md:grid-cols-2 gap-2">
                     <div>
@@ -103,13 +113,13 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-gray-50 p-6 rounded-lg">
                 <h2 className="text-lg font-medium text-rematal-dark mb-4 flex items-center">
                   <FileText className="h-5 w-5 mr-2 text-rematal-primary" />
                   Application Status
                 </h2>
-                
+
                 {loading ? (
                   <div className="text-center py-4">
                     <div className="animate-spin inline-block h-6 w-6 border-2 border-t-rematal-primary border-rematal-primary/20 rounded-full"></div>
@@ -120,7 +130,7 @@ const Dashboard = () => {
                     {!applicationStatus && (
                       <div>
                         <p className="text-gray-600 mb-4">You haven't applied as a freelancer yet.</p>
-                        <Button 
+                        <Button
                           asChild
                           className="bg-rematal-primary hover:bg-rematal-primary/90 text-white"
                         >
@@ -128,7 +138,7 @@ const Dashboard = () => {
                         </Button>
                       </div>
                     )}
-                    
+
                     {applicationStatus === 'PENDING' && (
                       <div className="bg-blue-50 p-4 rounded-lg">
                         <div className="flex items-start">
@@ -143,7 +153,7 @@ const Dashboard = () => {
                       </div>
                     )}
 
-                    {applicationStatus === 'DONE_STEP_1' && (
+                    {applicationStatus === APP_CONSTANTS.APPLICATION_STATUS.DONE_STEP_1 && (
                       <div className="bg-blue-50 p-4 rounded-lg">
                         <div className="flex items-start">
                           <Clock className="h-5 w-5 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
@@ -152,20 +162,18 @@ const Dashboard = () => {
                             <p className="text-sm text-gray-700 mt-1">
                               You've completed step 1 of your application. Please proceed to step 2 to complete your application process.
                             </p>
-                            <Button 
-                              asChild
-                              className="bg-rematal-primary hover:bg-rematal-primary/90 text-white mt-4"
+                            <Button
+                              type="button"
+                              className="w-fit mt-4 bg-rematal-primary hover:bg-rematal-primary/90 text-white py-4 text-sm"
+                              onClick={handleContinueToStep2}
                             >
-                              <Link to={{ 
-                                pathname: "/apply", 
-                                search: "?step=video-interview" 
-                              }}>Go to Step 2</Link>
+                              Go to Step 2 →
                             </Button>
                           </div>
                         </div>
                       </div>
                     )}
-                    
+
                     {applicationStatus === 'APPROVED' && (
                       <div className="bg-green-50 p-4 rounded-lg">
                         <div className="flex items-start">
@@ -179,7 +187,7 @@ const Dashboard = () => {
                         </div>
                       </div>
                     )}
-                    
+
                     {applicationStatus === 'REJECTED' && (
                       <div className="bg-red-50 p-4 rounded-lg">
                         <div className="flex items-start">
@@ -195,7 +203,7 @@ const Dashboard = () => {
                                 <p className="text-sm text-gray-700 mt-1">
                                   You can now reapply as the 90-day waiting period has passed.
                                 </p>
-                                <Button 
+                                <Button
                                   asChild
                                   className="bg-rematal-primary hover:bg-rematal-primary/90 text-white mt-4"
                                 >

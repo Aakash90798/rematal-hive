@@ -1,4 +1,5 @@
 
+import { APP_CONSTANTS } from "@/constants";
 import { supabase } from "@/lib/supabase";
 import { ApplicationFormState, Niche, ServiceCategory, ServiceSubcategory, Tool, ReferralSource } from "@/types/form";
 
@@ -256,7 +257,7 @@ export const submitApplication = async (formState: ApplicationFormState): Promis
           portfolio_url: formState.portfolioUrl,
           more_info: formState.moreInfo,
           skills_tools_requested: formState.skillsToolsRequested,
-          application_status: 'DONE_STEP_1'  // Using enum value
+          application_status: APP_CONSTANTS.APPLICATION_STATUS.DONE_STEP_1
         })
         .eq('id', existingFreelancer.id);
 
@@ -278,7 +279,7 @@ export const submitApplication = async (formState: ApplicationFormState): Promis
           portfolio_url: formState.portfolioUrl,
           more_info: formState.moreInfo,
           skills_tools_requested: formState.skillsToolsRequested,
-          application_status: 'DONE_STEP_1'  // Using enum value
+          application_status: APP_CONSTANTS.APPLICATION_STATUS.DONE_STEP_1
         })
         .select('id')
         .single();
