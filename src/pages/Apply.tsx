@@ -63,8 +63,8 @@ const Apply = () => {
   // Check if user is authenticated and email is verified
   useEffect(() => {
     if (!user) {
-      // Redirect to login if not authenticated
-      navigate('/login');
+      // Redirect to signup if not authenticated
+      navigate('/signup');
       return;
     }
 

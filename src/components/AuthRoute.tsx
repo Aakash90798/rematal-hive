@@ -27,7 +27,7 @@ const AuthRoute = ({
 
   // If authentication is required and user is not logged in
   if (requireAuth && !user) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/signup" state={{ from: location }} replace />;
   }
 
   // If email verification is required and the user is logged in but email is not verified

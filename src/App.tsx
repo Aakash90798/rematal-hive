@@ -34,8 +34,8 @@ const App = () => (
                 </AuthRoute>
               } 
             />
-            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
             <Route 
