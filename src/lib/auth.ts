@@ -51,7 +51,9 @@ export async function signInWithLinkedIn() {
 }
 
 export async function signOut() {
-  return await supabase.auth.signOut();
+  await supabase.auth.refreshSession();
+  const { error } = await supabase.auth.signOut();
+  return { error };
 }
 
 export async function getCurrentUser(): Promise<AuthUser | null> {
