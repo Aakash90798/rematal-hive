@@ -73,7 +73,7 @@ const ResetPassword = () => {
       // Redirect to login page after successful password reset
       setTimeout(() => {
         navigate('/login');
-      }, 2000);
+      }, 4000);
     } catch (error) {
       console.error("Password reset error:", error);
       toast({
@@ -113,7 +113,7 @@ const ResetPassword = () => {
               <Check className="h-5 w-5 text-green-500" />
               <AlertTitle>Success!</AlertTitle>
               <AlertDescription>
-                Your password has been successfully reset. You will be redirected to the login page.
+                Your password has been successfully reset. You will be redirected now.
               </AlertDescription>
             </Alert>
           ) : (

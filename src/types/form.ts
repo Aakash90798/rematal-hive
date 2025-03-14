@@ -1,6 +1,3 @@
-
-export type ApplicationStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'DONE_STEP_1';
-
 export type FormStep =
   | 'personal-info'
   | 'experience-check'

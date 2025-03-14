@@ -5,11 +5,15 @@ export const APP_CONSTANTS = {
   LINKEDIN_URL_REGEX: /^(?:https?:\/\/)?(?:www\.)?linkedin\.com\/(?:(?:in\/[A-Za-z0-9_-]{3,})|(?:company\/[A-Za-z0-9_-]{1,}))\/?$/,
   NORMAL_URL_REGEX: /^(?:(?:https?:\/\/)?(?:www\.)?)?[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}(?:\:\d+)?(?:\/\S*)?$/,
   LET_REMATAL_DECIDE_ID: "bab11423-d214-4c43-855e-94e7bfb92b38",
-  FREELANCER_USER_TYPE: "EXPERT",
   APPLICATION_STATUS: {
     PENDING: "PENDING",
     APPROVED: "APPROVED",
     REJECTED: "REJECTED",
     DONE_STEP_1: "DONE_STEP_1"
+  },
+  USER_TYPE: {
+    EXPERT: "EXPERT",
+    CLIENT: "CLIENT",
+    ADMIN: "ADMIN",
   }
 };

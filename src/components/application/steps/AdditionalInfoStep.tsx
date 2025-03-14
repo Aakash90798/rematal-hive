@@ -88,7 +88,7 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
         <p className="text-gray-600 mt-2">
           {isRematalDecide 
             ? "Help us understand your experience and what you specialize in" 
-            : "Please specify the other skills or tools you mentioned"}
+            : "Didn't find what you're looking for? Let us know which skills or tools you'd like us to add in the future."}
         </p>
       </div>
       
@@ -125,7 +125,7 @@ const AdditionalInfoStep = ({ formState, updateFormState }: AdditionalInfoStepPr
         <div className="space-y-4">
           <div className={`form-group ${formState.errors?.skillsToolsRequested ? 'error' : ''}`}>
             <label htmlFor="skillsToolsRequested" className="block font-medium mb-2">
-              Please specify the other skills or tools you selected:
+              Please specify the other skills or tools
             </label>
             <textarea
               id="skillsToolsRequested"

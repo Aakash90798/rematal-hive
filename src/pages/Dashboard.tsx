@@ -53,7 +53,7 @@ const Dashboard = () => {
     }, 1500);
 
     return () => clearTimeout(timer);
-  }, [user]);
+  }, []);
 
   const handleLogout = async () => {
     if (window.confirm("Are you sure you want to log out?")) {
@@ -89,8 +89,8 @@ const Dashboard = () => {
 
   const handleContinueToStep2 = () => {
     // Create the URL with the user's information
-    const firstName = profileData?.first_name || 'John';
-    const lastName = profileData?.last_name || 'Doe';
+    const firstName = profileData?.first_name;
+    const lastName = profileData?.last_name;
     const hirevireUrl = `https://app.hirevire.com/applications/3776ece3-0688-4024-b666-e1e689cd9ce7?first_name=${encodeURIComponent(firstName)}&last_name=${encodeURIComponent(lastName)}&email=${encodeURIComponent(user.email)}`;
 
     // Open in a new tab
@@ -128,7 +128,7 @@ const Dashboard = () => {
 
                 <div className="space-y-3">
                   <div className="grid md:grid-cols-2 gap-2">
-                    {profileData && (
+                    {profileData && profileData.first_name && (
                       <div>
                         <p className="text-sm text-gray-500">Name</p>
                         <p className="font-medium">
@@ -169,7 +169,7 @@ const Dashboard = () => {
                       </div>
                     )}
 
-                    {applicationStatus === 'PENDING' && (
+                    {applicationStatus === APP_CONSTANTS.APPLICATION_STATUS.PENDING && (
                       <div className="bg-blue-50 p-4 rounded-lg">
                         <div className="flex items-start">
                           <Clock className="h-5 w-5 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
@@ -204,7 +204,7 @@ const Dashboard = () => {
                       </div>
                     )}
 
-                    {applicationStatus === 'APPROVED' && (
+                    {applicationStatus === APP_CONSTANTS.APPLICATION_STATUS.APPROVED && (
                       <div className="bg-green-50 p-4 rounded-lg">
                         <div className="flex items-start">
                           <Check className="h-5 w-5 text-green-500 mt-0.5 mr-2 flex-shrink-0" />
@@ -218,7 +218,7 @@ const Dashboard = () => {
                       </div>
                     )}
 
-                    {applicationStatus === 'REJECTED' && (
+                    {applicationStatus === APP_CONSTANTS.APPLICATION_STATUS.REJECTED && (
                       <div className="bg-red-50 p-4 rounded-lg">
                         <div className="flex items-start">
                           <X className="h-5 w-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
