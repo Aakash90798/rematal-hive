@@ -53,6 +53,15 @@ const Signup = () => {
     try {
       setLoading(true);
       const { data, error } = await signUpWithEmail(email, password);
+
+      if(data?.user?.role !== 'authenticated') {
+        toast({
+          title: "User already exists",
+          description: "Please log in instead.",
+          variant: "destructive"
+        });
+        return;
+      }
       
       if (error) {
         toast({

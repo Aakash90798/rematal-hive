@@ -105,9 +105,9 @@ const Login = () => {
       }
       
       toast({
-        title: "Reset email sent",
-        description: "Check your email for a password reset link",
-      });
+        title: "Password Reset",
+        description: `If an account with ${resetEmail} exists, a password reset link has been sent.`,
+      });      
       
       setShowResetForm(false);
     } catch (error) {
