@@ -9,12 +9,14 @@ import { User, LogOut, FileText, Clock, Check, X } from 'lucide-react';
 import Footer from '@/components/Footer';
 import NavbarInner from '@/components/NavbarInner';
 import { APP_CONSTANTS } from '@/constants';
+import { supabase } from '@/lib/supabase';
 
 const Dashboard = () => {
   const { user } = useAuth();
   const [applicationStatus, setApplicationStatus] = useState<string | null>(null);
   const [rejectedDate, setRejectedDate] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [profileData, setProfileData] = useState<{ first_name: string; last_name: string } | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -28,7 +30,27 @@ const Dashboard = () => {
       setLoading(false);
     };
 
-    const timer = setTimeout(fetchApplicationStatus, 1500);
+    const fetchUserProfile = async () => {
+      if (user) {
+        // Fetch user profile data from the public.users table
+        const { data, error } = await supabase
+          .from('users')
+          .select('first_name, last_name')
+          .eq('id', user.id)
+          .single();
+        
+        if (data && !error) {
+          setProfileData(data);
+        } else {
+          console.error("Error fetching user profile:", error);
+        }
+      }
+    };
+
+    const timer = setTimeout(() => {
+      fetchApplicationStatus();
+      fetchUserProfile();
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, [user]);
@@ -67,8 +89,8 @@ const Dashboard = () => {
 
   const handleContinueToStep2 = () => {
     // Create the URL with the user's information
-    const firstName = 'John';
-    const lastName = 'Doe';
+    const firstName = profileData?.first_name || 'John';
+    const lastName = profileData?.last_name || 'Doe';
     const hirevireUrl = `https://app.hirevire.com/applications/3776ece3-0688-4024-b666-e1e689cd9ce7?first_name=${encodeURIComponent(firstName)}&last_name=${encodeURIComponent(lastName)}&email=${encodeURIComponent(user.email)}`;
 
     // Open in a new tab
@@ -106,6 +128,14 @@ const Dashboard = () => {
 
                 <div className="space-y-3">
                   <div className="grid md:grid-cols-2 gap-2">
+                    {profileData && (
+                      <div>
+                        <p className="text-sm text-gray-500">Name</p>
+                        <p className="font-medium">
+                          {profileData.first_name || ''} {profileData.last_name || ''}
+                        </p>
+                      </div>
+                    )}
                     <div>
                       <p className="text-sm text-gray-500">Email</p>
                       <p className="font-medium">{user.email}</p>

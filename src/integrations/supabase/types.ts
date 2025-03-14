@@ -457,7 +457,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      applicationstatus: "pending" | "approved" | "rejected"
+      applicationstatus: "PENDING" | "APPROVED" | "REJECTED" | "DONE_STEP_1"
       usertypes: "EXPERT" | "CLIENT" | "ADMIN"
     }
     CompositeTypes: {

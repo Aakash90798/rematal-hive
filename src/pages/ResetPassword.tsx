@@ -7,12 +7,15 @@ import { useToast } from '@/hooks/use-toast';
 import { updatePassword } from '@/lib/auth';
 import Footer from '@/components/Footer';
 import NavbarInner from '@/components/NavbarInner';
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Check } from 'lucide-react';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -59,6 +62,9 @@ const ResetPassword = () => {
         return;
       }
       
+      // Show success message
+      setSuccess(true);
+      
       toast({
         title: "Password updated",
         description: "Your password has been successfully reset",
@@ -102,6 +108,14 @@ const ResetPassword = () => {
                 Return to login
               </button>
             </div>
+          ) : success ? (
+            <Alert className="bg-green-50 border-green-200 mt-4">
+              <Check className="h-5 w-5 text-green-500" />
+              <AlertTitle>Success!</AlertTitle>
+              <AlertDescription>
+                Your password has been successfully reset. You will be redirected to the login page.
+              </AlertDescription>
+            </Alert>
           ) : (
             <form className="mt-8 space-y-6" onSubmit={handleResetPassword}>
               <div>
